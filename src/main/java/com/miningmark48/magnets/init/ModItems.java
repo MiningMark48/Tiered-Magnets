@@ -10,6 +10,9 @@ public class ModItems {
     public static Item ItemMagnetDurabilityIron;
     public static Item ItemMagnetDurabilityRedstone;
     public static Item ItemMagnetDurabilityGold;
+    public static Item ItemMagnetDurabilityLapis;
+    public static Item ItemMagnetDurabilityDiamond;
+    public static Item ItemMagnetDurabilityEmerald;
 
     public static void init() {
         //Durability Magnets
@@ -17,6 +20,9 @@ public class ModItems {
         ItemMagnetDurabilityIron = new ItemMagnetDurability(1).setUnlocalizedName("magnet_durability_iron").setRegistryName("magnet_durability_iron").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityRedstone = new ItemMagnetDurability(2).setUnlocalizedName("magnet_durability_redstone").setRegistryName("magnet_durability_redstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityGold = new ItemMagnetDurability(3).setUnlocalizedName("magnet_durability_gold").setRegistryName("magnet_durability_gold").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetDurabilityLapis = new ItemMagnetDurability(4).setUnlocalizedName("magnet_durability_lapis").setRegistryName("magnet_durability_lapis").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetDurabilityDiamond = new ItemMagnetDurability(5).setUnlocalizedName("magnet_durability_diamond").setRegistryName("magnet_durability_diamond").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetDurabilityEmerald = new ItemMagnetDurability(6).setUnlocalizedName("magnet_durability_emerald").setRegistryName("magnet_durability_emerald").setCreativeTab(ModCreativeTab.Magnets_Tab);
     }
 
 }

@@ -7,6 +7,9 @@ item.magnet_durability_stone.name=Stone Magnet
 item.magnet_durability_iron.name=Iron Magnet
 item.magnet_durability_redstone.name=Redstone Magnet
 item.magnet_durability_gold.name=Gold Magnet
+item.magnet_durability_lapis.name=Lapis Magnet
+item.magnet_durability_diamond.name=Diamond Magnet
+item.magnet_durability_emerald.name=Emerald Magnet
 
 
 #Blocks

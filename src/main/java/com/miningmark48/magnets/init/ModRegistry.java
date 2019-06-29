@@ -27,6 +27,9 @@ public class ModRegistry {
         registerItem(ModItems.ItemMagnetDurabilityIron);
         registerItem(ModItems.ItemMagnetDurabilityRedstone);
         registerItem(ModItems.ItemMagnetDurabilityGold);
+        registerItem(ModItems.ItemMagnetDurabilityLapis);
+        registerItem(ModItems.ItemMagnetDurabilityDiamond);
+        registerItem(ModItems.ItemMagnetDurabilityEmerald);
     }
 
     private static void registerBlocks(){
@@ -38,6 +41,9 @@ public class ModRegistry {
         registerItemRender(ModItems.ItemMagnetDurabilityIron);
         registerItemRender(ModItems.ItemMagnetDurabilityRedstone);
         registerItemRender(ModItems.ItemMagnetDurabilityGold);
+        registerItemRender(ModItems.ItemMagnetDurabilityLapis);
+        registerItemRender(ModItems.ItemMagnetDurabilityDiamond);
+        registerItemRender(ModItems.ItemMagnetDurabilityEmerald);
     }
 
     public static void registerRenderBlocks(){
