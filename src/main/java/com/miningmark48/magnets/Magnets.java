@@ -46,7 +46,7 @@ public class Magnets {
         proxy.registerRenders();
         proxy.init(event);
 
-        ModRecipes.init();
+//        ModRecipes.init();
 //        ModSoundEvents.registerSounds();
 
 //        MinecraftForge.EVENT_BUS.register(new ModSoundEvents());

@@ -12,4 +12,8 @@ public class Reference {
     public static final String SERVER_PROXY_CLASS = "com.miningmark48.magnets.proxy.CommonProxy";
     public static final String GUI_FACTORY_CLASS = "com.miningmark48.magnets.client.gui.GuiFactory";
 
+    //Mod IDs
+    public static final String TE = "thermalexpansion";
+    public static final String TF = "thermalfoundation";
+
 }
