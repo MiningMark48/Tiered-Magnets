@@ -1,0 +1,58 @@
+#Creative Tabs
+itemGroup.magnets=Magnets
+
+
+#Items
+item.magnet_durability_stone.name=Stone Magnet
+item.magnet_durability_iron.name=Iron Magnet
+item.magnet_durability_redstone.name=Redstone Magnet
+item.magnet_durability_gold.name=Gold Magnet
+
+
+#Blocks
+
+
+#Tooltips
+tooltip.item.hold=Hold
+tooltip.item.shift=Shift
+tooltip.item.magnet_base.enabled=Enabled
+tooltip.item.magnet_base.disabled=Disabled
+tooltip.item.magnet_base.range1=Range:
+tooltip.item.magnet_base.range2=Blocks
+tooltip.item.magnet_base.durability=Durability:
+tooltip.item.magnet_base.line1=I'm a magnet.
+
+
+#Chat Messages
+chat.item.magnet_base.enabled=Magnet enabled.
+chat.item.magnet_base.disabled=Magnet disabled.
+
+
+#Gui
+
+
+
+# Config Categories
+config.category.clientSide.title=Client
+config.category.clientSide.desc=Client-Side only 
+config.category.magnetItemDurability.title=Durability Magnets
+config.category.magnetItemDurability.desc=Durability Magnets control
+
+#Configs
+config.doParticles.title=Do Particles
+config.doParticles.desc=When enabled, particles will be displayed.
+config.baseRange.title=Base Range
+config.baseRange.desc=The base range all magnets use with multiplier, lowest tier item uses this value.
+config.rangeMultiplier.title=Range Multiplier
+config.rangeMultiplier.desc=The multiplier used to control range between tiers.
+config.baseDurability.title=Base Durability
+config.baseDurability.desc=The base durability all magnets use with multiplier, lowest tier item uses this value.
+config.durabilityMultiplier.title=Durability Multiplier
+config.durabilityMultiplier.desc=The multiplier used to control durability between tiers.
+config.speed.title=Speed
+config.speed.desc=Speed in which items and experience are pulled toward to the player.
+
+#Logs
+log.info.preinit=Pre-Initialization Complete!
+log.info.init=Initialization Complete!
+log.info.postinitPost=Initialization Complete!

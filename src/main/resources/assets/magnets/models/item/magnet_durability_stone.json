@@ -1,0 +1,7 @@
+{
+  "parent": "magnets:item/magnet_layered",
+  "textures": {
+    "color": "magnets:items/durability/magnet_stone",
+    "base": "magnets:items/durability/magnet_base"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+  	"facing=up": { "model": "displaycase:tool_rack" },
+    "facing=down": { "model": "displaycase:tool_rack" },
+    "facing=north": { "model": "displaycase:tool_rack" },
+    "facing=south": { "model": "displaycase:tool_rack", "y": 180 },
+    "facing=west":  { "model": "displaycase:tool_rack", "y": 270 },
+    "facing=east":  { "model": "displaycase:tool_rack", "y": 90 }
+  }
+}
