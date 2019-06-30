@@ -23,6 +23,7 @@ public class ModRegistry {
     }
 
     private static void registerItems(){
+        //Durability Magnets
         registerItem(ModItems.ItemMagnetDurabilityStone);
         registerItem(ModItems.ItemMagnetDurabilityIron);
         registerItem(ModItems.ItemMagnetDurabilityRedstone);
@@ -30,6 +31,11 @@ public class ModRegistry {
         registerItem(ModItems.ItemMagnetDurabilityLapis);
         registerItem(ModItems.ItemMagnetDurabilityDiamond);
         registerItem(ModItems.ItemMagnetDurabilityEmerald);
+
+        //Electromagnets
+        registerItem(ModItems.ItemMagnetElectromagnetLeadstone);
+        registerItem(ModItems.ItemMagnetElectromagnetHardened);
+
     }
 
     private static void registerBlocks(){
@@ -37,6 +43,7 @@ public class ModRegistry {
     }
 
     public static void registerRenderItems(){
+        //Durability Magnets
         registerItemRender(ModItems.ItemMagnetDurabilityStone);
         registerItemRender(ModItems.ItemMagnetDurabilityIron);
         registerItemRender(ModItems.ItemMagnetDurabilityRedstone);
@@ -44,6 +51,11 @@ public class ModRegistry {
         registerItemRender(ModItems.ItemMagnetDurabilityLapis);
         registerItemRender(ModItems.ItemMagnetDurabilityDiamond);
         registerItemRender(ModItems.ItemMagnetDurabilityEmerald);
+
+        //Electromagnets
+        registerItemRender(ModItems.ItemMagnetElectromagnetLeadstone);
+        registerItemRender(ModItems.ItemMagnetElectromagnetHardened);
+
     }
 
     public static void registerRenderBlocks(){

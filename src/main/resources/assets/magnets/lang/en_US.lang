@@ -10,6 +10,8 @@ item.magnet_durability_gold.name=Gold Magnet
 item.magnet_durability_lapis.name=Lapis Magnet
 item.magnet_durability_diamond.name=Diamond Magnet
 item.magnet_durability_emerald.name=Emerald Magnet
+item.magnet_energy_leadstone.name=Leadstone Electromagnet
+item.magnet_energy_hardened.name=Hardened Electromagnet
 
 
 #Blocks
@@ -23,6 +25,9 @@ tooltip.item.magnet_base.disabled=Disabled
 tooltip.item.magnet_base.range1=Range:
 tooltip.item.magnet_base.range2=Blocks
 tooltip.item.magnet_base.durability=Durability:
+tooltip.item.magnet_base.energy1=Energy:
+tooltip.item.magnet_base.energy2=RF
+tooltip.item.magnet_base.energy3=RF/t
 tooltip.item.magnet_base.line1=I'm a magnet.
 
 

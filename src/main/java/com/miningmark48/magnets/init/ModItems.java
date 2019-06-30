@@ -14,6 +14,10 @@ public class ModItems {
     public static Item ItemMagnetDurabilityDiamond;
     public static Item ItemMagnetDurabilityEmerald;
 
+    //Electromagnets
+    public static Item ItemMagnetElectromagnetLeadstone;
+    public static Item ItemMagnetElectromagnetHardened;
+
     public static void init() {
         //Durability Magnets
         ItemMagnetDurabilityStone = new ItemMagnetDurability(0).setUnlocalizedName("magnet_durability_stone").setRegistryName("magnet_durability_stone").setCreativeTab(ModCreativeTab.Magnets_Tab);
@@ -23,6 +27,11 @@ public class ModItems {
         ItemMagnetDurabilityLapis = new ItemMagnetDurability(4).setUnlocalizedName("magnet_durability_lapis").setRegistryName("magnet_durability_lapis").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityDiamond = new ItemMagnetDurability(5).setUnlocalizedName("magnet_durability_diamond").setRegistryName("magnet_durability_diamond").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityEmerald = new ItemMagnetDurability(6).setUnlocalizedName("magnet_durability_emerald").setRegistryName("magnet_durability_emerald").setCreativeTab(ModCreativeTab.Magnets_Tab);
+
+        //Electromagnets
+        ItemMagnetElectromagnetLeadstone = new ItemMagnetRF(0).setUnlocalizedName("magnet_energy_leadstone").setRegistryName("magnet_energy_leadstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetElectromagnetHardened = new ItemMagnetRF(1).setUnlocalizedName("magnet_energy_hardened").setRegistryName("magnet_energy_hardened").setCreativeTab(ModCreativeTab.Magnets_Tab);
+
     }
 
 }

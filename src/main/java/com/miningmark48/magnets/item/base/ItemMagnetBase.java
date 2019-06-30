@@ -44,7 +44,6 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         list.add(TextFormatting.YELLOW + ModTranslate.toLocal("tooltip.item.magnet_base.line1"));
         list.add(stack.getTagCompound().getBoolean("enabled") ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled")));
         list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + range + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
-        list.add(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getItemDamage()));
     }
 
     @Override
@@ -67,6 +66,8 @@ public abstract class ItemMagnetBase extends ModBaseItem {
             }
         }
 
+        player.getCooldownTracker().setCooldown(this, 10);
+
         return new ActionResult(EnumActionResult.SUCCESS, stack);
 
     }
@@ -87,7 +88,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (entity instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer) entity;
 
-            if (stack.getTagCompound().getBoolean("enabled") && canMagnet(player)){
+            if (stack.getTagCompound().getBoolean("enabled") && canMagnet(player, stack)){
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;
@@ -116,11 +117,11 @@ public abstract class ItemMagnetBase extends ModBaseItem {
             assert stack.getTagCompound() != null;
             entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
-            doCost(player, stack);
+            if (!player.capabilities.isCreativeMode) doCost(player, stack);
         }
     }
 
-    public boolean canMagnet(EntityPlayer player) {
+    public boolean canMagnet(EntityPlayer player, ItemStack stack) {
         return true;
     }
 
