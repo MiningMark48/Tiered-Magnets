@@ -98,7 +98,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                 for (EntityItem e: items){
                     doMagnet(stack, e, player);
                     if (!player.isSneaking() && ModConfig.miscconfigs.doParticles){
-                        world.spawnParticle(EnumParticleTypes.REDSTONE, e.posX, e.posY + 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
+                        world.spawnParticle(getParticle(), e.posX, e.posY + 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
 //                            world.spawnParticle(EnumParticleTypes.PORTAL, e.posX, e.posY - 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
                     }
                 }
@@ -127,6 +127,10 @@ public abstract class ItemMagnetBase extends ModBaseItem {
 
     public void doCost(EntityPlayer player, ItemStack stack) {
 
+    }
+
+    public EnumParticleTypes getParticle() {
+        return EnumParticleTypes.REDSTONE;
     }
 
 }

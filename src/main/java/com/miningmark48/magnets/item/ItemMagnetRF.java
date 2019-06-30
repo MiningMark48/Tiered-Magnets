@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -48,6 +49,11 @@ public class ItemMagnetRF extends ItemMagnetBase {
     @Override
     public void doCost(EntityPlayer player, ItemStack stack) {
         this.extractEnergyInternal(stack, usageEnergy, false);
+    }
+
+    @Override
+    public EnumParticleTypes getParticle() {
+        return EnumParticleTypes.REDSTONE;
     }
 
     @Override

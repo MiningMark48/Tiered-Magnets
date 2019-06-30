@@ -6,6 +6,7 @@ import com.miningmark48.mininglib.utility.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -28,6 +29,11 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     @Override
     public void doCost(EntityPlayer player, ItemStack stack) {
         stack.damageItem(1, player);
+    }
+
+    @Override
+    public EnumParticleTypes getParticle() {
+        return EnumParticleTypes.CRIT;
     }
 
 }
