@@ -2,7 +2,6 @@ package com.miningmark48.magnets;
 
 import com.miningmark48.mininglib.utility.ModLogger;
 import com.miningmark48.mininglib.utility.ModTranslate;
-import com.miningmark48.magnets.handler.ConfigurationHandler;
 import com.miningmark48.magnets.init.*;
 import com.miningmark48.magnets.proxy.CommonProxy;
 import com.miningmark48.magnets.reference.Reference;
@@ -25,8 +24,8 @@ public class Magnets {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
 
-        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+//        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
+//        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
 
         ModBlocks.init();
         ModTileEntities.init();

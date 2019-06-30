@@ -15,20 +15,21 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModRecipes {
 
     public static void init(RegistryEvent.Register<IRecipe> e) {
-
-        if (Loader.isModLoaded(Reference.TE)) {
+        if (ModConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
             IntegrationThermalExpansion.init();
         }
 
         // Vanilla
-        GameRegistry.addShapedRecipe(
-                new ResourceLocation(Reference.MOD_ID + ":magnet_durability_stone"), null, new ItemStack(ModItems.ItemMagnetDurabilityStone),
-                "MMM", "M M", "R R",
-                'M', new ItemStack(Blocks.COBBLESTONE), 'R', new ItemStack(Items.REDSTONE)
-        );
+        if (ModConfig.modules.vanillaModule) {
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_durability_stone"), null, new ItemStack(ModItems.ItemMagnetDurabilityStone),
+                    "MMM", "M M", "R R",
+                    'M', new ItemStack(Blocks.COBBLESTONE), 'R', new ItemStack(Items.REDSTONE)
+            );
+        }
 
         // Thermal Expansion
-        if (Loader.isModLoaded(Reference.TE)) {
+        if (ModConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
             GameRegistry.addShapelessRecipe(
                     new ResourceLocation(Reference.MOD_ID + ":magnet_durability_stone"), null, new ItemStack(ModItems.ItemMagnetDurabilityStone),
                     Ingredient.func_193369_a(IntegrationThermalExpansion.fluxCapacitorBasic), Ingredient.func_193369_a(IntegrationThermalExpansion.redstoneReceptionCoil), Ingredient.func_193369_a(new ItemStack(Items.GOLD_NUGGET))

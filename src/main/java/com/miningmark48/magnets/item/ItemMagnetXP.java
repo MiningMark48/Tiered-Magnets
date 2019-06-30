@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class ItemMagnetXP extends ItemMagnetBase {
 
     public ItemMagnetXP() {
-        super(16f, 0.05f);
+        super(16, 0.05f);
     }
 
     @Override

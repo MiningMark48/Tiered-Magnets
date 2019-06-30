@@ -1,8 +1,8 @@
 package com.miningmark48.magnets.item.base;
 
+import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.mininglib.base.item.ModBaseItem;
 import com.miningmark48.mininglib.utility.ModTranslate;
-import com.miningmark48.magnets.handler.ConfigurationHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -24,10 +24,10 @@ import java.util.List;
 
 public abstract class ItemMagnetBase extends ModBaseItem {
 
-    private float range;
-    private float speed;
+    private int range;
+    private double speed;
 
-    public ItemMagnetBase(float range, float speed){
+    public ItemMagnetBase(int range, double speed){
         setMaxStackSize(1);
 
         this.range = range;
@@ -96,12 +96,10 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                 List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityItem e: items){
                     doMagnet(stack, e, player);
-//                    if (ConfigurationHandler.pearcelMagnetParticles) { //TODO: Config for particles
-                        if (!player.isSneaking() && ConfigurationHandler.doParticles){
-                            world.spawnParticle(EnumParticleTypes.REDSTONE, e.posX, e.posY + 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
+                    if (!player.isSneaking() && ModConfig.miscconfigs.doParticles){
+                        world.spawnParticle(EnumParticleTypes.REDSTONE, e.posX, e.posY + 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
 //                            world.spawnParticle(EnumParticleTypes.PORTAL, e.posX, e.posY - 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
-                        }
-//                    }
+                    }
                 }
                 for (EntityXPOrb e: xp){
                     doMagnet(stack, e, player);
