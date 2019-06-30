@@ -88,7 +88,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (entity instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer) entity;
 
-            if (stack.getTagCompound().getBoolean("enabled") && canMagnet(player, stack)){
+            if (stack.getTagCompound().getBoolean("enabled") && (canMagnet(player, stack) || player.capabilities.isCreativeMode)){
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;

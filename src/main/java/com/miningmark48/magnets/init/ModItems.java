@@ -17,6 +17,7 @@ public class ModItems {
     //Electromagnets
     public static Item ItemMagnetElectromagnetLeadstone;
     public static Item ItemMagnetElectromagnetHardened;
+    public static Item ItemMagnetElectromagnetReinforced;
 
     public static void init() {
         //Durability Magnets
@@ -31,6 +32,7 @@ public class ModItems {
         //Electromagnets
         ItemMagnetElectromagnetLeadstone = new ItemMagnetRF(0).setUnlocalizedName("magnet_energy_leadstone").setRegistryName("magnet_energy_leadstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetElectromagnetHardened = new ItemMagnetRF(1).setUnlocalizedName("magnet_energy_hardened").setRegistryName("magnet_energy_hardened").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetElectromagnetReinforced = new ItemMagnetRF(2).setUnlocalizedName("magnet_energy_reinforced").setRegistryName("magnet_energy_reinforced").setCreativeTab(ModCreativeTab.Magnets_Tab);
 
     }
 
