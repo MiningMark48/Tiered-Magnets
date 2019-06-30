@@ -56,20 +56,32 @@ public abstract class ItemMagnetBase extends ModBaseItem {
 
         if (!world.isRemote) {
             if (!player.isSneaking()) {
-                if (stack.getTagCompound().getBoolean("enabled")) {
-                    stack.getTagCompound().setBoolean("enabled", false);
-                    player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")));
-                } else {
-                    stack.getTagCompound().setBoolean("enabled", true);
-                    player.sendMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")));
-                }
+                toggleMagnet(stack, player);
             }
         }
-
-        player.getCooldownTracker().setCooldown(this, 10);
-
         return new ActionResult(EnumActionResult.SUCCESS, stack);
+    }
 
+    public static ItemStack getMagnet(EntityPlayer player) {
+        ItemStack heldItem = player.getHeldItemMainhand();
+        if (!(heldItem.getItem() instanceof ItemMagnetBase)) {
+            heldItem = player.getHeldItemOffhand();
+            if (!(heldItem.getItem() instanceof ItemMagnetBase)) {
+                return ItemStack.EMPTY;
+            }
+        }
+        return heldItem;
+    }
+
+    public static void toggleMagnet(ItemStack stack, EntityPlayer player) {
+        if (stack.getTagCompound().getBoolean("enabled")) {
+            stack.getTagCompound().setBoolean("enabled", false);
+            player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")));
+        } else {
+            stack.getTagCompound().setBoolean("enabled", true);
+            player.sendMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")));
+        }
+        player.getCooldownTracker().setCooldown(stack.getItem(), 10);
     }
 
     @Override

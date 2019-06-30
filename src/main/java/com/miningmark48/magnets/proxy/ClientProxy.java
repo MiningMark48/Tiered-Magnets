@@ -1,5 +1,6 @@
 package com.miningmark48.magnets.proxy;
 
+import com.miningmark48.magnets.client.KeyBindings;
 import com.miningmark48.magnets.init.ModRegistry;
 import com.miningmark48.magnets.init.ModTileEntities;
 import com.miningmark48.magnets.reference.Reference;
@@ -20,6 +21,7 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event){
         registerOBJRenders();
+        KeyBindings.init();
     }
 
     @Override

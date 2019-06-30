@@ -1,6 +1,8 @@
 package com.miningmark48.magnets.proxy;
 
 import com.miningmark48.magnets.init.ModRecipes;
+import com.miningmark48.magnets.network.PacketHandler;
+import com.miningmark48.mininglib.utility.ModLogger;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CommonProxy {
 
-    public void preInit(FMLPreInitializationEvent event){
+    public void preInit(FMLPreInitializationEvent event) {
 
     }
 

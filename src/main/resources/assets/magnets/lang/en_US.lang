@@ -39,6 +39,10 @@ chat.item.magnet_base.disabled=Magnet disabled.
 
 #Gui
 
+#Keys
+key.categories.magnets=Magnets
+key.toggle_magnet=Toggle Magnet
+
 
 #Logs
 log.info.preinit=Pre-Initialization Complete!
