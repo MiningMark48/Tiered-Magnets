@@ -13,6 +13,8 @@ item.magnet_durability_emerald.name=Emerald Magnet
 item.magnet_energy_leadstone.name=Leadstone Electromagnet
 item.magnet_energy_hardened.name=Hardened Electromagnet
 item.magnet_energy_reinforced.name=Reinforced Electromagnet
+item.magnet_energy_signalum.name=Signalum Electromagnet
+item.magnet_energy_resonant.name=Resonant Electromagnet
 
 
 #Blocks

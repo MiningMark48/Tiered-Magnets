@@ -36,6 +36,8 @@ public class ModRegistry {
         registerItem(ModItems.ItemMagnetElectromagnetLeadstone);
         registerItem(ModItems.ItemMagnetElectromagnetHardened);
         registerItem(ModItems.ItemMagnetElectromagnetReinforced);
+        registerItem(ModItems.ItemMagnetElectromagnetSignalum);
+        registerItem(ModItems.ItemMagnetElectromagnetResonant);
 
     }
 
@@ -57,6 +59,8 @@ public class ModRegistry {
         registerItemRender(ModItems.ItemMagnetElectromagnetLeadstone);
         registerItemRender(ModItems.ItemMagnetElectromagnetHardened);
         registerItemRender(ModItems.ItemMagnetElectromagnetReinforced);
+        registerItemRender(ModItems.ItemMagnetElectromagnetSignalum);
+        registerItemRender(ModItems.ItemMagnetElectromagnetResonant);
 
     }
 
