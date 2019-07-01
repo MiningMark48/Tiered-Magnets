@@ -1,7 +1,8 @@
 {
-  "name": "Magnets Overview",
+  "name": "Magnets",
   "icon": "magnets:magnet_durability_diamond",
   "category": "category_vanilla",
+  "sortnum": 1,
   "pages": [
     {
       "type": "text",

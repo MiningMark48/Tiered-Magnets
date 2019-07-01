@@ -43,7 +43,8 @@ public abstract class ItemMagnetBase extends ModBaseItem {
             stack.getTagCompound().setBoolean("enabled", false);
         }
 
-        list.add(TextFormatting.YELLOW + ModTranslate.toLocal("tooltip.item.magnet_base.line1"));
+        list.add(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : ""))));
+
         list.add(stack.getTagCompound().getBoolean("enabled") ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled")));
         list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + range + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
     }

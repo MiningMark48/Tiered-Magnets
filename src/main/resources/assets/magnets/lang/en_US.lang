@@ -11,11 +11,24 @@ item.magnet_durability_obsidian.name=Obsidian Magnet
 item.magnet_durability_lapis.name=Lapis Magnet
 item.magnet_durability_diamond.name=Diamond Magnet
 item.magnet_durability_emerald.name=Emerald Magnet
+item.magnet_magic_durability_stone.name=Magic Stone Magnet
+item.magnet_magic_durability_iron.name=Magic Iron Magnet
+item.magnet_magic_durability_redstone.name=Magic Redstone Magnet
+item.magnet_magic_durability_gold.name=Magic Gold Magnet
+item.magnet_magic_durability_obsidian.name=Magic Obsidian Magnet
+item.magnet_magic_durability_lapis.name=Magic Lapis Magnet
+item.magnet_magic_durability_diamond.name=Magic Diamond Magnet
+item.magnet_magic_durability_emerald.name=Magic Emerald Magnet
 item.magnet_energy_leadstone.name=Leadstone Electromagnet
 item.magnet_energy_hardened.name=Hardened Electromagnet
 item.magnet_energy_reinforced.name=Reinforced Electromagnet
 item.magnet_energy_signalum.name=Signalum Electromagnet
 item.magnet_energy_resonant.name=Resonant Electromagnet
+item.magnet_magic_energy_leadstone.name=Magic Leadstone Electromagnet
+item.magnet_magic_energy_hardened.name=Magic Hardened Electromagnet
+item.magnet_magic_energy_reinforced.name=Magic Reinforced Electromagnet
+item.magnet_magic_energy_signalum.name=Magic Signalum Electromagnet
+item.magnet_magic_energy_resonant.name=Magic Resonant Electromagnet
 
 
 #Blocks
@@ -32,7 +45,8 @@ tooltip.item.magnet_base.durability=Durability:
 tooltip.item.magnet_base.energy1=Energy:
 tooltip.item.magnet_base.energy2=RF
 tooltip.item.magnet_base.energy3=RF/t
-tooltip.item.magnet_base.line1=I'm a magnet.
+tooltip.item.magnet_base.line1=Pulls items towards the player.
+tooltip.item.magnet_magic_base.line1=Teleports items to the player.
 
 
 #Chat Messages
