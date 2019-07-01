@@ -1,0 +1,6 @@
+{
+  "name": "Electromagnets",
+  "description": "An overview of Electromagnets in the style of Thermal Expansion. $(br2)Requires $(l:https://www.curseforge.com/minecraft/mc-mods/thermal-expansion)Thermal Expansion$()",
+  "icon": "magnets:magnet_energy_resonant",
+  "sortnum": 1
+}
