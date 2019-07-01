@@ -22,6 +22,12 @@ public class ModConfig {
         @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets (Requires Thermal Expansion).")
         @Config.RequiresMcRestart
         public boolean thermalExpansionModule = true;
+        @Config.Comment("If true, enables Vanilla-based, durability magnets that teleport items to the player.")
+        @Config.RequiresMcRestart
+        public boolean vanillaMagicModule = true;
+        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets that teleport items to the player (Requires Thermal Expansion).")
+        @Config.RequiresMcRestart
+        public boolean thermalExpansionMagicModule = true;
 //        @Config.Comment("If true, enables special magnets.")
 //        public boolean specialModule = true;
     }
@@ -47,6 +53,10 @@ public class ModConfig {
         @Config.Comment("Affects the increase in durability between magnet tiers.")
         @Config.RequiresMcRestart
         public double multiplierDurability = 0.5D;
+        @Config.RangeInt(min = 0)
+        @Config.Comment("Affects the increase in damage in the magic magnets.")
+        @Config.RequiresMcRestart
+        public int multiplierMagic = 5;
     }
 
     public static class ThermalExpansionConfigs {
@@ -82,6 +92,10 @@ public class ModConfig {
         @Config.Comment("Affects the increase in energy usage between electromagnet tiers.")
         @Config.RequiresMcRestart
         public int multiplierUsageEnergy = 1;
+        @Config.RangeDouble(min = 0)
+        @Config.Comment("Affects the increase in energy usage in the magic magnets.")
+        @Config.RequiresMcRestart
+        public double multiplierMagic = 5D;
     }
 
     public static class MiscConfigs { // heh heh ;)

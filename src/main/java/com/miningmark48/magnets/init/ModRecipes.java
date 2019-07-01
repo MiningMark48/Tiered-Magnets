@@ -113,6 +113,16 @@ public class ModRecipes {
             );
         }
 
+        // Vanilla - Magic
+        if (ModConfig.modules.vanillaMagicModule) {
+            //TODO
+        }
+
+        // Thermal Expansion - Magic
+        if (ModConfig.modules.thermalExpansionMagicModule) {
+            //TODO
+        }
+
     }
 
 }

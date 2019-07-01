@@ -15,9 +15,13 @@ import java.util.List;
 
 public class ItemMagnetDurability extends ItemMagnetBase {
 
-    public ItemMagnetDurability(int tier) {
-        super(ModConfig.vanillaConfigs.baseRange + (ModConfig.vanillaConfigs.baseRange * ModConfig.vanillaConfigs.multiplierRange * tier), ModConfig.vanillaConfigs.speed);
+    private final boolean isMagic;
+
+    public ItemMagnetDurability(int tier, boolean isMagic) {
+        super(ModConfig.vanillaConfigs.baseRange + (ModConfig.vanillaConfigs.baseRange * ModConfig.vanillaConfigs.multiplierRange * tier), ModConfig.vanillaConfigs.speed, isMagic);
         setMaxDamage((int) Math.round(ModConfig.vanillaConfigs.baseDurability + (ModConfig.vanillaConfigs.baseDurability * ModConfig.vanillaConfigs.multiplierDurability * tier)));
+
+        this.isMagic = isMagic;
     }
 
     @Override
@@ -28,7 +32,9 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public void doCost(EntityPlayer player, ItemStack stack) {
-        stack.damageItem(1, player);
+        int damageAmount = 1;
+        if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
+        stack.damageItem(damageAmount, player);
     }
 
     @Override

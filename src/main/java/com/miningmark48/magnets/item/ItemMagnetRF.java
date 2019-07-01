@@ -5,6 +5,7 @@ import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.item.base.ItemMagnetBase;
 import com.miningmark48.mininglib.utility.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,14 +26,16 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     private final int maxPower;
     private final int transfer;
-    private final int usageEnergy;
+    private int usageEnergy;
 
-    public ItemMagnetRF(int tier) {
-        super(ModConfig.thermalExpansionConfigs.baseRange + (ModConfig.thermalExpansionConfigs.baseRange * ModConfig.thermalExpansionConfigs.multiplierRange * tier), ModConfig.thermalExpansionConfigs.speed);
+    public ItemMagnetRF(int tier, boolean isMagic) {
+        super(ModConfig.thermalExpansionConfigs.baseRange + (ModConfig.thermalExpansionConfigs.baseRange * ModConfig.thermalExpansionConfigs.multiplierRange * tier), ModConfig.thermalExpansionConfigs.speed, isMagic);
 
         this.maxPower = ModConfig.thermalExpansionConfigs.baseEnergy + (ModConfig.thermalExpansionConfigs.baseEnergy * ModConfig.thermalExpansionConfigs.multiplierEnergy * tier);
         this.transfer = ModConfig.thermalExpansionConfigs.transferRate;
         this.usageEnergy = ModConfig.thermalExpansionConfigs.baseUsageEnergy + (ModConfig.thermalExpansionConfigs.baseUsageEnergy * ModConfig.thermalExpansionConfigs.multiplierUsageEnergy * tier);
+
+        if (isMagic) usageEnergy *= ModConfig.thermalExpansionConfigs.multiplierMagic;
     }
 
     @Override

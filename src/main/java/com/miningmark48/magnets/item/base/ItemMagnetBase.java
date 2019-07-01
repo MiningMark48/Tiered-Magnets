@@ -26,12 +26,14 @@ public abstract class ItemMagnetBase extends ModBaseItem {
 
     private int range;
     private double speed;
+    private boolean isMagic;
 
-    public ItemMagnetBase(int range, double speed){
+    public ItemMagnetBase(int range, double speed, boolean isMagic){
         setMaxStackSize(1);
 
         this.range = range;
         this.speed = speed;
+        this.isMagic = isMagic;
     }
 
     @Override
@@ -134,9 +136,16 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         double y = player.posY;
         double z = player.posZ;
         if (!player.isSneaking()) {
-            assert stack.getTagCompound() != null;
-            entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
+            if (!isMagic) {
+                assert stack.getTagCompound() != null;
+                entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
+            } else {
+                if (!player.isSneaking()) {
+                    assert stack.getTagCompound() != null;
+                    entity.setPositionAndUpdate(x, y, z);
+                }
+            }
             if (!player.capabilities.isCreativeMode) doCost(player, stack);
         }
     }
