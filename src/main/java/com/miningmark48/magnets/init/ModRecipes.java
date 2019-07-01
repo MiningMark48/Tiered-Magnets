@@ -42,6 +42,11 @@ public class ModRecipes {
                 'M', new ItemStack(Items.GOLD_INGOT), 'I', new ItemStack(Items.IRON_INGOT), 'R', new ItemStack(Items.REDSTONE)
             );
             GameRegistry.addShapedRecipe(
+                new ResourceLocation(Reference.MOD_ID + ":magnet_durability_obsidian"), null, new ItemStack(ModItems.ItemMagnetDurabilityObsidian),
+                "MIM", "I I", "R R",
+                'M', new ItemStack(Blocks.OBSIDIAN), 'I', new ItemStack(Items.IRON_INGOT), 'R', new ItemStack(Items.REDSTONE)
+            );
+            GameRegistry.addShapedRecipe(
                 new ResourceLocation(Reference.MOD_ID + ":magnet_durability_lapis"), null, new ItemStack(ModItems.ItemMagnetDurabilityLapis),
                 "MIM", "I I", "R R",
                 'M', new ItemStack(Items.DYE, 1, 4), 'I', new ItemStack(Items.IRON_INGOT), 'R', new ItemStack(Items.REDSTONE)
