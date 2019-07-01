@@ -19,6 +19,9 @@ public class ModConfig {
         @Config.Comment("If true, enables Vanilla-based, durability magnets.")
         @Config.RequiresMcRestart
         public boolean vanillaModule = true;
+        @Config.Comment("If true, enables the Magnets manual added by Patchouli.")
+        @Config.RequiresMcRestart
+        public boolean patchouliModule = true;
         @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets (Requires Thermal Expansion).")
         @Config.RequiresMcRestart
         public boolean thermalExpansionModule = true;

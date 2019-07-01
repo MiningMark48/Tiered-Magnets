@@ -15,5 +15,6 @@ public class Reference {
     //Mod IDs
     public static final String TE = "thermalexpansion";
     public static final String TF = "thermalfoundation";
+    public static final String PATCHOULI = "patchouli";
 
 }
