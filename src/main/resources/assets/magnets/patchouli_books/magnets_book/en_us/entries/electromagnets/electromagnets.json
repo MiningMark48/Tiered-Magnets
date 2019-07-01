@@ -14,17 +14,33 @@
     },
     {
       "type": "crafting",
+      "title": "Leadstone Electromagnet",
       "recipe": "magnets:magnet_energy_leadstone",
-      "recipe2": "magnets:magnet_energy_hardened"
+      "recipe2": "magnets:magnet_energy_leadstone2"
     },
     {
       "type": "crafting",
+      "title": "Hardened Electromagnet",
+      "recipe": "magnets:magnet_energy_hardened",
+      "recipe2": "magnets:magnet_energy_hardened2"
+    },
+    {
+      "type": "crafting",
+      "title": "Reinforced Electromagnet",
       "recipe": "magnets:magnet_energy_reinforced",
-      "recipe2": "magnets:magnet_energy_signalum"
+      "recipe2": "magnets:magnet_energy_reinforced2"
     },
     {
       "type": "crafting",
-      "recipe": "magnets:magnet_energy_resonant"
+      "title": "Signalum Electromagnet",
+      "recipe": "magnets:magnet_energy_signalum",
+      "recipe2": "magnets:magnet_energy_signalum2"
+    },
+    {
+      "type": "crafting",
+      "title": "Resonant Electromagnet",
+      "recipe": "magnets:magnet_energy_resonant",
+      "recipe2": "magnets:magnet_energy_resonant2"
     }
   ]
 }

@@ -110,26 +110,6 @@ public class ModRecipes {
                 " G ", "C R", " G ",
                 'C', IntegrationThermalExpansion.fluxCapacitorBasic , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
             );
-//            GameRegistry.addShapedRecipe(
-//                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_hardened"), null, new ItemStack(ModItems.ItemMagnetElectromagnetHardened),
-//                    " G ", "C R", " G ",
-//                    'C', IntegrationThermalExpansion.fluxCapacitorHardened , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
-//            );
-//            GameRegistry.addShapedRecipe(
-//                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_reinforced"), null, new ItemStack(ModItems.ItemMagnetElectromagnetReinforced),
-//                    " G ", "C R", " G ",
-//                    'C', IntegrationThermalExpansion.fluxCapacitorReinforced , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
-//            );
-//            GameRegistry.addShapedRecipe(
-//                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_signalum"), null, new ItemStack(ModItems.ItemMagnetElectromagnetSignalum),
-//                    " G ", "C R", " G ",
-//                    'C', IntegrationThermalExpansion.fluxCapacitorSignalum , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
-//            );
-//            GameRegistry.addShapedRecipe(
-//                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_resonant"), null, new ItemStack(ModItems.ItemMagnetElectromagnetResonant),
-//                    " G ", "C R", " G ",
-//                    'C', IntegrationThermalExpansion.fluxCapacitorResonant , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
-//            );
             GameRegistry.addShapedRecipe(
                     new ResourceLocation(Reference.MOD_ID + ":magnet_energy_hardened"), null, new ItemStack(ModItems.ItemMagnetElectromagnetHardened),
                     " R ", "XMX", "RYR",
@@ -149,6 +129,26 @@ public class ModRecipes {
                     new ResourceLocation(Reference.MOD_ID + ":magnet_energy_resonant"), null, new ItemStack(ModItems.ItemMagnetElectromagnetResonant),
                     " R ", "XMX", "RYR",
                     'M', ModItems.ItemMagnetElectromagnetSignalum , 'X', IntegrationThermalExpansion.ingotEnderium, 'Y', IntegrationThermalExpansion.dustPyrotheum, 'R', new ItemStack(Items.REDSTONE)
+            );
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_hardened2"), null, new ItemStack(ModItems.ItemMagnetElectromagnetHardened),
+                    " G ", "C R", " G ",
+                    'C', IntegrationThermalExpansion.fluxCapacitorHardened , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
+            );
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_reinforced2"), null, new ItemStack(ModItems.ItemMagnetElectromagnetReinforced),
+                    " G ", "C R", " G ",
+                    'C', IntegrationThermalExpansion.fluxCapacitorReinforced , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
+            );
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_signalum2"), null, new ItemStack(ModItems.ItemMagnetElectromagnetSignalum),
+                    " G ", "C R", " G ",
+                    'C', IntegrationThermalExpansion.fluxCapacitorSignalum , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
+            );
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_energy_resonant2"), null, new ItemStack(ModItems.ItemMagnetElectromagnetResonant),
+                    " G ", "C R", " G ",
+                    'C', IntegrationThermalExpansion.fluxCapacitorResonant , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
             );
             GameRegistry.addShapedRecipe(
                     new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_leadstone"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetLeadstone),
