@@ -87,6 +87,8 @@ public class ModConfig {
     public static class MiscConfigs { // heh heh ;)
         @Config.Comment("If true, particles will be displayed as items are attracted.")
         public boolean doParticles = true;
+        @Config.Comment("If true, magnets will glow when enabled.")
+        public boolean doGlow = true;
     }
 
     @Mod.EventBusSubscriber

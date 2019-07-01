@@ -62,6 +62,14 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         return new ActionResult(EnumActionResult.SUCCESS, stack);
     }
 
+    @Override
+    public boolean hasEffect(ItemStack stack) {
+        if (stack.hasTagCompound()) {
+            return stack.getTagCompound().getBoolean("enabled") && ModConfig.miscconfigs.doGlow;
+        }
+        return false;
+    }
+
     public static ItemStack getMagnet(EntityPlayer player) {
         ItemStack heldItem = player.getHeldItemMainhand();
         if (!(heldItem.getItem() instanceof ItemMagnetBase)) {
