@@ -1,5 +1,6 @@
 package com.miningmark48.magnets.network;
 
+import com.miningmark48.magnets.network.packets.PacketFilterToggle;
 import com.miningmark48.magnets.network.packets.PacketToggleMagnet;
 import com.miningmark48.magnets.reference.Reference;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -17,6 +18,7 @@ public class PacketHandler {
     public static void registerMessages() {
         // Server side
         registerMessage(PacketToggleMagnet.Handler.class, PacketToggleMagnet.class, Side.SERVER);
+        registerMessage(PacketFilterToggle.Handler.class, PacketFilterToggle.class, Side.SERVER);
     }
 
     private static void registerMessage(Class handler, Class packet, Side side) {

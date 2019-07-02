@@ -1,5 +1,6 @@
 package com.miningmark48.magnets;
 
+import com.miningmark48.magnets.handler.GuiHandler;
 import com.miningmark48.magnets.network.PacketHandler;
 import com.miningmark48.mininglib.utility.ModLogger;
 import com.miningmark48.mininglib.utility.ModTranslate;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, dependencies = Reference.MOD_DEPENDENCIES, acceptedMinecraftVersions = Reference.GAME_VERSION, guiFactory = Reference.GUI_FACTORY_CLASS)
 public class Magnets {
@@ -35,7 +37,7 @@ public class Magnets {
         ModRegistry.init();
 
         MinecraftForge.EVENT_BUS.register(new ModRegistry());
-//        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(proxy);
 
         PacketHandler.registerMessages();

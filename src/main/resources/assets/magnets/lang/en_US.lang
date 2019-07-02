@@ -55,6 +55,10 @@ chat.item.magnet_base.disabled=Magnet disabled.
 
 
 #Gui
+gui.magnet_filter.name=Magnet Filter
+gui.magnet_filter.button.blacklist=Blacklist
+gui.magnet_filter.button.whitelist=Whitelist
+
 
 #Keys
 key.categories.magnets=Magnets

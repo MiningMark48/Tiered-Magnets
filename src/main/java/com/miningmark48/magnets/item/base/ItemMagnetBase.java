@@ -1,26 +1,34 @@
 package com.miningmark48.magnets.item.base;
 
 import com.miningmark48.magnets.init.ModConfig;
+import com.miningmark48.magnets.inventory.InventoryMagnetFilter;
+import com.miningmark48.magnets.reference.Reference;
+import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.mininglib.base.item.ModBaseItem;
+import com.miningmark48.mininglib.utility.ModLogger;
 import com.miningmark48.mininglib.utility.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class ItemMagnetBase extends ModBaseItem {
 
@@ -60,6 +68,8 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (!world.isRemote) {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
+            } else {
+                player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
             }
         }
         return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -115,15 +125,32 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;
+                boolean blacklist = stack.getTagCompound().getBoolean("filterModeBlacklist");
+
+                ArrayList<Item> inventory = new ArrayList<>();
+                NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+                for (int i = 0; i < invItems.tagCount(); i++){
+                    NBTTagCompound item = invItems.getCompoundTagAt(i);
+                    inventory.add(new ItemStack(item).getItem());
+                }
+
+//                ModLogger.info(inventory);
 
                 List<EntityItem> items = entity.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityItem e: items){
-                    doMagnet(stack, e, player);
-                    if (!player.isSneaking() && ModConfig.miscconfigs.doParticles){
-                        world.spawnParticle(getParticle(), e.posX, e.posY + 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
-//                            world.spawnParticle(EnumParticleTypes.PORTAL, e.posX, e.posY - 0.3, e.posZ, 0.0D, 0.0D, 0.0D);
+//                    ModLogger.info(e.getItem() + ": " + inventory.contains(e.getItem().getItem()));
+                    if (blacklist) {
+                        if (!inventory.contains(e.getItem().getItem())) {
+                            doMagnet(stack, e, player);
+                        }
+                    } else {
+                        if (inventory.contains(e.getItem().getItem())) {
+                            doMagnet(stack, e, player);
+                        }
                     }
+
+
                 }
                 for (EntityXPOrb e: xp){
                     doMagnet(stack, e, player);
@@ -137,16 +164,18 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         double y = player.posY;
         double z = player.posZ;
         if (!player.isSneaking()) {
+            assert stack.getTagCompound() != null;
             if (!isMagic) {
-                assert stack.getTagCompound() != null;
                 entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
             } else {
-                if (!player.isSneaking()) {
-                    assert stack.getTagCompound() != null;
-                    entity.setPositionAndUpdate(x, y, z);
-                }
+                entity.setPositionAndUpdate(x, y, z);
             }
+
+            if (ModConfig.miscconfigs.doParticles){
+                player.world.spawnParticle(getParticle(), entity.posX, entity.posY + 0.3, entity.posZ, 0.0D, 0.0D, 0.0D);
+            }
+
             if (!player.capabilities.isCreativeMode) doCost(player, stack);
         }
     }
