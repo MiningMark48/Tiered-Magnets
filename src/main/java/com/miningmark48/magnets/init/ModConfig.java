@@ -108,6 +108,8 @@ public class ModConfig {
         public boolean doGlow = true;
         @Config.Comment("If true, magnets will be able to be filtered.")
         public boolean doFilter = true;
+        @Config.Comment("If true, XP will be vacuumed toward the player.")
+        public boolean doXPVacuum;
     }
 
     @Mod.EventBusSubscriber

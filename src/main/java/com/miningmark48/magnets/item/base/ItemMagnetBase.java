@@ -131,27 +131,35 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                 boolean blacklist = stack.getTagCompound().getBoolean("filterModeBlacklist");
 
                 ArrayList<Item> inventory = new ArrayList<>();
-                NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
-                for (int i = 0; i < invItems.tagCount(); i++){
-                    NBTTagCompound item = invItems.getCompoundTagAt(i);
-                    inventory.add(new ItemStack(item).getItem());
+                if (ModConfig.miscconfigs.doFilter) {
+                    NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+                    for (int i = 0; i < invItems.tagCount(); i++) {
+                        NBTTagCompound item = invItems.getCompoundTagAt(i);
+                        inventory.add(new ItemStack(item).getItem());
+                    }
                 }
 
                 List<EntityItem> items = entity.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
-                List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityItem e: items){
-                    if (blacklist) {
-                        if (!inventory.contains(e.getItem().getItem())) {
-                            doMagnet(stack, e, player);
+                    if (ModConfig.miscconfigs.doFilter) {
+                        if (blacklist) {
+                            if (!inventory.contains(e.getItem().getItem())) {
+                                doMagnet(stack, e, player);
+                            }
+                        } else {
+                            if (inventory.contains(e.getItem().getItem())) {
+                                doMagnet(stack, e, player);
+                            }
                         }
                     } else {
-                        if (inventory.contains(e.getItem().getItem())) {
-                            doMagnet(stack, e, player);
-                        }
+                        doMagnet(stack, e, player);
                     }
                 }
-                for (EntityXPOrb e: xp){
-                    doMagnet(stack, e, player);
+                if (ModConfig.miscconfigs.doXPVacuum) {
+                    List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+                    for (EntityXPOrb e : xp) {
+                        doMagnet(stack, e, player);
+                    }
                 }
             }
         }
