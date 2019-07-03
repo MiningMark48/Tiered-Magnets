@@ -1,0 +1,12 @@
+{
+  "name": "Keybinding",
+  "icon": "minecraft:stone_button",
+  "category": "category_misc",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "By default, the 'M' key will allow you to toggle the magnet on and off. $(br2)Note: This toggle will only use the first magnet found in your inventory, starting with the hotbar."
+    }
+  ]
+}

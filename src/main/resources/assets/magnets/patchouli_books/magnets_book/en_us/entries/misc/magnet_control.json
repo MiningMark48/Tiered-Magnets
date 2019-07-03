@@ -1,0 +1,16 @@
+{
+  "name": "Magnet Control",
+  "icon": "minecraft:paper",
+  "category": "category_misc",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "By Shift + Right clicking while holding a magnet, you can open up a menu allowing for more control of the magnet. $(br2)By using the slots on the left and toggling between blacklist and whitelist, you can control which items are picked up by the magnet."
+    },
+    {
+      "type": "text",
+      "text": "The range buttons allow you to increase or reduce the range of the magnet."
+    }
+  ]
+}
