@@ -1,18 +1,15 @@
 package com.miningmark48.magnets.item.base;
 
 import com.miningmark48.magnets.init.ModConfig;
-import com.miningmark48.magnets.inventory.InventoryMagnetFilter;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.mininglib.base.item.ModBaseItem;
-import com.miningmark48.mininglib.utility.ModLogger;
 import com.miningmark48.mininglib.utility.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,15 +20,14 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class ItemMagnetBase extends ModBaseItem {
 
+    private final int defaultRange;
     private int range;
     private double speed;
     private boolean isMagic;
@@ -39,6 +35,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
     public ItemMagnetBase(int range, double speed, boolean isMagic){
         setMaxStackSize(1);
 
+        this.defaultRange = range;
         this.range = range;
         this.speed = speed;
         this.isMagic = isMagic;
@@ -111,12 +108,17 @@ public abstract class ItemMagnetBase extends ModBaseItem {
     }
 
     public void doUpdate(ItemStack stack, World world, Entity entity){
-
         if (!stack.hasTagCompound()){
             stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setBoolean("enabled", false);
             stack.getTagCompound().setString("mode", "Attracts");
             stack.getTagCompound().setBoolean("filterModeBlacklist", true);
+        }
+
+        if (getRange() > getDefaultRange()) {
+            setRange(getDefaultRange());
+        } else if (getRange() <= 0) {
+            setRange(1);
         }
 
         if (entity instanceof EntityPlayer){
@@ -186,6 +188,18 @@ public abstract class ItemMagnetBase extends ModBaseItem {
 
     public EnumParticleTypes getParticle() {
         return EnumParticleTypes.REDSTONE;
+    }
+
+    public int getDefaultRange() {
+        return this.defaultRange;
+    }
+
+    public int getRange() {
+        return this.range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 
 }
