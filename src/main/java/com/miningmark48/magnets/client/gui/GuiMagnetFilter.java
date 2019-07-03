@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -61,8 +62,9 @@ public class GuiMagnetFilter extends GuiContainer {
     public void initGui() {
         super.initGui();
 
-        if (this.magnet.hasTagCompound()) {
-            buttonModeBlacklist = this.magnet.getTagCompound().getBoolean("filterModeBlacklist");
+        if (!this.magnet.hasTagCompound()) {
+            this.magnet.setTagCompound(new NBTTagCompound());
+            this.magnet.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
         buttonFilterToggle = new GuiButton(0, getGuiLeft() + 90, getGuiTop() + 35, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));

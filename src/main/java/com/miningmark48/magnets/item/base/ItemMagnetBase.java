@@ -116,6 +116,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
             stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setBoolean("enabled", false);
             stack.getTagCompound().setString("mode", "Attracts");
+            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
         if (entity instanceof EntityPlayer){
