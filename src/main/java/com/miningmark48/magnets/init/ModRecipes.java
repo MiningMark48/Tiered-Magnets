@@ -74,6 +74,11 @@ public class ModRecipes {
                     "MIM", "I I", "R R",
                     'M', new ItemStack(Items.EMERALD), 'I', new ItemStack(Items.IRON_INGOT), 'R', new ItemStack(Items.REDSTONE)
             );
+
+        }
+
+        // Vanilla - Magic
+        if (ModConfig.modules.vanillaMagicModule) {
             GameRegistry.addShapedRecipe(
                     new ResourceLocation(Reference.MOD_ID + ":magnet_magic_durability_stone"), null, new ItemStack(ModItems.ItemMagnetMagicDurabilityStone),
                     " E ", "GMG", " E ",
@@ -163,6 +168,10 @@ public class ModRecipes {
                     " G ", "C R", " G ",
                     'C', IntegrationThermalExpansion.fluxCapacitorResonant , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
             );
+        }
+
+        // Thermal Expansion - Magic
+        if (ModConfig.modules.thermalExpansionMagicModule && Loader.isModLoaded(Reference.TE)) {
             new ShapedCopyNBTRecipe(
                     e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_leadstone"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetLeadstone), new ItemStack(ModItems.ItemMagnetElectromagnetLeadstone),
                     " E ", "GMG", " E ",
@@ -189,17 +198,6 @@ public class ModRecipes {
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetResonant), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
         }
-
-        // Vanilla - Magic
-        if (ModConfig.modules.vanillaMagicModule) {
-            //TODO
-        }
-
-        // Thermal Expansion - Magic
-        if (ModConfig.modules.thermalExpansionMagicModule) {
-            //TODO
-        }
-
     }
 
     private static class ShapedCopyNBTRecipe extends ShapedOreRecipe {
