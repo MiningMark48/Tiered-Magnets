@@ -5,6 +5,7 @@ import com.miningmark48.magnets.integration.IntegrationThermalExpansion;
 import com.miningmark48.magnets.reference.Reference;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
@@ -12,6 +13,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+
+import javax.annotation.Nonnull;
 
 public class ModRecipes {
 
@@ -159,28 +163,28 @@ public class ModRecipes {
                     " G ", "C R", " G ",
                     'C', IntegrationThermalExpansion.fluxCapacitorResonant , 'R', IntegrationThermalExpansion.redstoneReceptionCoil, 'G', new ItemStack(Items.GOLD_NUGGET)
             );
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_leadstone"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetLeadstone),
+            new ShapedCopyNBTRecipe(
+                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_leadstone"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetLeadstone), new ItemStack(ModItems.ItemMagnetElectromagnetLeadstone),
                     " E ", "GMG", " E ",
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetLeadstone), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_hardened"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetHardened),
+            new ShapedCopyNBTRecipe(
+                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_hardened"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetHardened), new ItemStack(ModItems.ItemMagnetElectromagnetHardened),
                     " E ", "GMG", " E ",
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetHardened), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_reinforced"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetReinforced),
+            new ShapedCopyNBTRecipe(
+                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_reinforced"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetReinforced), new ItemStack(ModItems.ItemMagnetElectromagnetReinforced),
                     " E ", "GMG", " E ",
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetReinforced), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_signalum"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetSignalum),
+            new ShapedCopyNBTRecipe(
+                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_signalum"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetSignalum), new ItemStack(ModItems.ItemMagnetElectromagnetSignalum),
                     " E ", "GMG", " E ",
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetSignalum), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_resonant"), null, new ItemStack(ModItems.ItemMagnetMagicElectromagnetResonant),
+            new ShapedCopyNBTRecipe(
+                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_resonant"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetResonant), new ItemStack(ModItems.ItemMagnetElectromagnetResonant),
                     " E ", "GMG", " E ",
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetResonant), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
@@ -194,6 +198,35 @@ public class ModRecipes {
         // Thermal Expansion - Magic
         if (ModConfig.modules.thermalExpansionMagicModule) {
             //TODO
+        }
+
+    }
+
+    private static class ShapedCopyNBTRecipe extends ShapedOreRecipe {
+
+        private final ItemStack nbtCopyStack;
+
+        private ShapedCopyNBTRecipe(RegistryEvent.Register<IRecipe> e, ResourceLocation group, @Nonnull ItemStack result, ItemStack nbtCopyStack, Object... recipe) {
+            super(group, result, recipe);
+            this.nbtCopyStack = nbtCopyStack;
+
+            e.getRegistry().register(this.setRegistryName(group));
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack getCraftingResult(InventoryCrafting inventory) {
+            ItemStack stack = super.getCraftingResult(inventory);
+            if (!stack.isEmpty()) {
+                for (int i = 0; i < inventory.getSizeInventory(); i++) {
+                    ItemStack input = inventory.getStackInSlot(i);
+                    if (this.nbtCopyStack.isItemEqual(input)) {
+                        stack.setTagCompound(input.getTagCompound());
+                        break;
+                    }
+                }
+            }
+            return stack;
         }
 
     }
