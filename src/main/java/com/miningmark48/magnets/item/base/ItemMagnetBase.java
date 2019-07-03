@@ -46,6 +46,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (!stack.hasTagCompound()) {
             stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setBoolean("enabled", false);
+            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
         list.add(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : ""))));
@@ -60,6 +61,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (!stack.hasTagCompound()){
             stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setBoolean("enabled", false);
+            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
         if (!world.isRemote) {
@@ -111,7 +113,6 @@ public abstract class ItemMagnetBase extends ModBaseItem {
         if (!stack.hasTagCompound()){
             stack.setTagCompound(new NBTTagCompound());
             stack.getTagCompound().setBoolean("enabled", false);
-            stack.getTagCompound().setString("mode", "Attracts");
             stack.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
