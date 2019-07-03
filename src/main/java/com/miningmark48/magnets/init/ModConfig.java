@@ -106,6 +106,8 @@ public class ModConfig {
         public boolean doParticles = true;
         @Config.Comment("If true, magnets will glow when enabled.")
         public boolean doGlow = true;
+        @Config.Comment("If true, magnets will be able to be filtered.")
+        public boolean doFilter = true;
     }
 
     @Mod.EventBusSubscriber

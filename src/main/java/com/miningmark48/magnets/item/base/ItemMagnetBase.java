@@ -69,7 +69,7 @@ public abstract class ItemMagnetBase extends ModBaseItem {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
             } else {
-                player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
+                if(ModConfig.miscconfigs.doFilter) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
             }
         }
         return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -134,12 +134,9 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                     inventory.add(new ItemStack(item).getItem());
                 }
 
-//                ModLogger.info(inventory);
-
                 List<EntityItem> items = entity.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityItem e: items){
-//                    ModLogger.info(e.getItem() + ": " + inventory.contains(e.getItem().getItem()));
                     if (blacklist) {
                         if (!inventory.contains(e.getItem().getItem())) {
                             doMagnet(stack, e, player);
@@ -149,8 +146,6 @@ public abstract class ItemMagnetBase extends ModBaseItem {
                             doMagnet(stack, e, player);
                         }
                     }
-
-
                 }
                 for (EntityXPOrb e: xp){
                     doMagnet(stack, e, player);
