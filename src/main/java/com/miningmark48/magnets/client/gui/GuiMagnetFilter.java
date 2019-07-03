@@ -67,17 +67,20 @@ public class GuiMagnetFilter extends GuiContainer {
             this.magnet.getTagCompound().setBoolean("filterModeBlacklist", true);
         }
 
-        buttonFilterToggle = new GuiButton(0, getGuiLeft() + 90, getGuiTop() + 35, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
+        buttonModeBlacklist = this.magnet.getTagCompound().getBoolean("filterModeBlacklist");
+
+        buttonFilterToggle = new GuiButton(0, getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
         this.buttonList.add(buttonFilterToggle);
     }
 
     @Override
     protected void actionPerformed(GuiButton button) {
         if (button.mousePressed(Minecraft.getMinecraft(), button.x, button.y)) {
-            buttonModeBlacklist = !buttonModeBlacklist;
-            button.displayString = buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist");
-
-            PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
+            if (button.id == buttonFilterToggle.id) {
+                buttonModeBlacklist = !buttonModeBlacklist;
+                button.displayString = buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist");
+                PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
+            }
         }
     }
 
