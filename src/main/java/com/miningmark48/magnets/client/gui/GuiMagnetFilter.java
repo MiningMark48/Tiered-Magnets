@@ -128,19 +128,14 @@ public class GuiMagnetFilter extends GuiContainer {
         }
     }
 
-    public void renderTooltips(int mouseX, int mouseY) {
+    private void renderTooltips(int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getMinecraft();
-
-//        ModLogger.info("x: " + mouseX + ", y: " + mouseY);
-
         if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
             List<String> text = new ArrayList<>();
             text.add(TextFormatting.BOLD + "Adjust Range");
             text.add("None - Inc/Dec by 1");
             text.add("Shift - Inc/Dec by 5");
-
             GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
-
         }
     }
 
