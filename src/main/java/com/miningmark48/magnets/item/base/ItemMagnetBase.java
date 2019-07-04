@@ -5,6 +5,7 @@ import baubles.api.IBauble;
 import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
+import com.miningmark48.magnets.util.ModLogger;
 import com.miningmark48.magnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -32,6 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
 public abstract class ItemMagnetBase extends Item implements IBauble {
@@ -189,7 +191,12 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
             }
 
             if (ModConfig.miscconfigs.doParticles){
-                player.world.spawnParticle(getParticle(), entity.posX, entity.posY + 0.3, entity.posZ, 0.0D, 0.0D, 0.0D);
+                Random rand = new Random();
+                double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
+                double th = (rand.nextDouble() + 1) * 2 * Math.PI;
+                double pX = entity.posX + r * Math.cos(th);
+                double pZ = entity.posZ + r * Math.sin(th);
+                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
 
             if (!player.capabilities.isCreativeMode) doCost(player, stack);
