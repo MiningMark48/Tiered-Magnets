@@ -156,28 +156,28 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                     if (ModConfig.miscconfigs.doFilter) {
                         if (blacklist) {
                             if (!inventory.contains(e.getItem().getItem())) {
-                                doMagnet(stack, e, player);
+                                doMagnet(stack, e, player, true);
                             }
                         } else {
                             if (inventory.contains(e.getItem().getItem())) {
-                                doMagnet(stack, e, player);
+                                doMagnet(stack, e, player, true);
                             }
                         }
                     } else {
-                        doMagnet(stack, e, player);
+                        doMagnet(stack, e, player, true);
                     }
                 }
                 if (ModConfig.miscconfigs.doXPVacuum) {
                     List<EntityXPOrb> xp = entity.world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                     for (EntityXPOrb e : xp) {
-                        doMagnet(stack, e, player);
+                        doMagnet(stack, e, player, false);
                     }
                 }
             }
         }
     }
 
-    public void doMagnet(ItemStack stack, Entity entity, EntityPlayer player) {
+    public void doMagnet(ItemStack stack, Entity entity, EntityPlayer player, boolean particles) {
         double x = player.posX;
         double y = player.posY;
         double z = player.posZ;
@@ -190,7 +190,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 entity.setPositionAndUpdate(x, y, z);
             }
 
-            if (ModConfig.miscconfigs.doParticles){
+            if (ModConfig.miscconfigs.doParticles && particles){
                 Random rand = new Random();
                 double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
                 double th = (rand.nextDouble() + 1) * 2 * Math.PI;
