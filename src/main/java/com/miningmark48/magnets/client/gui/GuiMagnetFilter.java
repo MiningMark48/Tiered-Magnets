@@ -6,12 +6,10 @@ import com.miningmark48.magnets.item.base.ItemMagnetBase;
 import com.miningmark48.magnets.network.PacketHandler;
 import com.miningmark48.magnets.network.packets.PacketChangeRange;
 import com.miningmark48.magnets.network.packets.PacketFilterToggle;
-import com.miningmark48.magnets.network.packets.PacketToggleMagnet;
 import com.miningmark48.magnets.reference.Reference;
-import com.miningmark48.mininglib.utility.GuiUtil;
-import com.miningmark48.mininglib.utility.KeyChecker;
-import com.miningmark48.mininglib.utility.ModLogger;
-import com.miningmark48.mininglib.utility.ModTranslate;
+import com.miningmark48.magnets.util.KeyChecker;
+import com.miningmark48.magnets.util.ModTranslate;
+import com.miningmark48.magnets.util.UtilGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -58,7 +56,7 @@ public class GuiMagnetFilter extends GuiContainer {
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = ModTranslate.toLocal("gui.magnet_filter.name");
-        int x = GuiUtil.getXCenter(text, this.fontRenderer, xSize);
+        int x = UtilGui.getXCenter(text, this.fontRenderer, xSize);
         this.fontRenderer.drawString(text, x, 5, 0x404040);
 
         if (magnet.getItem() instanceof ItemMagnetBase) {

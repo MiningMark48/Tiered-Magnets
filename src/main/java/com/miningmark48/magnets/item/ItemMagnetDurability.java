@@ -2,7 +2,7 @@ package com.miningmark48.magnets.item;
 
 import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.item.base.ItemMagnetBase;
-import com.miningmark48.mininglib.utility.ModTranslate;
+import com.miningmark48.magnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

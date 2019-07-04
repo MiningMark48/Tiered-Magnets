@@ -1,12 +1,15 @@
 package com.miningmark48.magnets;
 
 import com.miningmark48.magnets.handler.GuiHandler;
+import com.miningmark48.magnets.init.ModBlocks;
+import com.miningmark48.magnets.init.ModItems;
+import com.miningmark48.magnets.init.ModRegistry;
+import com.miningmark48.magnets.init.ModTileEntities;
 import com.miningmark48.magnets.network.PacketHandler;
-import com.miningmark48.mininglib.utility.ModLogger;
-import com.miningmark48.mininglib.utility.ModTranslate;
-import com.miningmark48.magnets.init.*;
 import com.miningmark48.magnets.proxy.CommonProxy;
 import com.miningmark48.magnets.reference.Reference;
+import com.miningmark48.magnets.util.ModLogger;
+import com.miningmark48.magnets.util.ModTranslate;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;

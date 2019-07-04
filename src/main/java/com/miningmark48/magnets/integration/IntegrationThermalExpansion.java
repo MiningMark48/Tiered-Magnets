@@ -1,8 +1,7 @@
 package com.miningmark48.magnets.integration;
 
 import com.miningmark48.magnets.reference.Reference;
-import com.miningmark48.mininglib.utility.ModLogger;
-import net.minecraft.block.Block;
+import com.miningmark48.magnets.util.ModLogger;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

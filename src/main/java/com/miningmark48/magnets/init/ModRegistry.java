@@ -1,6 +1,6 @@
 package com.miningmark48.magnets.init;
 
-import com.miningmark48.mininglib.base.item.ModItemBlock;
+import com.miningmark48.magnets.block.base.ModItemBlock;
 import com.miningmark48.magnets.reference.Reference;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
