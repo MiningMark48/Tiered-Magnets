@@ -27,7 +27,7 @@ public class PacketToggleMagnet extends PacketEmpty {
         private void handle(MessageContext ctx) {
             EntityPlayerMP playerEntity = ctx.getServerHandler().player;
             ItemStack magnet = playerEntity.inventory.mainInventory.stream().filter(item -> item.getItem() instanceof ItemMagnetBase).findFirst().orElse(ItemStack.EMPTY);
-            if (!magnet.isEmpty()) ItemMagnetBase.toggleMagnet(magnet, playerEntity);
+            if (!magnet.isEmpty() && !playerEntity.getCooldownTracker().hasCooldown(magnet.getItem())) ItemMagnetBase.toggleMagnet(magnet, playerEntity);
 
 //            if (Loader.isModLoaded(Reference.BAUBLES)) {
 //                handleBaubleMagnet(playerEntity);
