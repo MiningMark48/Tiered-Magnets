@@ -26,6 +26,10 @@ public class ModConfig {
     @Config.Comment("Miscellaneous configuration settings")
     public static MiscConfigs miscconfigs = new MiscConfigs();
 
+    @Config.Name("Magnetic Insulator")
+    @Config.Comment("Magnetic Insulator configuration settings")
+    public static InsulatorConfigs insulatorConfigs = new InsulatorConfigs();
+
     public static class Modules {
         @Config.Name("Vanilla")
         @Config.Comment("If true, enables Vanilla-based, durability magnets.")
@@ -51,6 +55,11 @@ public class ModConfig {
         @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets that teleport items to the player (Requires Thermal Expansion).")
         @Config.RequiresMcRestart
         public boolean thermalExpansionMagicModule = true;
+
+        @Config.Name("Magnetic Insulator")
+        @Config.Comment("If true, enables a block to prevent items from being picked up.")
+        @Config.RequiresMcRestart
+        public boolean insulatorModule = true;
 
 //        @Config.Comment("If true, enables special magnets.")
 //        public boolean specialModule = true;
@@ -150,6 +159,12 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public double multiplierMagic = 5D;
 
+    }
+
+    public static class InsulatorConfigs {
+        @Config.Name("Range")
+        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup")
+        public int range = 16;
     }
 
     public static class MiscConfigs { // heh heh ;)

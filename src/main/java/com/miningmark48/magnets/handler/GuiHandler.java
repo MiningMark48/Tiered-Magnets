@@ -1,11 +1,15 @@
 package com.miningmark48.magnets.handler;
 
 import com.miningmark48.magnets.client.gui.GuiMagnetFilter;
+import com.miningmark48.magnets.client.gui.GuiMagneticInsulator;
 import com.miningmark48.magnets.container.ContainerMagnetFilter;
+import com.miningmark48.magnets.container.ContainerMagneticInsulator;
 import com.miningmark48.magnets.inventory.InventoryMagnetFilter;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
+import com.miningmark48.magnets.tileentity.TileEntityMagneticInsulator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
@@ -16,6 +20,9 @@ public class GuiHandler implements IGuiHandler {
         if (ID == ReferenceGUIs.gui_id_magnet_filter){
             return new ContainerMagnetFilter(player, player.inventory, new InventoryMagnetFilter(player.getHeldItem(EnumHand.MAIN_HAND)));
         }
+        if (ID == ReferenceGUIs.gui_id_magnetic_insulator){
+            return new ContainerMagneticInsulator(player.inventory, (TileEntityMagneticInsulator) world.getTileEntity(new BlockPos(x, y, z)));
+        }
         return null;
     }
 
@@ -23,6 +30,9 @@ public class GuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == ReferenceGUIs.gui_id_magnet_filter){
             return new GuiMagnetFilter(new ContainerMagnetFilter(player, player.inventory, new InventoryMagnetFilter(player.getHeldItem(EnumHand.MAIN_HAND))), player.getHeldItem(EnumHand.MAIN_HAND));
+        }
+        if (ID == ReferenceGUIs.gui_id_magnetic_insulator){
+            return new GuiMagneticInsulator(player.inventory, (TileEntityMagneticInsulator) world.getTileEntity(new BlockPos(x, y, z)), player);
         }
         return null;
     }

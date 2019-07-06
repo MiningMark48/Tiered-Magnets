@@ -32,6 +32,7 @@ item.magnet_magic_energy_resonant.name=Magic Resonant Electromagnet
 
 
 #Blocks
+tile.magnetic_insulator.name=Magnetic Insulator
 
 
 #Tooltips
@@ -59,6 +60,8 @@ gui.magnet_filter.name=Magnet Control
 gui.magnet_filter.label.range.name=Range
 gui.magnet_filter.button.blacklist=Blacklist
 gui.magnet_filter.button.whitelist=Whitelist
+gui.magnetic_insulator.name=Magnetic Insulator
+gui.magnetic_insulator.label.range.name=Range
 
 
 #Keys

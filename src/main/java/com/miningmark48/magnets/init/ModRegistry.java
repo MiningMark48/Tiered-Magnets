@@ -56,7 +56,7 @@ public class ModRegistry {
     }
 
     private static void registerBlocks(){
-
+        registerBlock(ModBlocks.BlockMagneticInsulator);
     }
 
     public static void registerRenderItems(){
@@ -93,7 +93,7 @@ public class ModRegistry {
     }
 
     public static void registerRenderBlocks(){
-
+        registerBlockRender(ModBlocks.BlockMagneticInsulator);
     }
 
     //Registry

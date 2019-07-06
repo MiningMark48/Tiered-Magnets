@@ -4,21 +4,20 @@ import com.miningmark48.magnets.item.base.ItemMagnetBase;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketChangeRange extends PacketEmpty {
+public class PacketChangeRangeMagnetFilter extends PacketEmpty {
 
     private int rangeChange;
 
-    public PacketChangeRange() {
+    public PacketChangeRangeMagnetFilter() {
         rangeChange = 0;
     }
 
-    public PacketChangeRange(int rangeChange) {
+    public PacketChangeRangeMagnetFilter(int rangeChange) {
         this.rangeChange = rangeChange;
     }
 
@@ -32,14 +31,14 @@ public class PacketChangeRange extends PacketEmpty {
         buf.writeInt(rangeChange);
     }
 
-    public static class Handler implements IMessageHandler<PacketChangeRange, IMessage> {
+    public static class Handler implements IMessageHandler<PacketChangeRangeMagnetFilter, IMessage> {
         @Override
-        public IMessage onMessage(PacketChangeRange message, MessageContext ctx) {
+        public IMessage onMessage(PacketChangeRangeMagnetFilter message, MessageContext ctx) {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
 
-        private void handle(PacketChangeRange message, MessageContext ctx) {
+        private void handle(PacketChangeRangeMagnetFilter message, MessageContext ctx) {
             EntityPlayerMP playerEntity = ctx.getServerHandler().player;
 
             ItemStack heldItem = ItemMagnetBase.getMagnet(playerEntity);

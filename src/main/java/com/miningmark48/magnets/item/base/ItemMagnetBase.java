@@ -152,19 +152,25 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 }
 
                 List<EntityItem> items = entity.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
-                for (EntityItem e: items){
-                    if (ModConfig.miscconfigs.doFilter) {
-                        if (blacklist) {
-                            if (!inventory.contains(e.getItem().getItem())) {
-                                doMagnet(stack, e, player, true);
+                for (EntityItem e: items) {
+
+                    if (!e.getEntityData().getBoolean("noMagnet")) {
+
+//                        ModLogger.info(e.getEntityData() + " " + e.getEntityData().getBoolean("noMagnet"));
+
+                        if (ModConfig.miscconfigs.doFilter) {
+                            if (blacklist) {
+                                if (!inventory.contains(e.getItem().getItem())) {
+                                    doMagnet(stack, e, player, true);
+                                }
+                            } else {
+                                if (inventory.contains(e.getItem().getItem())) {
+                                    doMagnet(stack, e, player, true);
+                                }
                             }
                         } else {
-                            if (inventory.contains(e.getItem().getItem())) {
-                                doMagnet(stack, e, player, true);
-                            }
+                            doMagnet(stack, e, player, true);
                         }
-                    } else {
-                        doMagnet(stack, e, player, true);
                     }
                 }
                 if (ModConfig.miscconfigs.doXPVacuum) {
