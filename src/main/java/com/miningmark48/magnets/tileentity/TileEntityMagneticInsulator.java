@@ -34,9 +34,11 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         int z = pos.getZ();
         int r = getRange();
 
+        List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - r, y - r, z - r, x + r, y + r, z + r));
         if (!world.isBlockPowered(pos)) {
-            List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - r, y - r, z - r, x + r, y + r, z + r));
             items.forEach(item -> item.getEntityData().setBoolean("noMagnet", true));
+        } else {
+            items.forEach(item -> item.getEntityData().setBoolean("noMagnet", false));
         }
 
         if (getDoPreview()) {
