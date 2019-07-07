@@ -3,11 +3,13 @@ package com.miningmark48.magnets.client.gui;
 import com.miningmark48.magnets.container.ContainerMagneticInsulator;
 import com.miningmark48.magnets.network.PacketHandler;
 import com.miningmark48.magnets.network.packets.PacketChangeRangeInsulator;
+import com.miningmark48.magnets.network.packets.PacketTogglePreview;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.tileentity.TileEntityMagneticInsulator;
 import com.miningmark48.magnets.util.KeyChecker;
 import com.miningmark48.magnets.util.ModTranslate;
 import com.miningmark48.magnets.util.UtilGui;
+import javafx.scene.text.Text;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -27,10 +29,10 @@ public class GuiMagneticInsulator extends GuiContainer {
     private IInventory playerInv;
     private EntityPlayer player;
     private TileEntityMagneticInsulator te;
-    private int range = 0;
 
     private GuiButton buttonRangeDecrease;
     private GuiButton buttonRangeIncrease;
+    private GuiButton buttonTogglePreview;
 
     public GuiMagneticInsulator(IInventory playerInv, TileEntityMagneticInsulator te, EntityPlayer player) {
         super(new ContainerMagneticInsulator(playerInv, te));
@@ -41,8 +43,6 @@ public class GuiMagneticInsulator extends GuiContainer {
         this.playerInv = playerInv;
         this.te = te;
         this.player = player;
-
-        range = te.getTileData().getInteger("range");
 
     }
 
@@ -55,10 +55,8 @@ public class GuiMagneticInsulator extends GuiContainer {
         int x = UtilGui.getXCenter(text, this.fontRenderer, xSize);
         this.fontRenderer.drawString(text, x, 5, 0x404040);
 
-        range = te.getTileData().getInteger("range");
-
-        this.fontRenderer.drawString(ModTranslate.toLocal("gui.magnetic_insulator.label.range.name"), 110, 44, 0x404040);
-        this.fontRenderer.drawString(String.valueOf(range), 118, 61, 0x404040);
+        this.fontRenderer.drawString(ModTranslate.toLocal("gui.magnetic_insulator.label.range.name"), 73, 20, 0x404040);
+        this.fontRenderer.drawString(String.valueOf(this.te.getRange()), 82, 36, 0x404040);
 
         renderTooltips(mouseX, mouseY);
     }
@@ -81,10 +79,12 @@ public class GuiMagneticInsulator extends GuiContainer {
     public void initGui() {
         super.initGui();
 
-        buttonRangeDecrease = new GuiButton(0, getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<");
-        buttonRangeIncrease = new GuiButton(1, getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">");
+        buttonRangeDecrease = new GuiButton(0, getGuiLeft() + 63, getGuiTop() + 30, 15, 20, "<");
+        buttonRangeIncrease = new GuiButton(1, getGuiLeft() + 99, getGuiTop() + 30, 15, 20, ">");
+        buttonTogglePreview = new GuiButton(2, getGuiLeft() + 51, getGuiTop() + 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"));
         this.buttonList.add(buttonRangeDecrease);
         this.buttonList.add(buttonRangeIncrease);
+        this.buttonList.add(buttonTogglePreview);
     }
 
     @Override
@@ -96,6 +96,7 @@ public class GuiMagneticInsulator extends GuiContainer {
                 } else {
                     PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), -1));
                 }
+                this.te.sendUpdates();
             }
             if (button.id == buttonRangeIncrease.id) {
                 if (KeyChecker.isHoldingShift()) {
@@ -103,6 +104,12 @@ public class GuiMagneticInsulator extends GuiContainer {
                 } else {
                     PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), 1));
                 }
+                this.te.sendUpdates();
+            }
+            if (button.id == buttonTogglePreview.id) {
+                buttonTogglePreview.displayString = !this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview");
+                PacketHandler.INSTANCE.sendToServer(new PacketTogglePreview(this.te.getPos()));
+                this.te.sendUpdates();
             }
         }
     }
@@ -110,12 +117,12 @@ public class GuiMagneticInsulator extends GuiContainer {
     @SuppressWarnings("Duplicates")
     private void renderTooltips(int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getMinecraft();
-        if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
+        if (this.isMouseOver(mouseX, mouseY, 63, 30, 76, 48) || this.isMouseOver(mouseX, mouseY, 99, 30, 112, 48)) {
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.BOLD + "Adjust Range");
-            text.add("None - Inc/Dec by 1");
-            text.add("Shift - Inc/Dec by 5");
-            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal("gui.tooltips.adjust_range.name"));
+            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.none"));
+            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.shift"));
+            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) + 25, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
         }
     }
 

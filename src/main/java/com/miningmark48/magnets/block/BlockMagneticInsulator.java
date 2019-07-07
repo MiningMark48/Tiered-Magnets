@@ -54,18 +54,14 @@ public class BlockMagneticInsulator extends BlockContainer {
         super.onBlockAdded(worldIn, pos, state);
         this.setDefaultFacing(worldIn, pos, state);
         worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
-        TileEntity te = worldIn.getTileEntity(pos);
-        if (te != null) {
-            te.getTileData().setInteger("range", ModConfig.insulatorConfigs.range);
-        }
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos changedPos)
-    {
-        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
-    }
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos changedPos)
+//    {
+//        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
+//    }
 
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
     {
@@ -134,6 +130,19 @@ public class BlockMagneticInsulator extends BlockContainer {
         return new BlockStateContainer(this, FACING, POWERED);
     }
 
+    public void setState(World worldIn, BlockPos pos, boolean isActive)
+    {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(POWERED, isActive), 3);
+
+        if (tileentity != null)
+        {
+            tileentity.validate();
+            worldIn.setTileEntity(pos, tileentity);
+        }
+    }
+
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
@@ -155,4 +164,8 @@ public class BlockMagneticInsulator extends BlockContainer {
         return BlockRenderLayer.CUTOUT;
     }
 
+    @Override
+    public boolean isFullBlock(IBlockState state) {
+        return false;
+    }
 }

@@ -1,9 +1,6 @@
 package com.miningmark48.magnets.network;
 
-import com.miningmark48.magnets.network.packets.PacketChangeRangeInsulator;
-import com.miningmark48.magnets.network.packets.PacketChangeRangeMagnetFilter;
-import com.miningmark48.magnets.network.packets.PacketFilterToggle;
-import com.miningmark48.magnets.network.packets.PacketToggleMagnet;
+import com.miningmark48.magnets.network.packets.*;
 import com.miningmark48.magnets.reference.Reference;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -23,6 +20,7 @@ public class PacketHandler {
         registerMessage(PacketFilterToggle.Handler.class, PacketFilterToggle.class, Side.SERVER);
         registerMessage(PacketChangeRangeMagnetFilter.Handler.class, PacketChangeRangeMagnetFilter.class, Side.SERVER);
         registerMessage(PacketChangeRangeInsulator.Handler.class, PacketChangeRangeInsulator.class, Side.SERVER);
+        registerMessage(PacketTogglePreview.Handler.class, PacketTogglePreview.class, Side.SERVER);
     }
 
     private static void registerMessage(Class handler, Class packet, Side side) {

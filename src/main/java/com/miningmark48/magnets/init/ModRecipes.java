@@ -198,6 +198,15 @@ public class ModRecipes {
                     'M', new ItemStack(ModItems.ItemMagnetElectromagnetResonant), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
             );
         }
+
+        //Magnetic Insulator
+        if (ModConfig.modules.insulatorModule) {
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnetic_insulator"), null, new ItemStack(ModBlocks.BlockMagneticInsulator),
+                    "EGE", " G ", "III",
+                    'E', new ItemStack(Items.ENDER_PEARL) , 'G', new ItemStack(Items.GOLD_INGOT), 'I', new ItemStack(Items.IRON_INGOT)
+            );
+        }
     }
 
     private static class ShapedCopyNBTRecipe extends ShapedOreRecipe {

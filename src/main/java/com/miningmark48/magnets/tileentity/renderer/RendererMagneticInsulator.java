@@ -14,4 +14,7 @@ public class RendererMagneticInsulator extends TileEntitySpecialRenderer<TileEnt
     public void renderTileEntityFast(TileEntityMagneticInsulator te, double x, double y, double z, float partialTicks, int destroyStage, float partial, BufferBuilder buffer) {
 
     }
+
+
+
 }

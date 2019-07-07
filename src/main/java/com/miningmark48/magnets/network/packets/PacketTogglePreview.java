@@ -11,40 +11,37 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketChangeRangeInsulator extends PacketEmpty {
+public class PacketTogglePreview extends PacketEmpty {
 
     private BlockPos pos;
-    private int rangeChange;
 
-    public PacketChangeRangeInsulator() {
-        rangeChange = 0;
+    public PacketTogglePreview() {
+
     }
 
-    public PacketChangeRangeInsulator(BlockPos pos, int rangeChange) {
+    public PacketTogglePreview(BlockPos pos) {
         this.pos = pos;
-        this.rangeChange = rangeChange;
     }
 
     @Override
     public void fromBytes(ByteBuf buf) {
         pos = BlockPos.fromLong(buf.readLong());
-        rangeChange = buf.readInt();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
         buf.writeLong(pos.toLong());
-        buf.writeInt(rangeChange);
     }
 
-    public static class Handler implements IMessageHandler<PacketChangeRangeInsulator, IMessage> {
+    public static class Handler implements IMessageHandler<PacketTogglePreview, IMessage> {
         @Override
-        public IMessage onMessage(PacketChangeRangeInsulator message, MessageContext ctx) {
+        public IMessage onMessage(PacketTogglePreview message, MessageContext ctx) {
             FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
             return null;
         }
 
-        private void handle(PacketChangeRangeInsulator message, MessageContext ctx) {
+        @SuppressWarnings("Duplicates")
+        private void handle(PacketTogglePreview message, MessageContext ctx) {
             EntityPlayerMP playerEntity = ctx.getServerHandler().player;
             World world = playerEntity.world;
             BlockPos pos = message.pos;
@@ -55,14 +52,8 @@ public class PacketChangeRangeInsulator extends PacketEmpty {
             if (te instanceof TileEntityMagneticInsulator) {
                 TileEntityMagneticInsulator mi = (TileEntityMagneticInsulator) te;
 
-                int newRange = mi.getRange() + message.rangeChange;
-                if (newRange > mi.getDefaultRange()) {
-                    mi.setRange(mi.getDefaultRange());
-                } else if (newRange <= 0) {
-                    mi.setRange(1);
-                } else {
-                    mi.setRange(newRange);
-                }
+                mi.setDoPreview(!mi.getDoPreview());
+
                 mi.markDirty();
             }
 
