@@ -44,17 +44,31 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
             double pSpeed = 0.075D * (r * 0.5D);
             EnumParticleTypes particle = EnumParticleTypes.FLAME;
 
+            // Square - Corner 1
             world.spawnParticle(particle, x - r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
             world.spawnParticle(particle, x - r + offset, y + offset * 2, z - r + offset, pSpeed, 0D, 0D);
-
+            // Square - Corner 2
             world.spawnParticle(particle, x + r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
             world.spawnParticle(particle, x + r + offset, y + offset * 2, z + r + offset, -pSpeed, 0D, 0D);
-
+            // Square - Corner 3
             world.spawnParticle(particle, x + r + offset, y + offset * 2, z - r + offset, -pSpeed, 0D, 0D);
             world.spawnParticle(particle, x + r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
-
+            // Square - Corner 4
             world.spawnParticle(particle, x - r + offset, y + offset * 2, z + r + offset, pSpeed, 0D, 0D);
             world.spawnParticle(particle, x - r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
+            // Verticals
+            world.spawnParticle(particle, x + offset, y + r + offset, z + offset, 0D, -pSpeed, 0D);
+            world.spawnParticle(particle, x + offset, y - r + offset, z + offset, 0D, pSpeed, 0D);
+            // Vert Cross - Up
+            world.spawnParticle(particle, x + offset, y + r + offset, z + offset, 0D, 0D, pSpeed);
+            world.spawnParticle(particle, x + offset, y + r + offset, z + offset, 0D, 0D, -pSpeed);
+            world.spawnParticle(particle, x + offset, y + r + offset, z + offset, pSpeed, 0D, 0D);
+            world.spawnParticle(particle, x + offset, y + r + offset, z + offset, -pSpeed, 0D, 0D);
+            // Vert Cross - Down
+            world.spawnParticle(particle, x + offset, y - r + offset, z + offset, 0D, 0D, pSpeed);
+            world.spawnParticle(particle, x + offset, y - r + offset, z + offset, 0D, 0D, -pSpeed);
+            world.spawnParticle(particle, x + offset, y - r + offset, z + offset, pSpeed, 0D, 0D);
+            world.spawnParticle(particle, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
 
         }
 
