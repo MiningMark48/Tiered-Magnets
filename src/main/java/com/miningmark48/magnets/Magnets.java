@@ -49,9 +49,8 @@ public class Magnets {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event){
-
-        proxy.registerRenders();
         proxy.init(event);
+        proxy.registerRenders();
 
 //        ModRecipes.init();
 //        ModSoundEvents.registerSounds();
