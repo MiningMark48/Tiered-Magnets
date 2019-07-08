@@ -7,6 +7,7 @@ import com.miningmark48.magnets.reference.Reference;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -26,9 +27,9 @@ public class PacketToggleMagnet extends PacketEmpty {
             ItemStack magnet = playerEntity.inventory.mainInventory.stream().filter(item -> item.getItem() instanceof ItemMagnetBase).findFirst().orElse(ItemStack.EMPTY);
             if (!magnet.isEmpty() && !playerEntity.getCooldownTracker().hasCooldown(magnet.getItem())) ItemMagnetBase.toggleMagnet(magnet, playerEntity);
 
-//            if (Loader.isModLoaded(Reference.BAUBLES)) {
-//                handleBaubleMagnet(playerEntity);
-//            }
+            if (Loader.isModLoaded(Reference.BAUBLES)) {
+                handleBaubleMagnet(playerEntity);
+            }
         }
 
         @Optional.Method(modid = Reference.BAUBLES)
@@ -36,8 +37,11 @@ public class PacketToggleMagnet extends PacketEmpty {
             IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
             for (int i = 0; i < baubles.getSlots(); i++) {
                 ItemStack stack = baubles.getStackInSlot(i);
-                if (stack.getItem() instanceof ItemMagnetBase) {
-                    if (!stack.isEmpty()) ItemMagnetBase.toggleMagnet(stack, player);
+                if (!stack.isEmpty()) {
+                    if (stack.getItem() instanceof ItemMagnetBase) {
+                        ItemMagnetBase.toggleMagnet(stack, player);
+                        baubles.setChanged(i, true);
+                    }
                 }
             }
         }
