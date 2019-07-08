@@ -47,7 +47,14 @@ public class PacketChangeRangeMagnetFilter extends PacketEmpty {
             if (heldItem.getItem() instanceof ItemMagnetBase) {
                 ItemMagnetBase magnet = (ItemMagnetBase) heldItem.getItem();
 
-                magnet.setRange(magnet.getRange() + message.rangeChange);
+                int newRange = magnet.getRange(heldItem) + message.rangeChange;
+                if (newRange > magnet.getDefaultRange()) {
+                    magnet.setRange(heldItem, magnet.getDefaultRange());
+                } else if (newRange <= 0) {
+                    magnet.setRange(heldItem, 1);
+                } else {
+                    magnet.setRange(heldItem, newRange);
+                }
 
             }
         }

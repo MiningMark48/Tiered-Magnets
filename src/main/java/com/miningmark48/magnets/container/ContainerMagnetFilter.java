@@ -13,10 +13,12 @@ import net.minecraft.util.EnumHand;
 public class ContainerMagnetFilter extends Container {
 
     public final InventoryMagnetFilter inventory;
+    public EntityPlayer player;
     private static final int INV_START = InventoryMagnetFilter.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
 
     public ContainerMagnetFilter(EntityPlayer player, InventoryPlayer invPlayer, InventoryMagnetFilter item) {
         this.inventory = item;
+        this.player = player;
 
         int i;
         for (i = 0; i < InventoryMagnetFilter.INV_SIZE; i++){

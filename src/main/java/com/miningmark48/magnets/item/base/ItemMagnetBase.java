@@ -5,7 +5,6 @@ import baubles.api.IBauble;
 import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
-import com.miningmark48.magnets.util.ModLogger;
 import com.miningmark48.magnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -27,8 +26,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -39,7 +36,6 @@ import java.util.Random;
 public abstract class ItemMagnetBase extends Item implements IBauble {
 
     private final int defaultRange;
-    private int range;
     private double speed;
     private boolean isMagic;
 
@@ -47,39 +43,32 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         setMaxStackSize(1);
 
         this.defaultRange = range;
-        this.range = range;
         this.speed = speed;
         this.isMagic = isMagic;
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
-        if (!stack.hasTagCompound()) {
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setBoolean("enabled", false);
-            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
-        }
+        setTagDefaults(stack);
 
         list.add(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : ""))));
 
         list.add(stack.getTagCompound().getBoolean("enabled") ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled")));
-        list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + range + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
+        list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public ActionResult onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setBoolean("enabled", false);
-            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
-        }
+        setTagDefaults(stack);
 
         if (!world.isRemote) {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
             } else {
-                if(ModConfig.miscconfigs.doFilter) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
+                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(EnumHand.MAIN_HAND).getItem() == this) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
             }
         }
         return new ActionResult(EnumActionResult.SUCCESS, stack);
@@ -121,22 +110,18 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     }
 
     public void doUpdate(ItemStack stack, World world, Entity entity){
-        if (!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setBoolean("enabled", false);
-            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
-        }
+        setTagDefaults(stack);
 
-        if (getRange() > getDefaultRange()) {
-            setRange(getDefaultRange());
-        } else if (getRange() <= 0) {
-            setRange(1);
+        if (getRange(stack) > getDefaultRange()) {
+            setRange(stack, getDefaultRange());
+        } else if (getRange(stack) <= 0) {
+            setRange(stack, 1);
         }
 
         if (entity instanceof EntityPlayer){
             EntityPlayer player = (EntityPlayer) entity;
 
-            if (stack.getTagCompound().getBoolean("enabled") && (canMagnet(player, stack) || player.capabilities.isCreativeMode)){
+            if (stack.getTagCompound().getBoolean("enabled") && (canMagnet(player, stack) || player.capabilities.isCreativeMode)) {
                 double x = player.posX;
                 double y = player.posY;
                 double z = player.posZ;
@@ -151,13 +136,11 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                     }
                 }
 
+                int range = getRange(stack);
                 List<EntityItem> items = entity.world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityItem e: items) {
 
                     if (!e.getEntityData().getBoolean("noMagnet")) {
-
-//                        ModLogger.info(e.getEntityData() + " " + e.getEntityData().getBoolean("noMagnet"));
-
                         if (ModConfig.miscconfigs.doFilter) {
                             if (blacklist) {
                                 if (!inventory.contains(e.getItem().getItem())) {
@@ -225,12 +208,23 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         return this.defaultRange;
     }
 
-    public int getRange() {
-        return this.range;
+    public int getRange(ItemStack stack) {
+        setTagDefaults(stack);
+        return stack.getTagCompound().getInteger("range");
     }
 
-    public void setRange(int range) {
-        this.range = range;
+    public void setRange(ItemStack stack, int range) {
+        setTagDefaults(stack);
+        stack.getTagCompound().setInteger("range", range);
+    }
+
+    private void setTagDefaults(ItemStack stack) {
+        if (!stack.hasTagCompound()){
+            stack.setTagCompound(new NBTTagCompound());
+            stack.getTagCompound().setBoolean("enabled", false);
+            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
+            stack.getTagCompound().setInteger("range", getDefaultRange());
+        }
     }
 
     /* Baubles */

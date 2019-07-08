@@ -13,8 +13,10 @@ import com.miningmark48.magnets.util.UtilGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -28,6 +30,7 @@ public class GuiMagnetFilter extends GuiContainer {
     private ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/gui_magnet_filter.png");
     private final InventoryMagnetFilter inventory;
     private final ItemStack magnet;
+    private final EntityPlayer player;
     private int range = 0;
 
     private GuiButton buttonFilterToggle;
@@ -39,13 +42,14 @@ public class GuiMagnetFilter extends GuiContainer {
         super(containerItem);
         this.inventory = containerItem.inventory;
         this.magnet = stack;
+        this.player = containerItem.player;
 
         this.xSize = 176;
         this.ySize = 166;
 
         if (magnet.getItem() instanceof ItemMagnetBase) {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
-            range = m.getRange();
+            range = m.getRange(stack);
         }
 
     }
@@ -61,7 +65,7 @@ public class GuiMagnetFilter extends GuiContainer {
 
         if (magnet.getItem() instanceof ItemMagnetBase) {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
-            range = m.getRange();
+            range = m.getRange(player.getHeldItem(EnumHand.MAIN_HAND));
         }
         this.fontRenderer.drawString(ModTranslate.toLocal("gui.magnet_filter.label.range.name"), 110, 44, 0x404040);
         this.fontRenderer.drawString(String.valueOf(range), 118, 61, 0x404040);
