@@ -51,8 +51,8 @@ tooltip.item.magnet_magic_base.line1=Teleports items to the player.
 
 
 #Chat Messages
-chat.item.magnet_base.enabled=Magnet enabled.
-chat.item.magnet_base.disabled=Magnet disabled.
+chat.item.magnet_base.enabled=Magnet enabled
+chat.item.magnet_base.disabled=Magnet disabled
 
 
 #Gui

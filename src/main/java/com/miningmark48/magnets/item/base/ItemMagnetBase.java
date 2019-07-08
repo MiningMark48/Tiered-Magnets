@@ -99,10 +99,12 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     public static void toggleMagnet(ItemStack stack, EntityPlayer player) {
         if (stack.getTagCompound().getBoolean("enabled")) {
             stack.getTagCompound().setBoolean("enabled", false);
-            player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")));
+//            player.sendMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")));
+            player.sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")), true);
         } else {
             stack.getTagCompound().setBoolean("enabled", true);
-            player.sendMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")));
+//            player.sendMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")));
+            player.sendStatusMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
         }
         player.getCooldownTracker().setCooldown(stack.getItem(), 10);
     }
