@@ -1,5 +1,6 @@
 package com.miningmark48.magnets;
 
+import com.miningmark48.magnets.client.events.EventStitchParticles;
 import com.miningmark48.magnets.handler.GuiHandler;
 import com.miningmark48.magnets.init.ModBlocks;
 import com.miningmark48.magnets.init.ModItems;
@@ -42,6 +43,8 @@ public class Magnets {
         MinecraftForge.EVENT_BUS.register(new ModRegistry());
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
         MinecraftForge.EVENT_BUS.register(proxy);
+
+        MinecraftForge.EVENT_BUS.register(new EventStitchParticles());
 
         PacketHandler.registerMessages();
 

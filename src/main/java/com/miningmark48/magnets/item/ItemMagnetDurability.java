@@ -38,8 +38,8 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     }
 
     @Override
-    public EnumParticleTypes getParticle() {
-        return EnumParticleTypes.CRIT;
+    public int getParticle() {
+        return 0;
     }
 
 }

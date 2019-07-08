@@ -54,8 +54,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     @Override
-    public EnumParticleTypes getParticle() {
-        return EnumParticleTypes.REDSTONE;
+    public int getParticle() {
+        return 1;
     }
 
     @Override

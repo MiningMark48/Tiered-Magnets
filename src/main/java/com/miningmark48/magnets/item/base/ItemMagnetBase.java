@@ -2,10 +2,13 @@ package com.miningmark48.magnets.item.base;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import com.miningmark48.magnets.client.particle.ParticleMagnetizeEnergy;
+import com.miningmark48.magnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.magnets.util.ModTranslate;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -185,7 +188,16 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 double th = (rand.nextDouble() + 1) * 2 * Math.PI;
                 double pX = entity.posX + r * Math.cos(th);
                 double pZ = entity.posZ + r * Math.sin(th);
-                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
+
+                if (player.world.isRemote) {
+                    if (getParticle() == 0) {
+                        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeVanilla(player.world, pX, entity.posY + 0.3, pZ, 0, 0, 0));
+                    } else {
+                        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(player.world, pX, entity.posY + 0.3, pZ, 0, 0, 0));
+                    }
+                }
+
+//                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
 
             if (!player.capabilities.isCreativeMode) doCost(player, stack);
@@ -200,8 +212,8 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 
     }
 
-    public EnumParticleTypes getParticle() {
-        return EnumParticleTypes.REDSTONE;
+    public int getParticle() {
+        return 0;
     }
 
     public int getDefaultRange() {
