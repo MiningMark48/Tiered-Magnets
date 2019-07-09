@@ -4,9 +4,7 @@ import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.item.base.ItemMagnetBase;
 import com.miningmark48.magnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
@@ -31,10 +29,10 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     }
 
     @Override
-    public void doCost(EntityPlayer player, ItemStack stack) {
+    public void doCost(ItemStack stack) {
         int damageAmount = 1;
         if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
-        stack.damageItem(damageAmount, player);
+        stack.damageItem(damageAmount, this.fakePlayer);
     }
 
     @Override

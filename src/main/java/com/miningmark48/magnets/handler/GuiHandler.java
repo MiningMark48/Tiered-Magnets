@@ -2,11 +2,14 @@ package com.miningmark48.magnets.handler;
 
 import com.miningmark48.magnets.client.gui.GuiMagnetFilter;
 import com.miningmark48.magnets.client.gui.GuiMagneticInsulator;
+import com.miningmark48.magnets.client.gui.GuiMagneticProjector;
 import com.miningmark48.magnets.container.ContainerMagnetFilter;
 import com.miningmark48.magnets.container.ContainerMagneticInsulator;
+import com.miningmark48.magnets.container.ContainerMagneticProjector;
 import com.miningmark48.magnets.inventory.InventoryMagnetFilter;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.magnets.tileentity.TileEntityMagneticInsulator;
+import com.miningmark48.magnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +26,9 @@ public class GuiHandler implements IGuiHandler {
         if (ID == ReferenceGUIs.gui_id_magnetic_insulator){
             return new ContainerMagneticInsulator(player.inventory, (TileEntityMagneticInsulator) world.getTileEntity(new BlockPos(x, y, z)));
         }
+        if (ID == ReferenceGUIs.gui_id_magnetic_projector){
+            return new ContainerMagneticProjector(player.inventory, (TileEntityMagneticProjector) world.getTileEntity(new BlockPos(x, y, z)));
+        }
         return null;
     }
 
@@ -33,6 +39,9 @@ public class GuiHandler implements IGuiHandler {
         }
         if (ID == ReferenceGUIs.gui_id_magnetic_insulator){
             return new GuiMagneticInsulator(player.inventory, (TileEntityMagneticInsulator) world.getTileEntity(new BlockPos(x, y, z)), player);
+        }
+        if (ID == ReferenceGUIs.gui_id_magnetic_projector){
+            return new GuiMagneticProjector(player.inventory, (TileEntityMagneticProjector) world.getTileEntity(new BlockPos(x, y, z)), player);
         }
         return null;
     }

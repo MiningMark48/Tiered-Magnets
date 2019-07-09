@@ -44,12 +44,12 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     @Override
-    public boolean canMagnet(EntityPlayer player, ItemStack stack) {
+    public boolean canMagnet(ItemStack stack) {
         return this.getEnergyStored(stack) >= usageEnergy;
     }
 
     @Override
-    public void doCost(EntityPlayer player, ItemStack stack) {
+    public void doCost(ItemStack stack) {
         this.extractEnergyInternal(stack, usageEnergy, false);
     }
 

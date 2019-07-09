@@ -1,8 +1,10 @@
 package com.miningmark48.magnets.block;
 
+import com.miningmark48.magnets.item.base.ItemMagnetBase;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.magnets.tileentity.TileEntityMagneticInsulator;
+import com.miningmark48.magnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -12,6 +14,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -23,12 +27,13 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockMagneticInsulator extends BlockContainer {
+@SuppressWarnings("Duplicates")
+public class BlockMagneticProjector extends BlockContainer {
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
     private static final PropertyBool POWERED = PropertyBool.create("powered");
 
-    public BlockMagneticInsulator() {
+    public BlockMagneticProjector() {
         super(Material.ROCK, MapColor.GRAY);
         setHardness(2.0f);
         setResistance(2.0f);
@@ -38,12 +43,12 @@ public class BlockMagneticInsulator extends BlockContainer {
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityMagneticInsulator();
+        return new TileEntityMagneticProjector();
     }
 
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!player.isSneaking()) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnetic_insulator, world, pos.getX(), pos.getY(), pos.getZ());
+        if (!player.isSneaking()) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnetic_projector, world, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
 
@@ -165,6 +170,20 @@ public class BlockMagneticInsulator extends BlockContainer {
     @Override
     public boolean isFullBlock(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state)
+    {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (tileentity instanceof IInventory)
+        {
+            InventoryHelper.dropInventoryItems(worldIn, pos, (IInventory) tileentity);
+            worldIn.updateComparatorOutputLevel(pos, this);
+        }
+
+        super.breakBlock(worldIn, pos, state);
     }
 
 }
