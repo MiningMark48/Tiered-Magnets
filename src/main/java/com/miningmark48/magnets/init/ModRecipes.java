@@ -207,6 +207,15 @@ public class ModRecipes {
                     'E', new ItemStack(Items.ENDER_PEARL) , 'G', new ItemStack(Items.GOLD_INGOT), 'I', new ItemStack(Items.IRON_INGOT)
             );
         }
+
+        //Magnetic Projector
+        if (ModConfig.modules.projectorModule) {
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnetic_projector"), null, new ItemStack(ModBlocks.BlockMagneticProjector),
+                    "IPI", "GRG", "IHI",
+                    'G', new ItemStack(Items.GOLD_INGOT), 'H', new ItemStack(Blocks.HOPPER), 'I', new ItemStack(Items.IRON_INGOT), 'P', new ItemStack(Blocks.GLASS_PANE), 'R', new ItemStack(Items.REDSTONE)
+            );
+        }
     }
 
     private static class ShapedCopyNBTRecipe extends ShapedOreRecipe {

@@ -30,6 +30,10 @@ public class ModConfig {
     @Config.Comment("Magnetic Insulator configuration settings")
     public static InsulatorConfigs insulatorConfigs = new InsulatorConfigs();
 
+    @Config.Name("Magnetic Projector")
+    @Config.Comment("Magnetic Projector configuration settings")
+    public static ProjectorConfigs projectorConfigs = new ProjectorConfigs();
+
     public static class Modules {
         @Config.Name("Vanilla")
         @Config.Comment("If true, enables Vanilla-based, durability magnets.")
@@ -60,6 +64,11 @@ public class ModConfig {
         @Config.Comment("If true, enables a block to prevent items from being picked up.")
         @Config.RequiresMcRestart
         public boolean insulatorModule = true;
+
+        @Config.Name("Magnetic Projector")
+        @Config.Comment("If true, enables a block to recreate a magnet in block-form.")
+        @Config.RequiresMcRestart
+        public boolean projectorModule = true;
 
 //        @Config.Comment("If true, enables special magnets.")
 //        public boolean specialModule = true;
@@ -163,8 +172,14 @@ public class ModConfig {
 
     public static class InsulatorConfigs {
         @Config.Name("Range")
-        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup")
+        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
         public int range = 16;
+    }
+
+    public static class ProjectorConfigs {
+        @Config.Name("Lamp Render")
+        @Config.Comment("If true, a lamp render will be displayed.")
+        public boolean lampRender = true;
     }
 
     public static class MiscConfigs { // heh heh ;)

@@ -1,0 +1,20 @@
+{
+  "name": "Magnetic Projector",
+  "icon": "magnets:magnetic_projector",
+  "category": "category_utility_blocks",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "It seems that by refractoring light through glass onto a magnet, someone can project the effects of the magnet into the world."
+    },
+    {
+      "type": "text",
+      "text": "After placing the block, right click it to open the GUI. Then, place any magnet within the item slot. The block will recreate the same actions as the magnet normally does with a player. Applying a redstone signal will disable the magnet. $(br2)If an inventory is found below the block, the magnet will pull the items from the world and put them into the inventory."
+    },
+    {
+      "type": "crafting",
+      "recipe": "magnets:magnetic_projector"
+    }
+  ]
+}

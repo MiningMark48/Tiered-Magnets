@@ -12,6 +12,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,10 +23,13 @@ import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 @SuppressWarnings("Duplicates")
 public class BlockMagneticProjector extends BlockContainer {
@@ -33,11 +37,26 @@ public class BlockMagneticProjector extends BlockContainer {
     public static final PropertyDirection FACING = PropertyDirection.create("facing");
     private static final PropertyBool POWERED = PropertyBool.create("powered");
 
+    private static AxisAlignedBB BOUNDING_BOX_ACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5625D, 0.9375D);
+    private static AxisAlignedBB BOUNDING_BOX_INACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D);
+
     public BlockMagneticProjector() {
         super(Material.ROCK, MapColor.GRAY);
         setHardness(2.0f);
         setResistance(2.0f);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
+    }
+
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (state.getValue(POWERED)) return BOUNDING_BOX_INACITVE;
+        return BOUNDING_BOX_ACITVE;
+    }
+
+    @Override
+    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+        if (state.getValue(POWERED)) addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_INACITVE);
+        addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_ACITVE);
     }
 
     @Nullable

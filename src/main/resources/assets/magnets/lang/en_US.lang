@@ -33,6 +33,7 @@ item.magnet_magic_energy_resonant.name=Magic Resonant Electromagnet
 
 #Blocks
 tile.magnetic_insulator.name=Magnetic Insulator
+tile.magnetic_projector.name=Magnetic Projector
 
 
 #Tooltips
@@ -67,6 +68,7 @@ gui.magnetic_insulator.name=Magnetic Insulator
 gui.magnetic_insulator.button.show_preview=Show Preview
 gui.magnetic_insulator.button.hide_preview=Hide Preview
 gui.magnetic_insulator.label.range.name=Range
+gui.magnetic_projector.name=Magnetic Projector
 
 
 #Keys
