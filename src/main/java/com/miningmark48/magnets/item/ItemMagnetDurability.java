@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 public class ItemMagnetDurability extends ItemMagnetBase {
 
@@ -32,7 +33,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     public void doCost(ItemStack stack) {
         int damageAmount = 1;
         if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
-        stack.damageItem(damageAmount, this.fakePlayer);
+        stack.attemptDamageItem(damageAmount, new Random(), null);
     }
 
     @Override

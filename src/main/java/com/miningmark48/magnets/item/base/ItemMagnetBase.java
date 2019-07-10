@@ -8,7 +8,6 @@ import com.miningmark48.magnets.init.ModConfig;
 import com.miningmark48.magnets.reference.Reference;
 import com.miningmark48.magnets.reference.ReferenceGUIs;
 import com.miningmark48.magnets.util.ModTranslate;
-import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -28,16 +27,14 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 @SuppressWarnings("Duplicates")
 @Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
@@ -46,7 +43,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     private final int defaultRange;
     public double speed;
     public boolean isMagic;
-    public FakePlayer fakePlayer;
+//    public FakePlayer fakePlayer;
 
     public ItemMagnetBase(int range, double speed, boolean isMagic){
         setMaxStackSize(1);
@@ -125,9 +122,6 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 
     public void doUpdate(ItemStack stack, World world, double x, double y, double z, boolean noCost){
         setTagDefaults(stack);
-        if (fakePlayer == null) {
-            fakePlayer = FakePlayerFactory.get(FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(world.provider.getDimension()), new GameProfile(UUID.randomUUID(), "Magnet"));
-        }
 
         if (getRange(stack) > getDefaultRange()) {
             setRange(stack, getDefaultRange());
@@ -193,17 +187,22 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 double pZ = entity.posZ + r * Math.sin(th);
 
                 if (entity.world.isRemote) {
-                    if (getParticle() == 0) {
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeVanilla(entity.world, pX, entity.posY + 0.3, pZ, 0, 0, 0));
-                    } else {
-                        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(entity.world, pX, entity.posY + 0.3, pZ, 0, 0, 0));
-                    }
+                    spawnParticles(entity.world, pX, entity.posY, pZ);
                 }
 
 //                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
 
             if (!noCost) doCost(stack);
+    }
+
+    @SideOnly(Side.CLIENT)
+    private void spawnParticles(World world, double x, double y, double z) {
+        if (getParticle() == 0) {
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeVanilla(world, x, y + 0.3, z, 0, 0, 0));
+        } else {
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(world, x, y + 0.3, z, 0, 0, 0));
+        }
     }
 
     public boolean canMagnet(ItemStack stack) {
