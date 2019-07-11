@@ -145,7 +145,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
             List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
             for (EntityItem e: items) {
 
-                if (!e.getEntityData().getBoolean("noMagnet")) {
+                if (canMagnetItem(e)) {
                     if (ModConfig.miscconfigs.doFilter) {
                         if (blacklist) {
                             if (!inventory.contains(e.getItem().getItem())) {
@@ -164,7 +164,9 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
             if (ModConfig.miscconfigs.doXPVacuum) {
                 List<EntityXPOrb> xp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 for (EntityXPOrb e : xp) {
-                    doMagnet(stack, e, x, y, z, noCost, false);
+                    if (canMagnetItem(e)) {
+                        doMagnet(stack, e, x, y, z, noCost, false);
+                    }
                 }
             }
         }
@@ -203,6 +205,10 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         } else {
             Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(world, x, y + 0.3, z, 0, 0, 0));
         }
+    }
+
+    private boolean canMagnetItem(Entity entity) {
+        return !entity.getEntityData().getBoolean("noMagnet") && !entity.getEntityData().getBoolean("PreventRemoteMovement");
     }
 
     public boolean canMagnet(ItemStack stack) {
