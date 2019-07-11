@@ -22,17 +22,13 @@ public class ModConfig {
     @Config.Comment("Thermal Expansion configuration settings")
     public static ThermalExpansionConfigs thermalExpansionConfigs = new ThermalExpansionConfigs();
 
+    @Config.Name("Utility Blocks")
+    @Config.Comment("Magnetic Insulator configuration settings")
+    public static UtilityBlockConfigs utilityBlockConfigs = new UtilityBlockConfigs();
+
     @Config.Name("Misc")
     @Config.Comment("Miscellaneous configuration settings")
     public static MiscConfigs miscconfigs = new MiscConfigs();
-
-    @Config.Name("Magnetic Insulator")
-    @Config.Comment("Magnetic Insulator configuration settings")
-    public static InsulatorConfigs insulatorConfigs = new InsulatorConfigs();
-
-    @Config.Name("Magnetic Projector")
-    @Config.Comment("Magnetic Projector configuration settings")
-    public static ProjectorConfigs projectorConfigs = new ProjectorConfigs();
 
     public static class Modules {
         @Config.Name("Vanilla")
@@ -60,18 +56,9 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public boolean thermalExpansionMagicModule = true;
 
-        @Config.Name("Magnetic Insulator")
-        @Config.Comment("If true, enables a block to prevent items from being picked up.")
-        @Config.RequiresMcRestart
-        public boolean insulatorModule = true;
-
-        @Config.Name("Magnetic Projector")
-        @Config.Comment("If true, enables a block to recreate a magnet in block-form.")
-        @Config.RequiresMcRestart
-        public boolean projectorModule = true;
-
-//        @Config.Comment("If true, enables special tieredmagnets.")
-//        public boolean specialModule = true;
+        @Config.Name("Utility Blocks")
+        @Config.Comment("If true, utility blocks for the magnets will be enabled.")
+        public boolean utilityBlocksModule = true;
     }
 
     public static class VanillaConfigs {
@@ -170,16 +157,26 @@ public class ModConfig {
 
     }
 
-    public static class InsulatorConfigs {
-        @Config.Name("Range")
-        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
-        public int range = 16;
-    }
+    public static class UtilityBlockConfigs {
+        //M. Insulator
+        @Config.Name("Magnetic Insulator")
+        @Config.Comment("If true, enables a block to prevent items from being picked up.")
+        @Config.RequiresMcRestart
+        public boolean insulator = true;
 
-    public static class ProjectorConfigs {
-        @Config.Name("Lamp Render")
-        @Config.Comment("If true, a lamp render will be displayed.")
-        public boolean lampRender = true;
+        @Config.Name("Magnetic Insulator - Range")
+        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
+        public int insulatorRange = 16;
+
+        //M. Projector
+        @Config.Name("Magnetic Projector")
+        @Config.Comment("If true, enables a block to recreate a magnet in block-form.")
+        @Config.RequiresMcRestart
+        public boolean projector = true;
+
+        @Config.Name("Magnetic Projector - Lamp Render")
+        @Config.Comment("If true, a lamp render will be displayed on the Magnetic Projector.")
+        public boolean projectorLampRender = true;
     }
 
     public static class MiscConfigs { // heh heh ;)

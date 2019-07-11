@@ -199,22 +199,24 @@ public class ModRecipes {
             );
         }
 
-        //Magnetic Insulator
-        if (ModConfig.modules.insulatorModule) {
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnetic_insulator"), null, new ItemStack(ModBlocks.BlockMagneticInsulator),
-                    "EGE", " G ", "III",
-                    'E', new ItemStack(Items.ENDER_PEARL) , 'G', new ItemStack(Items.GOLD_INGOT), 'I', new ItemStack(Items.IRON_INGOT)
-            );
-        }
+        if (ModConfig.modules.utilityBlocksModule) {
+            //Magnetic Insulator
+            if (ModConfig.utilityBlockConfigs.insulator) {
+                GameRegistry.addShapedRecipe(
+                        new ResourceLocation(Reference.MOD_ID + ":magnetic_insulator"), null, new ItemStack(ModBlocks.BlockMagneticInsulator),
+                        "EGE", " G ", "III",
+                        'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT), 'I', new ItemStack(Items.IRON_INGOT)
+                );
+            }
 
-        //Magnetic Projector
-        if (ModConfig.modules.projectorModule) {
-            GameRegistry.addShapedRecipe(
-                    new ResourceLocation(Reference.MOD_ID + ":magnetic_projector"), null, new ItemStack(ModBlocks.BlockMagneticProjector),
-                    "IPI", "GRG", "IHI",
-                    'G', new ItemStack(Items.GOLD_INGOT), 'H', new ItemStack(Blocks.HOPPER), 'I', new ItemStack(Items.IRON_INGOT), 'P', new ItemStack(Blocks.GLASS_PANE), 'R', new ItemStack(Items.REDSTONE)
-            );
+            //Magnetic Projector
+            if (ModConfig.utilityBlockConfigs.projector) {
+                GameRegistry.addShapedRecipe(
+                        new ResourceLocation(Reference.MOD_ID + ":magnetic_projector"), null, new ItemStack(ModBlocks.BlockMagneticProjector),
+                        "IPI", "GRG", "IHI",
+                        'G', new ItemStack(Items.GOLD_INGOT), 'H', new ItemStack(Blocks.HOPPER), 'I', new ItemStack(Items.IRON_INGOT), 'P', new ItemStack(Blocks.GLASS_PANE), 'R', new ItemStack(Items.REDSTONE)
+                );
+            }
         }
     }
 

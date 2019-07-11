@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TileEntityMagneticInsulator extends TileEntity implements ITickable {
 
-    private int range = ModConfig.insulatorConfigs.range;
+    private int range = ModConfig.utilityBlockConfigs.insulatorRange;
     private boolean doPreview = false;
 
     public TileEntityMagneticInsulator() {
@@ -90,7 +90,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     }
 
     public int getDefaultRange() {
-        return ModConfig.insulatorConfigs.range;
+        return ModConfig.utilityBlockConfigs.insulatorRange;
     }
 
     public boolean getDoPreview() {
