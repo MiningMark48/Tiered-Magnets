@@ -53,7 +53,6 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         this.isMagic = isMagic;
     }
 
-    @SuppressWarnings("Duplicates")
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
         setTagDefaults(stack);
@@ -64,7 +63,6 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
     }
 
-    @SuppressWarnings("Duplicates")
     @Override
     public ActionResult onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
