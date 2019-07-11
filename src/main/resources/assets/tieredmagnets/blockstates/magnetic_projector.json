@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "facing=down,powered=false":  { "model": "tieredmagnets:magnetic_projector_active", "x": 180 },
+    "facing=up,powered=false":    { "model": "tieredmagnets:magnetic_projector_active" },
+    "facing=north,powered=false": { "model": "tieredmagnets:magnetic_projector_active" },
+    "facing=south,powered=false": { "model": "tieredmagnets:magnetic_projector_active", "y": 180 },
+    "facing=west,powered=false":  { "model": "tieredmagnets:magnetic_projector_active", "y": 270 },
+    "facing=east,powered=false":  { "model": "tieredmagnets:magnetic_projector_active", "y": 90 },
+
+    "facing=down,powered=true":  { "model": "tieredmagnets:magnetic_projector", "x": 180 },
+    "facing=up,powered=true":    { "model": "tieredmagnets:magnetic_projector" },
+    "facing=north,powered=true": { "model": "tieredmagnets:magnetic_projector" },
+    "facing=south,powered=true": { "model": "tieredmagnets:magnetic_projector", "y": 180 },
+    "facing=west,powered=true":  { "model": "tieredmagnets:magnetic_projector", "y": 270 },
+    "facing=east,powered=true":  { "model": "tieredmagnets:magnetic_projector", "y": 90 }
+  }
+}

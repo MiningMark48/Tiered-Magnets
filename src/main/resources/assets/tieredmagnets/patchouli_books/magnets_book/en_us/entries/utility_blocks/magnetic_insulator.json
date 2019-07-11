@@ -1,0 +1,20 @@
+{
+  "name": "Magnetic Insulator",
+  "icon": "tieredmagnets:magnetic_insulator",
+  "category": "category_utility_blocks",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Scientists have discovered that the magic of ‘The End’ seems to be compressed into these ‘pearls’ in amounts that aren’t dangerous, but seem to modify magnetic fields remotely. By assembling these pearls into a structure similar to a small satellite dish, the magnetic field of magnets and electromagnets can be completely counteracted."
+    },
+    {
+      "type": "text",
+      "text": "After placing the block, the effects are immediate. By right clicking the block, a GUI will be displayed. By using the range buttons, you can decrease and increase the range in which the block will function. You can click ‘Show Preview’ to toggle a preview to display the range of the block. It seems that a redstone signal can disable the block from functioning."
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnetic_insulator"
+    }
+  ]
+}

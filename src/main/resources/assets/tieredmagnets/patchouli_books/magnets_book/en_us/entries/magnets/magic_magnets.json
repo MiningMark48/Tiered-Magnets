@@ -1,0 +1,35 @@
+{
+  "name": "Magic Magnets",
+  "icon": "tieredmagnets:magnet_magic_durability_diamond",
+  "category": "category_vanilla",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Magic Magnets are items that can teleport items to the player at the expense of durability. $(br2)There are eight tiers of magnets; Stone, Iron, Redstone, Gold, Obsidian, Lapis, Diamond, and Emerald, each having a different level of durability and range."
+    },
+    {
+      "type": "text",
+      "text": "Each tier has more durability and range than the prior. $(br2)By default, Magic Magnets use more durability than regular $(l:magnets/magnets)magnets$()."
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_magic_durability_stone",
+      "recipe2": "tieredmagnets:magnet_magic_durability_iron"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_magic_durability_redstone",
+      "recipe2": "tieredmagnets:magnet_magic_durability_gold"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_magic_durability_lapis",
+      "recipe2": "tieredmagnets:magnet_magic_durability_diamond"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_magic_durability_emerald"
+    }
+  ]
+}

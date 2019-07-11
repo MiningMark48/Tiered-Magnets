@@ -1,7 +1,0 @@
-{
-  "parent": "magnets:item/magnet_layered",
-  "textures": {
-    "color": "magnets:items/energy/magnet_creative",
-    "base": "magnets:items/energy/magnet_magic_base"
-  }
-}

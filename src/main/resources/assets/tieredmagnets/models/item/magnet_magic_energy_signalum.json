@@ -1,0 +1,7 @@
+{
+  "parent": "tieredmagnets:item/magnet_layered",
+  "textures": {
+    "color": "tieredmagnets:items/energy/magnet_signalum",
+    "base": "tieredmagnets:items/energy/magnet_magic_base"
+  }
+}

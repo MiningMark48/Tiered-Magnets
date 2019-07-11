@@ -1,0 +1,7 @@
+{
+  "parent": "tieredmagnets:item/magnet_layered",
+  "textures": {
+    "color": "tieredmagnets:items/durability/magnet_diamond",
+    "base": "tieredmagnets:items/durability/magnet_magic_base"
+  }
+}

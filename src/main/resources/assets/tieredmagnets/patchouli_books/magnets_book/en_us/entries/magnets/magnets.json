@@ -1,0 +1,31 @@
+{
+  "name": "Magnets",
+  "icon": "tieredmagnets:magnet_durability_diamond",
+  "category": "category_vanilla",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Magnets are items that can pull items toward the player at the expense of durability. $(br2)There are eight tiers of magnets; Stone, Iron, Redstone, Gold, Obsidian, Lapis, Diamond, and Emerald, each having a different level of durability and range. $(br2)Each tier has more durability and range than the prior."
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_durability_stone",
+      "recipe2": "tieredmagnets:magnet_durability_iron"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_durability_redstone",
+      "recipe2": "tieredmagnets:magnet_durability_gold"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_durability_lapis",
+      "recipe2": "tieredmagnets:magnet_durability_diamond"
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_durability_emerald"
+    }
+  ]
+}
