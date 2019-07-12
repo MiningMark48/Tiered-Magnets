@@ -135,8 +135,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 
             int range = getRange(stack);
             List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
-            for (int i = 0; i < items.size(); i++) {
-                EntityItem e = items.get(i);
+            items.forEach(e -> {
                 if (canMagnetItem(e)) {
                     if (ModConfig.miscconfigs.doFilter) {
                         if (blacklist) {
@@ -152,14 +151,14 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                         doMagnet(stack, e, x, y, z, noCost, true);
                     }
                 }
-            }
+            });
             if (ModConfig.miscconfigs.doXPVacuum) {
                 List<EntityXPOrb> xp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
-                for (EntityXPOrb e : xp) {
+                xp.forEach(e -> {
                     if (canMagnetItem(e)) {
                         doMagnet(stack, e, x, y, z, noCost, false);
                     }
-                }
+                });
             }
         }
     }
