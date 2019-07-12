@@ -196,6 +196,10 @@ public class ModConfig {
         @Config.Comment("If true, XP will be vacuumed toward the player.")
         public boolean doXPVacuum = true;
 
+        @Config.Name("Cooldown Time")
+        @Config.Comment("The time (in ticks) the player can enable/disable a magnet.")
+        public int cooldownTime = 10;
+
     }
 
     @Mod.EventBusSubscriber

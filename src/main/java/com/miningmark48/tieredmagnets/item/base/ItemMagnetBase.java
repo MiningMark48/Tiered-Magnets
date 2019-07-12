@@ -105,7 +105,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
             setEnabled(stack, true);
             player.sendStatusMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
         }
-        player.getCooldownTracker().setCooldown(stack.getItem(), 10);
+        player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.miscconfigs.cooldownTime);
     }
 
     @Override
