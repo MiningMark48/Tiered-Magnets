@@ -47,10 +47,10 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
                     double y = this.getPos().getY() + 0.5D;
                     double z = this.getPos().getZ() + 0.5D;
                     List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
-                    for (EntityItem e : items) {
+                    items.forEach(e -> {
                         ItemStack left = TileEntityHopper.putStackInInventoryAllSlots(this, (IInventory) te, e.getItem(), null);
                         e.setItem(left);
-                    }
+                    });
                 }
             }
         }
