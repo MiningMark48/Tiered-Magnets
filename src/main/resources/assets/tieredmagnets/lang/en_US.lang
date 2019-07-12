@@ -79,4 +79,4 @@ key.toggle_magnet=Toggle Magnet
 #Logs
 log.info.preinit=Pre-Initialization Complete!
 log.info.init=Initialization Complete!
-log.info.postinitPost=Initialization Complete!
+log.info.postinit=Initialization Complete!
