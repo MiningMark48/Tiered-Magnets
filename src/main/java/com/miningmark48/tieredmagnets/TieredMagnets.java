@@ -32,9 +32,6 @@ public class TieredMagnets {
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
 
-//        ConfigurationHandler.init(event.getSuggestedConfigurationFile());
-//        MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
-
         ModBlocks.init();
         ModTileEntities.init();
         ModItems.init();
@@ -54,21 +51,12 @@ public class TieredMagnets {
     public void init(FMLInitializationEvent event){
         proxy.init(event);
         proxy.registerRenders();
-
-//        ModRecipes.init();
-//        ModSoundEvents.registerSounds();
-
-//        MinecraftForge.EVENT_BUS.register(new ModSoundEvents());
-
         ModLogger.info(ModTranslate.toLocal("log.info.init"));
-
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event){
-
         ModLogger.info(ModTranslate.toLocal("log.info.postinit"));
-
     }
 
 }
