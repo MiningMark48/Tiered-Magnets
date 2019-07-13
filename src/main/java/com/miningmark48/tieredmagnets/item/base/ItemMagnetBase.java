@@ -172,16 +172,14 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 entity.setPositionAndUpdate(x, y, z);
             }
 
-            if (ModConfig.miscconfigs.doParticles && particles){
+            if (ModConfig.miscconfigs.doParticles && particles && entity.world.isRemote){
                 Random rand = new Random();
                 double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
                 double th = (rand.nextDouble() + 1) * 2 * Math.PI;
                 double pX = entity.posX + r * MathHelper.cos((float) th);
                 double pZ = entity.posZ + r * MathHelper.sin((float) th);
 
-                if (entity.world.isRemote) {
-                    spawnParticles(entity.world, pX, entity.posY, pZ);
-                }
+                spawnParticles(entity.world, pX, entity.posY, pZ);
 
 //                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
