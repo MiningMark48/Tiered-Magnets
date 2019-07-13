@@ -124,12 +124,12 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         if (isEnabled(stack) && (canMagnet(stack) || noCost)) {
             boolean blacklist = stack.getTagCompound().getBoolean("filterModeBlacklist");
 
-            ObjectOpenHashSet<String> inventory = new ObjectOpenHashSet<>();
+            ObjectOpenHashSet<Item> inventory = new ObjectOpenHashSet<>();
             if (ModConfig.miscconfigs.doFilter) {
                 NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < invItems.tagCount(); i++) {
                     NBTTagCompound item = invItems.getCompoundTagAt(i);
-                    inventory.add(new ItemStack(item).getItem().toString());
+                    inventory.add(new ItemStack(item).getItem());
                 }
             }
 
@@ -139,11 +139,11 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 if (canMagnetItem(e)) {
                     if (ModConfig.miscconfigs.doFilter) {
                         if (blacklist) {
-                            if (!inventory.contains(e.getItem().getItem().toString())) {
+                            if (!inventory.contains(e.getItem().getItem())) {
                                 doMagnet(stack, e, x, y, z, noCost, true);
                             }
                         } else {
-                            if (inventory.contains(e.getItem().getItem().toString())) {
+                            if (inventory.contains(e.getItem().getItem())) {
                                 doMagnet(stack, e, x, y, z, noCost, true);
                             }
                         }
