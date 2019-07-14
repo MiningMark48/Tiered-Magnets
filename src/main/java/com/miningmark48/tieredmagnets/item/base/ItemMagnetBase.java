@@ -36,6 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @SuppressWarnings("Duplicates")
 @Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
@@ -124,7 +125,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         if (isEnabled(stack) && (canMagnet(stack) || noCost)) {
             boolean blacklist = stack.getTagCompound().getBoolean("filterModeBlacklist");
 
-            ObjectOpenHashSet<Item> inventory = new ObjectOpenHashSet<>();
+            Set<Item> inventory = new ObjectOpenHashSet<>();
             if (ModConfig.miscconfigs.doFilter) {
                 NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < invItems.tagCount(); i++) {
