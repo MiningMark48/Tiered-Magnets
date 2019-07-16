@@ -251,7 +251,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     @Optional.Method(modid = Reference.BAUBLES)
     public void onWornTick(ItemStack stack, EntityLivingBase player) {
         if (player instanceof EntityPlayer) {
-            doUpdate(stack, player.getEntityWorld(), player.posX, player.posY, player.posZ, ((EntityPlayer) player).capabilities.isCreativeMode);
+            if (!player.isSneaking()) doUpdate(stack, player.getEntityWorld(), player.posX, player.posY, player.posZ, ((EntityPlayer) player).capabilities.isCreativeMode);
         }
     }
 
