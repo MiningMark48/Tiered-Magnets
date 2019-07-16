@@ -4,7 +4,7 @@ public class Reference {
 
     public static final String MOD_ID = "tieredmagnets";
     public static final String MOD_NAME = "Tiered Magnets";
-    public static final String MOD_VERSION = "0.0.1";
+    public static final String MOD_VERSION = "0.0.2";
     public static final String GAME_VERSION = "1.12.2";
     public static final String VERSION = GAME_VERSION + "-" + MOD_VERSION;
     public static final String MOD_DEPENDENCIES = "";
