@@ -32,27 +32,27 @@ public class ModConfig {
 
     public static class Modules {
         @Config.Name("Vanilla")
-        @Config.Comment("If true, enables Vanilla-based, durability tieredmagnets.")
+        @Config.Comment("If true, enables Vanilla-based, durability magnets.")
         @Config.RequiresMcRestart
         public boolean vanillaModule = true;
 
         @Config.Name("Patchouli")
-        @Config.Comment("If true, enables the TieredMagnets manual added by Patchouli.")
+        @Config.Comment("If true, enables the Tiered Magnets manual added by Patchouli.")
         @Config.RequiresMcRestart
         public boolean patchouliModule = true;
 
         @Config.Name("Thermal Expansion")
-        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered tieredmagnets (Requires Thermal Expansion).")
+        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets (Requires Thermal Expansion).")
         @Config.RequiresMcRestart
         public boolean thermalExpansionModule = true;
 
         @Config.Name("Vanilla - Magic")
-        @Config.Comment("If true, enables Vanilla-based, durability tieredmagnets that teleport items to the player.")
+        @Config.Comment("If true, enables Vanilla-based, durability magnets that teleport items to the player.")
         @Config.RequiresMcRestart
         public boolean vanillaMagicModule = true;
 
         @Config.Name("Thermal Expansion - Magic")
-        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered tieredmagnets that teleport items to the player (Requires Thermal Expansion).")
+        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets that teleport items to the player (Requires Thermal Expansion).")
         @Config.RequiresMcRestart
         public boolean thermalExpansionMagicModule = true;
 
@@ -70,7 +70,7 @@ public class ModConfig {
 
         @Config.Name("Base Range")
         @Config.RangeInt(min = 1)
-        @Config.Comment("Set the base range for the vanilla tieredmagnets.")
+        @Config.Comment("Set the base range for the vanilla magnets.")
         @Config.RequiresMcRestart
         public int baseRange = 2;
 
@@ -82,7 +82,7 @@ public class ModConfig {
 
         @Config.Name("Base Durability")
         @Config.RangeInt(min = 1)
-        @Config.Comment("Set the base durability for the vanilla tieredmagnets.")
+        @Config.Comment("Set the base durability for the vanilla magnets.")
         @Config.RequiresMcRestart
         public int baseDurability = 1024;
 
@@ -94,7 +94,7 @@ public class ModConfig {
 
         @Config.Name("Multiplier Magic")
         @Config.RangeInt(min = 0)
-        @Config.Comment("Affects the increase in damage in the magic tieredmagnets.")
+        @Config.Comment("Affects the increase in damage in the magic magnets.")
         @Config.RequiresMcRestart
         public int multiplierMagic = 5;
 
@@ -115,7 +115,7 @@ public class ModConfig {
 
         @Config.Name("Base Range")
         @Config.RangeInt(min = 1)
-        @Config.Comment("Set the base range for the vanilla tieredmagnets.")
+        @Config.Comment("Set the base range for the vanilla magnets.")
         @Config.RequiresMcRestart
         public int baseRange = 8;
 
@@ -151,7 +151,7 @@ public class ModConfig {
 
         @Config.Name("Multiplier Magic Energy Usage")
         @Config.RangeDouble(min = 0)
-        @Config.Comment("Affects the increase in energy usage in the magic tieredmagnets.")
+        @Config.Comment("Affects the increase in energy usage in the magic magnets.")
         @Config.RequiresMcRestart
         public double multiplierMagic = 5D;
 
@@ -185,11 +185,11 @@ public class ModConfig {
         public boolean doParticles = true;
 
         @Config.Name("Glow")
-        @Config.Comment("If true, tieredmagnets will glow when enabled.")
+        @Config.Comment("If true, magnets will glow when enabled.")
         public boolean doGlow = true;
 
         @Config.Name("Filter")
-        @Config.Comment("If true, tieredmagnets will be able to be filtered.")
+        @Config.Comment("If true, magnets will be able to be filtered.")
         public boolean doFilter = true;
 
         @Config.Name("XP Vacuum")
