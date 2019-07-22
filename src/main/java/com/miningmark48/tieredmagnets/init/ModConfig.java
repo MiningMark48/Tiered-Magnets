@@ -96,7 +96,7 @@ public class ModConfig {
         @Config.RangeInt(min = 0)
         @Config.Comment("Affects the increase in damage in the magic magnets.")
         @Config.RequiresMcRestart
-        public int multiplierMagic = 5;
+        public int multiplierMagic = 3;
 
     }
 
@@ -153,7 +153,7 @@ public class ModConfig {
         @Config.RangeDouble(min = 0)
         @Config.Comment("Affects the increase in energy usage in the magic magnets.")
         @Config.RequiresMcRestart
-        public double multiplierMagic = 5D;
+        public double multiplierMagic = 3D;
 
     }
 
