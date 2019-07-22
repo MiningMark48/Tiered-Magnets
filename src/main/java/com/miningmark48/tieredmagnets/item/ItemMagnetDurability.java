@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
+import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,15 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
-        list.add(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getItemDamage()));
+
+        if (KeyChecker.isHoldingShift()) {
+            list.add(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getItemDamage()));
+
+            int damageAmount = 1;
+            if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
+            list.add(TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.cost") + " " + TextFormatting.LIGHT_PURPLE + damageAmount + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.durability") + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks1") + " " + TextFormatting.LIGHT_PURPLE + ModConfig.miscconfigs.costForDistance + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks2"));
+        }
+
     }
 
     @Override

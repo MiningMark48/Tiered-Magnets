@@ -3,6 +3,7 @@ package com.miningmark48.tieredmagnets.item;
 import com.miningmark48.tieredmagnets.block.base.CustomEnergyStorage;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
+import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -38,7 +39,11 @@ public class ItemMagnetRF extends ItemMagnetBase {
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
-        list.add(TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy1") + TextFormatting.AQUA + " " + this.getEnergyStored(stack) + " / " + this.getMaxEnergyStored(stack) + " " + TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy2") + " (" + usageEnergy + ModTranslate.toLocal("tooltip.item.magnet_base.energy3") + ") ");
+
+        if (KeyChecker.isHoldingShift()) {
+            list.add(TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy1") + TextFormatting.AQUA + " " + this.getEnergyStored(stack) + " / " + this.getMaxEnergyStored(stack) + " " + TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy2"));
+            list.add(TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.cost") + " " + TextFormatting.RED + usageEnergy + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.energy") + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks1") + " " + TextFormatting.LIGHT_PURPLE + ModConfig.miscconfigs.costForDistance + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks2"));
+        }
     }
 
     @Override

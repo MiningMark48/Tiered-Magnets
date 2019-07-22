@@ -7,6 +7,7 @@ import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
+import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -60,9 +61,14 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         setTagDefaults(stack);
 
         list.add(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : ""))));
-
         list.add(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled")));
-        list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
+
+        if (KeyChecker.isHoldingShift()) {
+            list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
+        } else {
+            list.add(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift"));
+        }
+
     }
 
     @Override
