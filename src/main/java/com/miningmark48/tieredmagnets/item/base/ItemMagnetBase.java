@@ -7,6 +7,7 @@ import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
@@ -185,7 +186,11 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 //                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
 
-            if (!noCost) doCost(stack);
+//        ModLogger.info(entity.getDistance(x, y, z));
+
+            if (!noCost && entity.getDistance(x, y, z) <= ModConfig.miscconfigs.costForDistance) {
+                doCost(stack);
+            }
     }
 
     @SideOnly(Side.CLIENT)

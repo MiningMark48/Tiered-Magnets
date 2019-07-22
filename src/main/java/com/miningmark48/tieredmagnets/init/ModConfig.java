@@ -198,7 +198,13 @@ public class ModConfig {
 
         @Config.Name("Cooldown Time")
         @Config.Comment("The time (in ticks) the player can enable/disable a magnet.")
+        @Config.RangeInt(min = 0)
         public int cooldownTime = 10;
+
+        @Config.Name("Cost for Distance")
+        @Config.Comment("The maximum distance in which magnetizing items and XP begins to have a cost.")
+        @Config.RangeDouble(min = 0)
+        public double costForDistance = 1.5D;
 
     }
 
