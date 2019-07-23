@@ -3,6 +3,7 @@ package com.miningmark48.tieredmagnets.item.base;
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
+import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.reference.Reference;
@@ -203,8 +204,10 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     private void spawnParticles(World world, double x, double y, double z) {
         if (getParticle() == 0) {
             Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeVanilla(world, x, y + 0.3, z, 0, 0, 0));
-        } else {
+        } else if (getParticle() == 1) {
             Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(world, x, y + 0.3, z, 0, 0, 0));
+        } else {
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeFree(world, x, y + 0.3, z, 0, 0, 0));
         }
     }
 

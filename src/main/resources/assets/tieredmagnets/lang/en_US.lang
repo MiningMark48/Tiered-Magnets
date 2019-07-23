@@ -48,6 +48,7 @@ tooltip.item.magnet_base.cost.durability=durability/tick
 tooltip.item.magnet_base.cost.energy=RF/t
 tooltip.item.magnet_base.cost.blocks1=within
 tooltip.item.magnet_base.cost.blocks2=blocks
+tooltip.item.magnet_base.free=Free to use!
 tooltip.item.magnet_base.durability=Durability:
 tooltip.item.magnet_base.energy1=Energy:
 tooltip.item.magnet_base.energy2=RF
