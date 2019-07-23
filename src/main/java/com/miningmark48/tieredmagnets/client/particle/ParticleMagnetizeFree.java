@@ -16,13 +16,21 @@ public class ParticleMagnetizeFree extends ParticleMagnetize {
         }
 
         if (this.particleAge % 4 == 0) {
-            this.particleGreen = (float) 0.25;
+            this.particleRed = (float) 0;
+            this.particleGreen = (float) 0;
+            this.particleBlue = (float) 0;
         } else if (this.particleAge % 4 == 1) {
-            this.particleGreen = (float) 0.5;
+            this.particleRed = (float) 0.25;
+            this.particleGreen = (float) 0.25;
+            this.particleBlue = (float) 0.25;
         } else if (this.particleAge % 4 == 2) {
-            this.particleGreen = (float) 0.75;
+            this.particleRed = (float) 0.5;
+            this.particleGreen = (float) 0.5;
+            this.particleBlue = (float) 0.5;
         } else {
-            this.particleGreen = (float) 1;
+            this.particleRed = (float) 0.75;
+            this.particleGreen = (float) 0.75;
+            this.particleBlue = (float) 0.75;
         }
 
     }

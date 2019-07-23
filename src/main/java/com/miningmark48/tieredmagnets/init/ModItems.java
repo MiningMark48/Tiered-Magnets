@@ -1,11 +1,12 @@
 package com.miningmark48.tieredmagnets.init;
 
 import com.miningmark48.tieredmagnets.item.*;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
 public class ModItems {
 
-    //Durability TieredMagnets
+    //Durability Magnets
     public static Item ItemMagnetDurabilityStone;
     public static Item ItemMagnetDurabilityIron;
     public static Item ItemMagnetDurabilityRedstone;
@@ -35,8 +36,12 @@ public class ModItems {
     public static Item ItemMagnetMagicElectromagnetSignalum;
     public static Item ItemMagnetMagicElectromagnetResonant;
 
+    //Free Magnets
+    public static Item ItemMagnetFree;
+    public static Item ItemMagnetMagicFree;
+
     public static void init() {
-        //Durability TieredMagnets
+        //Durability Magnets
         ItemMagnetDurabilityStone = new ItemMagnetDurability(0, false).setUnlocalizedName("magnet_durability_stone").setRegistryName("magnet_durability_stone").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityIron = new ItemMagnetDurability(1, false).setUnlocalizedName("magnet_durability_iron").setRegistryName("magnet_durability_iron").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetDurabilityRedstone = new ItemMagnetDurability(2, false).setUnlocalizedName("magnet_durability_redstone").setRegistryName("magnet_durability_redstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
@@ -65,6 +70,10 @@ public class ModItems {
         ItemMagnetMagicElectromagnetReinforced = new ItemMagnetRF(2, true).setUnlocalizedName("magnet_magic_energy_reinforced").setRegistryName("magnet_magic_energy_reinforced").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetMagicElectromagnetSignalum = new ItemMagnetRF(3, true).setUnlocalizedName("magnet_magic_energy_signalum").setRegistryName("magnet_magic_energy_signalum").setCreativeTab(ModCreativeTab.Magnets_Tab);
         ItemMagnetMagicElectromagnetResonant = new ItemMagnetRF(4, true).setUnlocalizedName("magnet_magic_energy_resonant").setRegistryName("magnet_magic_energy_resonant").setCreativeTab(ModCreativeTab.Magnets_Tab);
+
+        //Free Magnets
+        ItemMagnetFree = new ItemMagnetFree(false).setUnlocalizedName("magnet_free").setRegistryName("magnet_free").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        ItemMagnetMagicFree = new ItemMagnetFree( true).setUnlocalizedName("magnet_magic_free").setRegistryName("magnet_magic_free").setCreativeTab(ModCreativeTab.Magnets_Tab);
 
     }
 

@@ -53,6 +53,10 @@ public class ModRegistry {
         registerItem(ModItems.ItemMagnetMagicElectromagnetSignalum);
         registerItem(ModItems.ItemMagnetMagicElectromagnetResonant);
 
+        //Free Magnets
+        registerItem(ModItems.ItemMagnetFree);
+        registerItem(ModItems.ItemMagnetMagicFree);
+
     }
 
     private static void registerBlocks(){
@@ -61,7 +65,7 @@ public class ModRegistry {
     }
 
     public static void registerRenderItems(){
-        //Durability TieredMagnets
+        //Durability Magnets
         registerItemRender(ModItems.ItemMagnetDurabilityStone);
         registerItemRender(ModItems.ItemMagnetDurabilityIron);
         registerItemRender(ModItems.ItemMagnetDurabilityRedstone);
@@ -90,6 +94,10 @@ public class ModRegistry {
         registerItemRender(ModItems.ItemMagnetMagicElectromagnetReinforced);
         registerItemRender(ModItems.ItemMagnetMagicElectromagnetSignalum);
         registerItemRender(ModItems.ItemMagnetMagicElectromagnetResonant);
+
+        //Free Magnets
+        registerItemRender(ModItems.ItemMagnetFree);
+        registerItemRender(ModItems.ItemMagnetMagicFree);
 
     }
 

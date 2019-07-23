@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -13,18 +14,16 @@ import java.util.List;
 
 public class ItemMagnetFree extends ItemMagnetBase {
 
-    public ItemMagnetFree(int tier, int baseRange, int multiplierRange, double speed, boolean isMagic) {
-        super(baseRange + (baseRange * multiplierRange * tier), speed, isMagic);
+    public ItemMagnetFree(boolean isMagic) {
+        super(ModConfig.cursedMagnetsConfigs.range, ModConfig.cursedMagnetsConfigs.speed, isMagic);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
-
         if (KeyChecker.isHoldingShift()) {
             list.add(TextFormatting.GOLD + ModTranslate.toLocal("tooltip.item.magnet_base.free"));
         }
-
     }
 
     @Override

@@ -22,6 +22,10 @@ public class ModConfig {
     @Config.Comment("Thermal Expansion configuration settings")
     public static ThermalExpansionConfigs thermalExpansionConfigs = new ThermalExpansionConfigs();
 
+    @Config.Name("Cursed Magnets")
+    @Config.Comment("Cursed Magnets configuration settings")
+    public static CursedMagnetConfigs cursedMagnetsConfigs = new CursedMagnetConfigs();
+
     @Config.Name("Utility Blocks")
     @Config.Comment("Magnetic Insulator configuration settings")
     public static UtilityBlockConfigs utilityBlockConfigs = new UtilityBlockConfigs();
@@ -35,11 +39,6 @@ public class ModConfig {
         @Config.Comment("If true, enables Vanilla-based, durability magnets.")
         @Config.RequiresMcRestart
         public boolean vanillaModule = true;
-
-        @Config.Name("Patchouli")
-        @Config.Comment("If true, enables the Tiered Magnets manual added by Patchouli.")
-        @Config.RequiresMcRestart
-        public boolean patchouliModule = true;
 
         @Config.Name("Thermal Expansion")
         @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets (Requires Thermal Expansion).")
@@ -56,9 +55,20 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public boolean thermalExpansionMagicModule = true;
 
+        @Config.Name("Cursed Magnets")
+        @Config.Comment("If true, enables magnets that have no cost to use.")
+        @Config.RequiresMcRestart
+        public boolean cursedMagnetsModule = true;
+
         @Config.Name("Utility Blocks")
         @Config.Comment("If true, utility blocks for the magnets will be enabled.")
         public boolean utilityBlocksModule = true;
+
+        @Config.Name("Patchouli")
+        @Config.Comment("If true, enables the Tiered Magnets manual added by Patchouli.")
+        @Config.RequiresMcRestart
+        public boolean patchouliModule = true;
+
     }
 
     public static class VanillaConfigs {
@@ -154,6 +164,21 @@ public class ModConfig {
         @Config.Comment("Affects the increase in energy usage in the magic magnets.")
         @Config.RequiresMcRestart
         public double multiplierMagic = 3D;
+
+    }
+
+    public static class CursedMagnetConfigs {
+        @Config.Name("Speed")
+        @Config.RangeDouble(min = 0.01)
+        @Config.Comment("Affects the speed in which items are attracted.")
+        @Config.RequiresMcRestart
+        public double speed = 0.05D;
+
+        @Config.Name("Range")
+        @Config.RangeInt(min = 1)
+        @Config.Comment("Set the range for the Cursed Magnets.")
+        @Config.RequiresMcRestart
+        public int range = 64;
 
     }
 
