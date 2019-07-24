@@ -6,10 +6,10 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class ParticleMagnetize extends Particle {
+public abstract class ParticleMagnetize extends Particle {
 
     public static ResourceLocation texture = new ResourceLocation(Reference.MOD_ID+ ":particles/magnetize");
-    public static int life = 8;
+    private static int life = 8;
 
     public ParticleMagnetize(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
         super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0, 0, 0);
@@ -26,11 +26,6 @@ public class ParticleMagnetize extends Particle {
     @Override
     public int getFXLayer() {
         return 1;
-    }
-
-    @Override
-    public void onUpdate() {
-
     }
 
     public enum Particles {
