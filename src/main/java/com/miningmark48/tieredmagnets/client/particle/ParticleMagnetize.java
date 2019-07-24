@@ -11,9 +11,8 @@ public class ParticleMagnetize extends Particle {
     public static ResourceLocation texture = new ResourceLocation(Reference.MOD_ID+ ":particles/magnetize");
     public static int life = 8;
 
-    public ParticleMagnetize(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
-    {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+    public ParticleMagnetize(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, 0, 0, 0);
 
         this.particleRed = (float) 0;
         this.particleGreen = (float) 0;
@@ -22,7 +21,6 @@ public class ParticleMagnetize extends Particle {
         this.particleAge = life;
 
         this.setParticleTexture(Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString()));
-
     }
 
     @Override
@@ -33,6 +31,12 @@ public class ParticleMagnetize extends Particle {
     @Override
     public void onUpdate() {
 
+    }
+
+    public enum Particles {
+        ENERGY,
+        FREE,
+        VANILLA
     }
 
 }

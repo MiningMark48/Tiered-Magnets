@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item.base;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
+import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
@@ -9,10 +10,10 @@ import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
-import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +41,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import static com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles.VANILLA;
 
 @SuppressWarnings("Duplicates")
 @Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
@@ -189,25 +192,29 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 double pZ = entity.posZ + r * MathHelper.sin((float) th);
 
                 spawnParticles(entity.world, pX, entity.posY, pZ);
-
-//                player.world.spawnParticle(getParticle(), pX, entity.posY + 0.3, pZ, 0.0D, 0.0D, 0.0D);
             }
-
-//        ModLogger.info(entity.getDistance(x, y, z));
 
             if (!noCost && entity.getDistance(x, y, z) <= ModConfig.miscconfigs.costForDistance) {
                 doCost(stack);
             }
+
     }
 
     @SideOnly(Side.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
-        if (getParticle() == 0) {
-            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeVanilla(world, x, y + 0.3, z, 0, 0, 0));
-        } else if (getParticle() == 1) {
-            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeEnergy(world, x, y + 0.3, z, 0, 0, 0));
-        } else {
-            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagnetizeFree(world, x, y + 0.3, z, 0, 0, 0));
+        ParticleManager pm = Minecraft.getMinecraft().effectRenderer;
+        double yOffset = y + 0.3D;
+        switch (getParticle()) {
+            default:
+            case VANILLA:
+                pm.addEffect(new ParticleMagnetizeVanilla(world, x, yOffset, z));
+                break;
+            case ENERGY:
+                pm.addEffect(new ParticleMagnetizeEnergy(world, x, yOffset, z));
+                break;
+            case FREE:
+                pm.addEffect(new ParticleMagnetizeFree(world, x, yOffset, z));
+                break;
         }
     }
 
@@ -223,8 +230,8 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 
     }
 
-    public int getParticle() {
-        return 0;
+    public Particles getParticle() {
+        return Particles.VANILLA;
     }
 
     public int getDefaultRange() {

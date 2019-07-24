@@ -1,6 +1,8 @@
 package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.block.base.CustomEnergyStorage;
+import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize;
+import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
@@ -57,8 +59,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     @Override
-    public int getParticle() {
-        return 1;
+    public Particles getParticle() {
+        return Particles.ENERGY;
     }
 
     @Override

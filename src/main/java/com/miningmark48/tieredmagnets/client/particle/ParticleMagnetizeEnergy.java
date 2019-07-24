@@ -4,8 +4,8 @@ import net.minecraft.world.World;
 
 public class ParticleMagnetizeEnergy extends ParticleMagnetize {
 
-    public ParticleMagnetizeEnergy(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+    public ParticleMagnetizeEnergy(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn);
     }
 
     @Override

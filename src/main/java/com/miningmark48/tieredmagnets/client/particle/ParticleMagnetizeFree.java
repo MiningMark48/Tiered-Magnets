@@ -4,8 +4,8 @@ import net.minecraft.world.World;
 
 public class ParticleMagnetizeFree extends ParticleMagnetize {
 
-    public ParticleMagnetizeFree(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn) {
-        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+    public ParticleMagnetizeFree(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn) {
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn);
     }
 
     @Override
