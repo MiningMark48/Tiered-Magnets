@@ -1,0 +1,16 @@
+{
+  "name": "Cursed Magnets",
+  "icon": "tieredmagnets:magnet_free",
+  "category": "category_cursed",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Like regular $(l:magnets/magnets)magnets$(), Cursed Magnets pull items toward the player. However, they have no cost. $(br2)If enabled, Cursed Magnets will have the Curse of Vanishing, meaning they are lost on death."
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_free"
+    }
+  ]
+}

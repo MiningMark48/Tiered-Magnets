@@ -1,0 +1,16 @@
+{
+  "name": "Magic Cursed Magnet",
+  "icon": "tieredmagnets:magnet_magic_free",
+  "category": "category_cursed",
+  "sortnum": 2,
+  "pages": [
+    {
+      "type": "text",
+      "text": "Like regular $(l:magnets/magic_magnets)magic magnets$(), Magic Cursed Magnets teleport items to the player. However, they have no cost. $(br2)If enabled, Cursed Magnets will have the Curse of Vanishing, meaning they are lost on death."
+    },
+    {
+      "type": "crafting",
+      "recipe": "tieredmagnets:magnet_magic_free"
+    }
+  ]
+}
