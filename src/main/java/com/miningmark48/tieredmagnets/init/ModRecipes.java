@@ -199,6 +199,21 @@ public class ModRecipes {
             );
         }
 
+        if (ModConfig.modules.cursedMagnetsModule) {
+            //Free
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_free"), null, new ItemStack(ModItems.ItemMagnetFree),
+                    "DGD", "ISI", "R R",
+                    'D', new ItemStack(Items.DIAMOND), 'G', new ItemStack(Items.GHAST_TEAR), 'I', new ItemStack(Items.IRON_INGOT), 'S', new ItemStack(Blocks.SOUL_SAND), 'R', new ItemStack(Items.REDSTONE)
+            );
+            //Magic Free
+            GameRegistry.addShapedRecipe(
+                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_free"), null, new ItemStack(ModItems.ItemMagnetMagicFree),
+                    " E ", "GMG", " E ",
+                    'M', new ItemStack(ModItems.ItemMagnetFree), 'E', new ItemStack(Items.ENDER_PEARL), 'G', new ItemStack(Items.GOLD_INGOT)
+            );
+        }
+
         if (ModConfig.modules.utilityBlocksModule) {
             //Magnetic Insulator
             if (ModConfig.utilityBlockConfigs.insulator) {

@@ -4,8 +4,13 @@ import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particle
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -25,6 +30,14 @@ public class ItemMagnetFree extends ItemMagnetBase {
         if (KeyChecker.isHoldingShift()) {
             list.add(TextFormatting.GOLD + ModTranslate.toLocal("tooltip.item.magnet_base.free"));
         }
+
+        if (ModConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) list.add(TextFormatting.RED + ModTranslate.toLocal("enchantment.vanishing_curse"));
+    }
+
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+        if (ModConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) stack.addEnchantment(Enchantments.VANISHING_CURSE, 1);
+        super.onUpdate(stack, world, entity, itemSlot, isSelected);
     }
 
     @Override

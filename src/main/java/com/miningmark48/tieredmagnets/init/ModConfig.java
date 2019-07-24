@@ -180,6 +180,10 @@ public class ModConfig {
         @Config.RequiresMcRestart
         public int range = 64;
 
+        @Config.Name("Curse of Vanishing")
+        @Config.Comment("If true, the Curse of Vanishing will be applied to the magnet, causing it to be lost on death.")
+        public boolean vanishing = true;
+
     }
 
     public static class UtilityBlockConfigs {

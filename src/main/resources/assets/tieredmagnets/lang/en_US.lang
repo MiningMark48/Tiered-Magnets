@@ -29,6 +29,8 @@ item.magnet_magic_energy_hardened.name=Magic Hardened Electromagnet
 item.magnet_magic_energy_reinforced.name=Magic Reinforced Electromagnet
 item.magnet_magic_energy_signalum.name=Magic Signalum Electromagnet
 item.magnet_magic_energy_resonant.name=Magic Resonant Electromagnet
+item.magnet_free.name=Cursed Magnet
+item.magnet_magic_free.name=Cursed Magic Magnet
 
 
 #Blocks
