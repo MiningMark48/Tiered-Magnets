@@ -2,7 +2,7 @@ package com.miningmark48.tieredmagnets.item.base;
 
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
-import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles;
+import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
@@ -41,8 +41,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
-import static com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles.VANILLA;
 
 @SuppressWarnings("Duplicates")
 @Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)

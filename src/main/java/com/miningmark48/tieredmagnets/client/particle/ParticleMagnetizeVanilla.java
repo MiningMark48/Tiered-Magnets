@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.client.particle;
 
+import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize;
 import net.minecraft.world.World;
 
 public class ParticleMagnetizeVanilla extends ParticleMagnetize {

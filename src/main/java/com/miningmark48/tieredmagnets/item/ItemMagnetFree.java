@@ -1,13 +1,11 @@
 package com.miningmark48.tieredmagnets.item;
 
-import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetize.Particles;
+import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
-import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Enchantments;

@@ -1,4 +1,4 @@
-package com.miningmark48.tieredmagnets.client.particle;
+package com.miningmark48.tieredmagnets.client.particle.base;
 
 import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraft.client.Minecraft;
