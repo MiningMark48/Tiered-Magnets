@@ -168,6 +168,20 @@ public class ModConfig {
     }
 
     public static class CursedMagnetConfigs {
+        @Config.Name("Cursed Magnet")
+        @Config.Comment("If true, the Cursed Magnet will be enabled.")
+        @Config.RequiresMcRestart
+        public boolean cursedMagnet = true;
+
+        @Config.Name("Magic Cursed Magnet")
+        @Config.Comment("If true, the Magic Cursed Magnet will be enabled.")
+        @Config.RequiresMcRestart
+        public boolean magicCursedMagnet = true;
+
+        @Config.Name("Curse of Vanishing")
+        @Config.Comment("If true, the Curse of Vanishing will be applied to the magnet, causing it to be lost on death.")
+        public boolean vanishing = true;
+
         @Config.Name("Speed")
         @Config.RangeDouble(min = 0.01)
         @Config.Comment("Affects the speed in which items are attracted.")
@@ -179,10 +193,6 @@ public class ModConfig {
         @Config.Comment("Set the range for the Cursed Magnets.")
         @Config.RequiresMcRestart
         public int range = 64;
-
-        @Config.Name("Curse of Vanishing")
-        @Config.Comment("If true, the Curse of Vanishing will be applied to the magnet, causing it to be lost on death.")
-        public boolean vanishing = true;
 
     }
 
