@@ -54,7 +54,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-        this.extractEnergyInternal(stack, usageEnergy, false);
+        if (ModConfig.thermalExpansionConfigs.hasCost) this.extractEnergyInternal(stack, usageEnergy, false);
     }
 
     @Override

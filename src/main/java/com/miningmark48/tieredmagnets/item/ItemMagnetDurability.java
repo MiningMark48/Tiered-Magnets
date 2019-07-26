@@ -41,10 +41,12 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-        int damageAmount = 1;
-        if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
-        if (stack.attemptDamageItem(damageAmount, new Random(), null)) {
-            stack.shrink(1);
+        if (ModConfig.vanillaConfigs.hasCost) {
+            int damageAmount = 1;
+            if (isMagic) damageAmount *= ModConfig.vanillaConfigs.multiplierMagic;
+            if (stack.attemptDamageItem(damageAmount, new Random(), null)) {
+                stack.shrink(1);
+            }
         }
     }
 

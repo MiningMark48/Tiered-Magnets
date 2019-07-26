@@ -72,6 +72,11 @@ public class ModConfig {
     }
 
     public static class VanillaConfigs {
+
+        @Config.Name("Has Cost")
+        @Config.Comment("If true, magnets will take damage when used.")
+        public boolean hasCost = true;
+
         @Config.Name("Speed")
         @Config.RangeDouble(min = 0.01)
         @Config.Comment("Affects the speed in which items are attracted.")
@@ -111,6 +116,11 @@ public class ModConfig {
     }
 
     public static class ThermalExpansionConfigs {
+
+        @Config.Name("Has Cost")
+        @Config.Comment("If true, magnets will consume energy when used.")
+        public boolean hasCost = true;
+
         @Config.Name("Speed")
         @Config.RangeDouble(min = 0.01)
         @Config.Comment("Affects the speed in which items are attracted.")
