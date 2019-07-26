@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
+import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,9 +27,13 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     protected NonNullList<ItemStack> inventory;
     private ItemMagnetBase magnet;
 
-    public TileEntityMagneticProjector(TileEntityType<?> p_i48289_1_, NonNullList<ItemStack> inventory) {
+    public TileEntityMagneticProjector(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
         this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
+    }
+
+    public TileEntityMagneticProjector() {
+        this(ModTileEntities.MAGNETIC_PROJECTOR);
     }
 
     @Override

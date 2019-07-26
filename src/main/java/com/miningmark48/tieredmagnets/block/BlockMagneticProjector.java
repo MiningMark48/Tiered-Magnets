@@ -1,107 +1,116 @@
 package com.miningmark48.tieredmagnets.block;
 
-import com.miningmark48.tieredmagnets.reference.Reference;
-import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
+import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.MapColor;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 @SuppressWarnings("Duplicates")
-public class BlockMagneticProjector extends BlockContainer {
+public class BlockMagneticProjector extends ContainerBlock {
 
-    public static final PropertyDirection FACING = PropertyDirection.create("facing");
-    private static final PropertyBool POWERED = PropertyBool.create("powered");
+    public static final DirectionProperty FACING = DirectionProperty.create("facing");
+    private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
     private static AxisAlignedBB BOUNDING_BOX_ACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5625D, 0.9375D);
     private static AxisAlignedBB BOUNDING_BOX_INACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D);
 
     public BlockMagneticProjector() {
-        super(Material.ROCK, MapColor.GRAY);
-        setHardness(2.0f);
-        setResistance(2.0f);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
+        super(Properties.create(Material.ROCK, MaterialColor.YELLOW).hardnessAndResistance(2.0f, 2.0f));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
     }
 
-    @Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        if (state.getValue(POWERED)) return BOUNDING_BOX_INACITVE;
-        return BOUNDING_BOX_ACITVE;
-    }
+//    @Override
+//    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
+//        if (state.get(POWERED)) return BOUNDING_BOX_INACITVE;
+//        return BOUNDING_BOX_ACITVE;
+//    }
 
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-        if (state.getValue(POWERED)) addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_INACITVE);
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_ACITVE);
+    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+        return super.getShape(p_220053_1_, p_220053_2_, p_220053_3_, p_220053_4_);
+    }
+
+//    @Override
+//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+//        if (state.getValue(POWERED)) addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_INACITVE);
+//        addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_ACITVE);
+//    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
+        return super.getCollisionShape(p_220071_1_, p_220071_2_, p_220071_3_, p_220071_4_);
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityMagneticProjector();
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityMagneticProjector(ModTileEntities.MAGNETIC_PROJECTOR);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!player.isSneaking()) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnetic_projector, world, pos.getX(), pos.getY(), pos.getZ());
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
+        if (!player.isSneaking()) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(pos));
         return true;
     }
 
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        super.onBlockAdded(worldIn, pos, state);
-        this.setDefaultFacing(worldIn, pos, state);
-        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState state1, boolean p_220082_5_) {
+        super.onBlockAdded(state, world, pos, state1, p_220082_5_);
+        this.setDefaultFacing(world, pos, state);
+        world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
     }
 
-//    @SuppressWarnings("deprecation")
+    //    @SuppressWarnings("deprecation")
 //    @Override
 //    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos changedPos)
 //    {
 //        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
 //    }
 
-    private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
+    private void setDefaultFacing(World worldIn, BlockPos pos, BlockState state)
     {
         if (!worldIn.isRemote) {
-            IBlockState iblockstate = worldIn.getBlockState(pos.north());
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-            IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-            IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-            EnumFacing enumfacing = state.getValue(FACING);
-            if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock()) {
-                enumfacing = EnumFacing.SOUTH;
-            } else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock()) {
-                enumfacing = EnumFacing.NORTH;
-            } else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock()) {
-                enumfacing = EnumFacing.EAST;
-            } else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock()) {
-                enumfacing = EnumFacing.WEST;
+            BlockState iblockstate = worldIn.getBlockState(pos.north());
+            BlockState iblockstate1 = worldIn.getBlockState(pos.south());
+            BlockState iblockstate2 = worldIn.getBlockState(pos.west());
+            BlockState iblockstate3 = worldIn.getBlockState(pos.east());
+            Direction enumfacing = state.get(FACING);
+            if (enumfacing == Direction.NORTH && iblockstate.isSolid() && !iblockstate1.isSolid()) {
+                enumfacing = Direction.SOUTH;
+            } else if (enumfacing == Direction.SOUTH && iblockstate1.isSolid() && !iblockstate.isSolid()) {
+                enumfacing = Direction.NORTH;
+            } else if (enumfacing == Direction.WEST && iblockstate2.isSolid() && !iblockstate3.isSolid()) {
+                enumfacing = Direction.EAST;
+            } else if (enumfacing == Direction.EAST && iblockstate3.isSolid() && !iblockstate2.isSolid()) {
+                enumfacing = Direction.WEST;
             }
 
-            worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
+            worldIn.setBlockState(pos, state.with(FACING, enumfacing), 2);
         }
     }
 

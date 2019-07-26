@@ -1,31 +1,29 @@
 package com.miningmark48.tieredmagnets.block;
 
-import com.miningmark48.tieredmagnets.reference.Reference;
-import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
+import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
-import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -36,27 +34,28 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     public BlockMagneticInsulator() {
         super(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(2.0f));
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
     }
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityMagneticInsulator();
+    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+        return new TileEntityMagneticInsulator(ModTileEntities.MAGNETIC_INSULATOR);
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if (!player.isSneaking()) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnetic_insulator, world, pos.getX(), pos.getY(), pos.getZ());
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
+        if (!player.isSneaking()) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(pos));
         return true;
     }
 
     @Override
-    public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-        super.onBlockAdded(worldIn, pos, state);
-        this.setDefaultFacing(worldIn, pos, state);
-        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState state2, boolean p_220082_5_) {
+        super.onBlockAdded(state, world, pos, state2, p_220082_5_);
+        this.setDefaultFacing(world, pos, state);
+        world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
     }
+
 
 //    @SuppressWarnings("deprecation")
 //    @Override
@@ -65,78 +64,77 @@ public class BlockMagneticInsulator extends ContainerBlock {
 //        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
 //    }
 
-    private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
+    private void setDefaultFacing(World worldIn, BlockPos pos, BlockState state)
     {
         if (!worldIn.isRemote) {
-            IBlockState iblockstate = worldIn.getBlockState(pos.north());
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
-            IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
-            IBlockState iblockstate3 = worldIn.getBlockState(pos.east());
-            EnumFacing enumfacing = state.getValue(FACING);
-            if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock()) {
-                enumfacing = EnumFacing.SOUTH;
-            } else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock()) {
-                enumfacing = EnumFacing.NORTH;
-            } else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock()) {
-                enumfacing = EnumFacing.EAST;
-            } else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock()) {
-                enumfacing = EnumFacing.WEST;
+            BlockState iblockstate = worldIn.getBlockState(pos.north());
+            BlockState iblockstate1 = worldIn.getBlockState(pos.south());
+            BlockState iblockstate2 = worldIn.getBlockState(pos.west());
+            BlockState iblockstate3 = worldIn.getBlockState(pos.east());
+            Direction enumfacing = state.get(FACING);
+            if (enumfacing == Direction.NORTH && iblockstate.isSolid() && !iblockstate1.isSolid()) {
+                enumfacing = Direction.SOUTH;
+            } else if (enumfacing == Direction.SOUTH && iblockstate1.isSolid() && !iblockstate.isSolid()) {
+                enumfacing = Direction.NORTH;
+            } else if (enumfacing == Direction.WEST && iblockstate2.isSolid() && !iblockstate3.isSolid()) {
+                enumfacing = Direction.EAST;
+            } else if (enumfacing == Direction.EAST && iblockstate3.isSolid() && !iblockstate2.isSolid()) {
+                enumfacing = Direction.WEST;
             }
 
-            worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
+            worldIn.setBlockState(pos, state.with(FACING, enumfacing), 2);
         }
     }
 
+    @Nullable
     @Override
-    @SuppressWarnings("deprecation")
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    { return this.getDefaultState().withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer));
+    public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+        return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing().getOpposite());
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack)
-    {
-        worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
+    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+//        world.setBlockState(pos, state.with(FACING, Direction.getDirectionFromEntityLiving(pos, placer)), 2);
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        boolean powered = false;
-        if (meta >= 6)
-        {
-            meta -= 6;
-            powered = true;
-        }
+//    @SuppressWarnings("deprecation")
+//    @Override
+//    public BlockState getStateFromMeta(int meta)
+//    {
+//        boolean powered = false;
+//        if (meta >= 6)
+//        {
+//            meta -= 6;
+//            powered = true;
+//        }
+//
+//        return this.getDefaultState().withProperty(FACING, EnumFacing.values()[meta]).withProperty(POWERED, powered);
+//    }
+//
+//    @Override
+//    public int getMetaFromState(IBlockState state)
+//    {
+//        int i = state.getValue(FACING).getIndex();
+//
+//        if (state.getValue(POWERED))
+//        {
+//            i += 6;
+//        }
+//
+//        return i;
+//    }
 
-        return this.getDefaultState().withProperty(FACING, EnumFacing.values()[meta]).withProperty(POWERED, powered);
-    }
-
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        int i = state.getValue(FACING).getIndex();
-
-        if (state.getValue(POWERED))
-        {
-            i += 6;
-        }
-
-        return i;
-    }
-
-    @Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, FACING, POWERED);
-    }
+//    @Override
+//    protected BlockStateContainer createBlockState()
+//    {
+//        return new BlockStateContainer(this, FACING, POWERED);
+//    }
 
     public void setState(World worldIn, BlockPos pos, boolean isActive)
     {
         TileEntity tileentity = worldIn.getTileEntity(pos);
 
-        worldIn.setBlockState(pos, worldIn.getBlockState(pos).withProperty(POWERED, isActive), 3);
+        worldIn.setBlockState(pos, worldIn.getBlockState(pos).with(POWERED, isActive), 3);
 
         if (tileentity != null)
         {
@@ -146,29 +144,28 @@ public class BlockMagneticInsulator extends ContainerBlock {
     }
 
     @Override
-    public EnumBlockRenderType getRenderType(IBlockState state)
+    public BlockRenderType getRenderType(BlockState state)
     {
-        return EnumBlockRenderType.MODEL;
+        return BlockRenderType.MODEL;
     }
 
     @Override
-    public boolean isFullCube(IBlockState state){
+    public boolean isSolid(BlockState state){
         return false;
     }
 
-    @Override
-    public boolean isOpaqueCube(IBlockState state){
-        return false;
-    }
+//    @Override
+//    public boolean isOpaqueCube(BlockState state){
+//        return false;
+//    }
 
     @Override
-    public BlockRenderLayer getBlockLayer(){
+    public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT;
     }
 
-    @Override
-    public boolean isFullBlock(IBlockState state) {
-        return false;
-    }
-
+//    @Override
+//    public boolean isFullBlock(BlockState state) {
+//        return false;
+//    }
 }
