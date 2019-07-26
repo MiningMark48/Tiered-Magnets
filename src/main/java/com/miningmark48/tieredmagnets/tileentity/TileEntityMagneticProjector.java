@@ -3,35 +3,36 @@ package com.miningmark48.tieredmagnets.tileentity;
 import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.HopperTileEntity;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityHopper;
-import net.minecraft.util.ITickable;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 
 import java.util.List;
-import java.util.Objects;
 
 @SuppressWarnings("Duplicates")
-public class TileEntityMagneticProjector extends TileEntity implements ITickable, IInventory {
+public class TileEntityMagneticProjector extends TileEntity implements ITickableTileEntity, IInventory {
 
     protected NonNullList<ItemStack> inventory;
     private ItemMagnetBase magnet;
 
-    public TileEntityMagneticProjector() {
+    public TileEntityMagneticProjector(TileEntityType<?> p_i48289_1_, NonNullList<ItemStack> inventory) {
+        super(p_i48289_1_);
         this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
     @Override
-    public void update() {
+    public void tick() {
         if (!world.isBlockPowered(pos)) {
             ItemStack stack = this.getStackInSlot(0);
             if (stack.getItem() instanceof ItemMagnetBase) {
@@ -46,9 +47,9 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
                     double x = this.getPos().getX() + 0.5D;
                     double y = this.getPos().getY() + 0.5D;
                     double z = this.getPos().getZ() + 0.5D;
-                    List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+                    List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                     items.forEach(e -> {
-                        ItemStack left = TileEntityHopper.putStackInInventoryAllSlots(this, (IInventory) te, e.getItem(), null);
+                        ItemStack left = HopperTileEntity.putStackInInventoryAllSlots(this, (IInventory) te, e.getItem(), null);
                         e.setItem(left);
                     });
                 }
@@ -63,18 +64,18 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound compound)
+    public void read(CompoundNBT compound)
     {
-        super.readFromNBT(compound);
+        super.read(compound);
         this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         ItemStackHelper.loadAllItems(compound, this.inventory);
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
+    public CompoundNBT write(CompoundNBT compound)
     {
-        super.writeToNBT(compound);
+        super.write(compound);
 
         ItemStackHelper.saveAllItems(compound, this.inventory);
 
@@ -82,21 +83,21 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
     {
-        this.readFromNBT(pkt.getNbtCompound());
+        this.read(pkt.getNbtCompound());
     }
 
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket()
+    public SUpdateTileEntityPacket getUpdatePacket()
     {
-        return new SPacketUpdateTileEntity(pos, getBlockMetadata(), this.writeToNBT(new NBTTagCompound()));
+        return new SUpdateTileEntityPacket(pos, 0, this.write(new CompoundNBT()));
     }
 
     @Override
-    public NBTTagCompound getUpdateTag()
+    public CompoundNBT getUpdateTag()
     {
-        return this.writeToNBT(new NBTTagCompound());
+        return this.write(new CompoundNBT());
     }
 
     @Override
@@ -156,17 +157,17 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return false;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
 
     }
 
@@ -175,33 +176,24 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
         return true;
     }
 
-    @Override
-    public int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value) {
-
-    }
-
-    @Override
-    public int getFieldCount() {
-        return 0;
-    }
+//    @Override
+//    public int getField(int id) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void setField(int id, int value) {
+//
+//    }
+//
+//    @Override
+//    public int getFieldCount() {
+//        return 0;
+//    }
 
     @Override
     public void clear() {
         this.inventory.clear();
     }
 
-    @Override
-    public String getName() {
-        return Objects.requireNonNull(this.getDisplayName()).toString();
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
-    }
 }

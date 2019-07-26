@@ -1,14 +1,10 @@
 package com.miningmark48.tieredmagnets.item.base;
 
-import baubles.api.BaubleType;
-import baubles.api.IBauble;
-import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
+import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.ModConfig;
-import com.miningmark48.tieredmagnets.reference.Reference;
-import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -16,26 +12,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ExperienceOrbEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -43,15 +38,15 @@ import java.util.Random;
 import java.util.Set;
 
 @SuppressWarnings("Duplicates")
-@Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
-public abstract class ItemMagnetBase extends Item implements IBauble {
+//@Optional.Interface(iface="baubles.api.IBauble", modid = Reference.BAUBLES)
+public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     public double speed;
     private boolean isMagic;
     private final int defaultRange;
 
-    public ItemMagnetBase(int range, double speed, boolean isMagic){
-        setMaxStackSize(1);
+    public ItemMagnetBase(Properties properties, int range, double speed, boolean isMagic){
+        super(properties.maxStackSize(1));
 
         this.defaultRange = range;
         this.speed = speed;
@@ -59,22 +54,22 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World playerIn, List<String> list, ITooltipFlag advanced) {
+    public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
         setTagDefaults(stack);
 
-        list.add(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : ""))));
-        list.add(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled")));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : "")))));
+        list.add(new StringTextComponent(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled"))));
 
         if (KeyChecker.isHoldingShift()) {
-            list.add(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2"));
+            list.add(new StringTextComponent(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2")));
         } else {
-            list.add(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift"));
+            list.add(new StringTextComponent(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift")));
         }
 
     }
 
     @Override
-    public ActionResult onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         setTagDefaults(stack);
 
@@ -82,21 +77,21 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
             } else {
-                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(EnumHand.MAIN_HAND).getItem() == this) player.openGui(Reference.MOD_ID, ReferenceGUIs.gui_id_magnet_filter, world, 0, 0, 0);
+//                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(Hand.MAIN_HAND).getItem() == this) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) stack);
             }
         }
-        return new ActionResult(EnumActionResult.SUCCESS, stack);
+        return new ActionResult(ActionResultType.SUCCESS, stack);
     }
 
     @Override
     public boolean hasEffect(ItemStack stack) {
-        if (stack.hasTagCompound()) {
+        if (stack.hasTag()) {
             return isEnabled(stack) && ModConfig.miscconfigs.doGlow;
         }
         return false;
     }
 
-    public static ItemStack getMagnet(EntityPlayer player) {
+    public static ItemStack getMagnet(PlayerEntity player) {
         ItemStack heldItem = player.getHeldItemMainhand();
         if (!(heldItem.getItem() instanceof ItemMagnetBase)) {
             heldItem = player.getHeldItemOffhand();
@@ -107,22 +102,31 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         return heldItem;
     }
 
-    public static void toggleMagnet(ItemStack stack, EntityPlayer player) {
+    public static void toggleMagnet(ItemStack stack, PlayerEntity player) {
         if (isEnabled(stack)) {
             setEnabled(stack, false);
-            player.sendStatusMessage(new TextComponentString(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")), true);
+            player.sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")), true);
         } else {
             setEnabled(stack, true);
-            player.sendStatusMessage(new TextComponentString(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
+            player.sendStatusMessage(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
         }
         player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.miscconfigs.cooldownTime);
     }
 
+//    @Override
+//    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
+//        if (entity instanceof PlayerEntity) {
+//            PlayerEntity player = (PlayerEntity) entity;
+//            if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.abilities.isCreativeMode);
+//        }
+//    }
+
+
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.capabilities.isCreativeMode);
+    public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
+            if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.abilities.isCreativeMode);
         }
     }
 
@@ -132,19 +136,20 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
         setRange(stack, MathHelper.clamp(getRange(stack), 1, getDefaultRange()));
 
         if (isEnabled(stack) && (canMagnet(stack) || noCost)) {
-            boolean blacklist = stack.getTagCompound().getBoolean("filterModeBlacklist");
+            assert stack.getTag() != null;
+            boolean blacklist = stack.getTag().getBoolean("filterModeBlacklist");
 
             Set<Item> inventory = new ObjectOpenHashSet<>();
             if (ModConfig.miscconfigs.doFilter) {
-                NBTTagList invItems = stack.getTagCompound().getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
-                for (int i = 0; i < invItems.tagCount(); i++) {
-                    NBTTagCompound item = invItems.getCompoundTagAt(i);
-                    inventory.add(new ItemStack(item).getItem());
+                ListNBT invItems = stack.getTag().getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+                for (int i = 0; i < invItems.size(); i++) {
+                    CompoundNBT item = invItems.getCompound(i);
+                    inventory.add(new ItemStack((IItemProvider) item).getItem());
                 }
             }
 
             int range = getRange(stack);
-            List<EntityItem> items = world.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+            List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
             items.forEach(e -> {
                 if (canMagnetItem(e)) {
                     if (ModConfig.miscconfigs.doFilter) {
@@ -163,7 +168,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 }
             });
             if (ModConfig.miscconfigs.doXPVacuum) {
-                List<EntityXPOrb> xp = world.getEntitiesWithinAABB(EntityXPOrb.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+                List<ExperienceOrbEntity> xp = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 xp.forEach(e -> {
                     if (canMagnetItem(e)) {
                         doMagnet(stack, e, x, y, z, noCost, false);
@@ -174,7 +179,7 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
     }
 
     public void doMagnet(ItemStack stack, Entity entity, double x, double y, double z, boolean noCost, boolean particles) {
-            assert stack.getTagCompound() != null;
+            assert stack.getTag() != null;
             if (!isMagic) {
                 entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
@@ -192,15 +197,15 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
                 spawnParticles(entity.world, pX, entity.posY, pZ);
             }
 
-            if (!noCost && entity.getDistance(x, y, z) <= ModConfig.miscconfigs.costForDistance) {
+            if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.miscconfigs.costForDistance) {
                 doCost(stack);
             }
 
     }
 
-    @SideOnly(Side.CLIENT)
+//    @SideOnly(Side.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
-        ParticleManager pm = Minecraft.getMinecraft().effectRenderer;
+        ParticleManager pm = Minecraft.getInstance().particles;
         double yOffset = y + 0.3D;
         switch (getParticle()) {
             default:
@@ -238,45 +243,48 @@ public abstract class ItemMagnetBase extends Item implements IBauble {
 
     public int getRange(ItemStack stack) {
         setTagDefaults(stack);
-        return stack.getTagCompound().getInteger("range");
+        assert stack.getTag() != null;
+        return stack.getTag().getInt("range");
     }
 
     public void setRange(ItemStack stack, int range) {
         setTagDefaults(stack);
-        stack.getTagCompound().setInteger("range", range);
+        assert stack.getTag() != null;
+        stack.getTag().putInt("range", range);
     }
 
     private static boolean isEnabled(ItemStack stack) {
-        assert stack.getTagCompound() != null;
-        return stack.getTagCompound().getBoolean("enabled");
+        assert stack.getTag() != null;
+        return stack.getTag().getBoolean("enabled");
     }
 
     private static void setEnabled(ItemStack stack, boolean enabled) {
-        assert stack.getTagCompound() != null;
-        stack.getTagCompound().setBoolean("enabled", enabled);
+        assert stack.getTag() != null;
+        stack.getTag().putBoolean("enabled", enabled);
     }
 
     private void setTagDefaults(ItemStack stack) {
-        if (!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
-            stack.getTagCompound().setBoolean("enabled", false);
-            stack.getTagCompound().setBoolean("filterModeBlacklist", true);
-            stack.getTagCompound().setInteger("range", getDefaultRange());
+        if (!stack.hasTag()){
+            stack.setTag(new CompoundNBT());
+            assert stack.getTag() != null;
+            stack.getTag().putBoolean("enabled", false);
+            stack.getTag().putBoolean("filterModeBlacklist", true);
+            stack.getTag().putInt("range", getDefaultRange());
         }
     }
 
     /* Baubles */
-    @Override
-    @Optional.Method(modid = Reference.BAUBLES)
-    public void onWornTick(ItemStack stack, EntityLivingBase player) {
-        if (player instanceof EntityPlayer) {
-            if (!player.isSneaking()) doUpdate(stack, player.getEntityWorld(), player.posX, player.posY, player.posZ, ((EntityPlayer) player).capabilities.isCreativeMode);
-        }
-    }
-
-    @Override
-    @Optional.Method(modid = Reference.BAUBLES)
-    public BaubleType getBaubleType(ItemStack itemstack) {
-        return BaubleType.RING;
-    }
+//    @Override
+//    @Optional.Method(modid = Reference.BAUBLES)
+//    public void onWornTick(ItemStack stack, EntityLivingBase player) {
+//        if (player instanceof EntityPlayer) {
+//            if (!player.isSneaking()) doUpdate(stack, player.getEntityWorld(), player.posX, player.posY, player.posZ, ((EntityPlayer) player).capabilities.isCreativeMode);
+//        }
+//    }
+//
+//    @Override
+//    @Optional.Method(modid = Reference.BAUBLES)
+//    public BaubleType getBaubleType(ItemStack itemstack) {
+//        return BaubleType.RING;
+//    }
 }

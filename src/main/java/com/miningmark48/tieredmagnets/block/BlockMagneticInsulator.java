@@ -3,9 +3,12 @@ package com.miningmark48.tieredmagnets.block;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.ReferenceGUIs;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -13,6 +16,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -23,15 +29,13 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockMagneticInsulator extends BlockContainer {
+public class BlockMagneticInsulator extends ContainerBlock {
 
-    private static final PropertyDirection FACING = PropertyDirection.create("facing");
-    private static final PropertyBool POWERED = PropertyBool.create("powered");
+    private static final DirectionProperty FACING = DirectionProperty.create("facing");
+    private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
     public BlockMagneticInsulator() {
-        super(Material.ROCK, MapColor.GRAY);
-        setHardness(2.0f);
-        setResistance(2.0f);
+        super(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(2.0f));
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, false));
     }
 

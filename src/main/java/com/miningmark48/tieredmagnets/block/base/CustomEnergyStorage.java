@@ -1,6 +1,6 @@
 package com.miningmark48.tieredmagnets.block.base;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.energy.EnergyStorage;
 
 public class CustomEnergyStorage extends EnergyStorage {
@@ -58,12 +58,12 @@ public class CustomEnergyStorage extends EnergyStorage {
         return energyExtracted;
     }
 
-    public void readFromNBT(NBTTagCompound compound) {
-        this.setEnergyStored(compound.getInteger("Energy"));
+    public void readFromNBT(CompoundNBT compound) {
+        this.setEnergyStored(compound.getInt("Energy"));
     }
 
-    public void writeToNBT(NBTTagCompound compound) {
-        compound.setInteger("Energy", this.getEnergyStored());
+    public void writeToNBT(CompoundNBT compound) {
+        compound.putInt("Energy", this.getEnergyStored());
     }
 
     public void setEnergyStored(int energy) {

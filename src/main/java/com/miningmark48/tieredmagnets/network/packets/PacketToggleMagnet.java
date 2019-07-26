@@ -1,50 +1,48 @@
 package com.miningmark48.tieredmagnets.network.packets;
 
-import baubles.api.BaublesApi;
-import baubles.api.cap.IBaublesItemHandler;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
-import com.miningmark48.tieredmagnets.reference.Reference;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class PacketToggleMagnet extends PacketEmpty {
 
-    public static class Handler implements IMessageHandler<PacketToggleMagnet, IMessage> {
-        @Override
-        public IMessage onMessage(PacketToggleMagnet message, MessageContext ctx) {
-            FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(ctx));
-            return null;
-        }
+    public static void encode(PacketToggleMagnet msg, PacketBuffer buffer) {
+    }
 
-        private void handle(MessageContext ctx) {
-            EntityPlayerMP playerEntity = ctx.getServerHandler().player;
+    public static PacketToggleMagnet decode(PacketBuffer buffer) {
+        return new PacketToggleMagnet();
+    }
+
+    public static class Handler {
+
+        public static void handle(PacketToggleMagnet msg, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayerEntity playerEntity = ctx.get().getSender();
+            assert playerEntity != null;
             ItemStack magnet = playerEntity.inventory.mainInventory.stream().filter(item -> item.getItem() instanceof ItemMagnetBase).findFirst().orElse(ItemStack.EMPTY);
             if (!magnet.isEmpty() && !playerEntity.getCooldownTracker().hasCooldown(magnet.getItem())) ItemMagnetBase.toggleMagnet(magnet, playerEntity);
 
-            if (Loader.isModLoaded(Reference.BAUBLES)) {
-                handleBaubleMagnet(playerEntity);
-            }
+//            if (Loader.isModLoaded(Reference.BAUBLES)) {
+//                handleBaubleMagnet(playerEntity);
+//            }
         }
 
-        @Optional.Method(modid = Reference.BAUBLES)
-        private void handleBaubleMagnet(EntityPlayerMP player) {
-            IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
-            for (int i = 0; i < baubles.getSlots(); i++) {
-                ItemStack stack = baubles.getStackInSlot(i);
-                if (!stack.isEmpty()) {
-                    if (stack.getItem() instanceof ItemMagnetBase) {
-                        ItemMagnetBase.toggleMagnet(stack, player);
-                        baubles.setChanged(i, true);
-                    }
-                }
-            }
-        }
+//        @Optional.Method(modid = Reference.BAUBLES)
+//        private void handleBaubleMagnet(EntityPlayerMP player) {
+//            IBaublesItemHandler baubles = BaublesApi.getBaublesHandler(player);
+//            for (int i = 0; i < baubles.getSlots(); i++) {
+//                ItemStack stack = baubles.getStackInSlot(i);
+//                if (!stack.isEmpty()) {
+//                    if (stack.getItem() instanceof ItemMagnetBase) {
+//                        ItemMagnetBase.toggleMagnet(stack, player);
+//                        baubles.setChanged(i, true);
+//                    }
+//                }
+//            }
+//        }
 
     }
 

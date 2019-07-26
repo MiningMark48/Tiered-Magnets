@@ -1,45 +1,33 @@
 package com.miningmark48.tieredmagnets.network.packets;
 
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class PacketChangeRangeMagnetFilter extends PacketEmpty {
 
     private int rangeChange;
 
-    public PacketChangeRangeMagnetFilter() {
-        rangeChange = 0;
-    }
-
     public PacketChangeRangeMagnetFilter(int rangeChange) {
         this.rangeChange = rangeChange;
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        rangeChange = buf.readInt();
+    public static void encode(PacketChangeRangeMagnetFilter msg, PacketBuffer buffer) {
+        buffer.writeInt(msg.rangeChange);
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        buf.writeInt(rangeChange);
+    public static PacketChangeRangeMagnetFilter decode(PacketBuffer buffer) {
+        return new PacketChangeRangeMagnetFilter(buffer.readInt());
     }
 
-    public static class Handler implements IMessageHandler<PacketChangeRangeMagnetFilter, IMessage> {
-        @Override
-        public IMessage onMessage(PacketChangeRangeMagnetFilter message, MessageContext ctx) {
-            FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
-            return null;
-        }
+    public static class Handler {
 
-        private void handle(PacketChangeRangeMagnetFilter message, MessageContext ctx) {
-            EntityPlayerMP playerEntity = ctx.getServerHandler().player;
+        public static void handle(PacketChangeRangeMagnetFilter msg, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayerEntity playerEntity = ctx.get().getSender();
 
             ItemStack heldItem = ItemMagnetBase.getMagnet(playerEntity);
             if (heldItem.isEmpty()) return;
@@ -47,7 +35,7 @@ public class PacketChangeRangeMagnetFilter extends PacketEmpty {
             if (heldItem.getItem() instanceof ItemMagnetBase) {
                 ItemMagnetBase magnet = (ItemMagnetBase) heldItem.getItem();
 
-                int newRange = magnet.getRange(heldItem) + message.rangeChange;
+                int newRange = magnet.getRange(heldItem) + msg.rangeChange;
                 if (newRange > magnet.getDefaultRange()) {
                     magnet.setRange(heldItem, magnet.getDefaultRange());
                 } else if (newRange <= 0) {

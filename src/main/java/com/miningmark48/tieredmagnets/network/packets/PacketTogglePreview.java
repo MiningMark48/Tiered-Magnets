@@ -1,15 +1,14 @@
 package com.miningmark48.tieredmagnets.network.packets;
 
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.network.NetworkEvent;
+
+import java.util.function.Supplier;
 
 public class PacketTogglePreview extends PacketEmpty {
 
@@ -23,28 +22,22 @@ public class PacketTogglePreview extends PacketEmpty {
         this.pos = pos;
     }
 
-    @Override
-    public void fromBytes(ByteBuf buf) {
-        pos = BlockPos.fromLong(buf.readLong());
+    public static void encode(PacketTogglePreview msg, PacketBuffer buffer) {
+        buffer.writeBlockPos(msg.pos);
     }
 
-    @Override
-    public void toBytes(ByteBuf buf) {
-        buf.writeLong(pos.toLong());
+    public static PacketTogglePreview decode(PacketBuffer buffer) {
+        return new PacketTogglePreview(buffer.readBlockPos());
     }
 
-    public static class Handler implements IMessageHandler<PacketTogglePreview, IMessage> {
-        @Override
-        public IMessage onMessage(PacketTogglePreview message, MessageContext ctx) {
-            FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
-            return null;
-        }
+    public static class Handler  {
 
         @SuppressWarnings("Duplicates")
-        private void handle(PacketTogglePreview message, MessageContext ctx) {
-            EntityPlayerMP playerEntity = ctx.getServerHandler().player;
+        public static void handle(PacketTogglePreview msg, Supplier<NetworkEvent.Context> ctx) {
+            ServerPlayerEntity playerEntity = ctx.get().getSender();
+            assert playerEntity != null;
             World world = playerEntity.world;
-            BlockPos pos = message.pos;
+            BlockPos pos = msg.pos;
             TileEntity te = world.getTileEntity(pos);
 
             if (te == null) return;
