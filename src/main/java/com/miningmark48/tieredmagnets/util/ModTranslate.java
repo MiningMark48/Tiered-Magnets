@@ -1,17 +1,11 @@
 package com.miningmark48.tieredmagnets.util;
 
+import net.minecraft.client.resources.I18n;
+
 public class ModTranslate {
 
-    /**
-     * Takes a key and translates it in the language file and returns back the value.
-     *      EX: -tile.block.name=Block- takes a key and returns back "Block"
-     * @param key
-     *  Key that is used in translation in the language file.
-     * @return
-     *  Value returned after translation.
-     */
     public static String toLocal(String key){
-        return key;
+        return I18n.format(key);
     }
 
 }
