@@ -35,7 +35,7 @@ public class ModContainers {
     public static ContainerType<ContainerMagneticInsulator> CONTAINER_MAGNETIC_PROJECTOR;
 
     @SuppressWarnings({"Convert2Diamond"})
-    static void init() {
+    public static void init() {
         container.add(
                 new ScreenContainerObjectBuilder(ReferenceContainers.MAGNET_FILTER_RL)
                         .builder(new ScreenContainerBuilder<ContainerMagnetFilter, GuiMagnetFilter>(
@@ -53,11 +53,11 @@ public class ModContainers {
         );
     }
 
-    static void cleanup() {
+    public static void cleanup() {
         container.clear();
     }
 
-    static void clientSetup() {
+    public static void clientSetup() {
         container.clientSetup();
     }
 

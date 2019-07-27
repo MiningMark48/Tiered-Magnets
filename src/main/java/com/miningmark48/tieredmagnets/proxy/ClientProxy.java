@@ -1,32 +1,18 @@
 package com.miningmark48.tieredmagnets.proxy;
 
-public class ClientProxy extends CommonProxy {
+import com.miningmark48.tieredmagnets.client.KeyBindings;
+import com.miningmark48.tieredmagnets.init.registry.BuildingObjects;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.common.Mod;
 
-//    @Override
-//    public void preInit(FMLPreInitializationEvent event) {
-//        OBJLoader.INSTANCE.addDomain(Reference.MOD_ID);
-//    }
-//
-//    @Override
-//    public void init(FMLInitializationEvent event){
-//        registerOBJRenders();
-//        KeyBindings.init();
-//    }
-//
-//    @Override
-//    public void registerRenders(){
-//        ModRegistry.registerRenderItems();
-//        ModRegistry.registerRenderBlocks();
-//        ModTileEntities.bindTileRenders();
-//    }
-//
-//    @Override
-//    public void registerModel(Item item) {
-//        ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
-//    }
-//
-//    private void registerOBJRenders() {
-//
-//    }
+@Mod.EventBusSubscriber(Dist.CLIENT)
+public class ClientProxy {
+
+    public static void clientSetup(final IEventBus eventBus) {
+        DeferredWorkQueue.runLater(KeyBindings::init);
+        BuildingObjects.clientSetup();
+    }
 
 }

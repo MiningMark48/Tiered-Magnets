@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ItemMagnetFree extends ItemMagnetBase {
 
-    public ItemMagnetFree(boolean isMagic) {
-        super(new Item.Properties(), ModConfig.cursedMagnetsConfigs.range, ModConfig.cursedMagnetsConfigs.speed, isMagic);
+    public ItemMagnetFree(Properties properties, boolean isMagic) {
+        super(properties, ModConfig.cursedMagnetsConfigs.range, ModConfig.cursedMagnetsConfigs.speed, isMagic);
     }
 
     @Override

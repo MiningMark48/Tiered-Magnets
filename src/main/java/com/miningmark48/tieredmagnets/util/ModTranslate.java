@@ -11,7 +11,7 @@ public class ModTranslate {
      *  Value returned after translation.
      */
     public static String toLocal(String key){
-        return net.minecraft.util.text.translation.I18n.translateToLocal(key);
+        return key;
     }
 
 }

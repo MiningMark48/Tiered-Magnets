@@ -21,6 +21,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ObjectHolder;
 
+import static com.miningmark48.tieredmagnets.init.ModItems.itemProperties;
+
 @ObjectHolder(Reference.MOD_ID)
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
@@ -65,7 +67,7 @@ public class ModBlocks {
         container.registerItemBlocks(event);
     }
 
-    static void cleanup() {
+    public static void cleanup() {
         container.clear();
     }
 
@@ -93,7 +95,7 @@ public class ModBlocks {
         @ObjectHolder(TileEntityReference.MAGNETIC_PROJECTOR)
         public static TileEntityType<?> MAGNETIC_PROJECTOR;
 
-        static void init() {
+        public static void init() {
 
         }
 
@@ -102,11 +104,11 @@ public class ModBlocks {
             container.register(event);
         }
 
-        static void clientInit() {
+        public static void clientInit() {
             container.clientInit();
         }
 
-        static void cleanup() {
+        public static void cleanup() {
             container.clear();
         }
 

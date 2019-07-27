@@ -68,7 +68,7 @@ public class BlockBuilder extends RegistryObjectBuilder<Block, Block.Properties>
     }
 
     @Override
-    protected Block construct() {
+    public Block construct() {
         block =  super.construct();
         return block;
     }

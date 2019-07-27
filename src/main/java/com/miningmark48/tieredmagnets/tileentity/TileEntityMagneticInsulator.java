@@ -29,7 +29,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 
     public TileEntityMagneticInsulator()
     {
-        this(ModTileEntities.MAGNETIC_INSULATOR);
+        this(ModBlocks.ModTileEntities.MAGNETIC_INSULATOR);
     }
 
     @Override

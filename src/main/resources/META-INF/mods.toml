@@ -1,0 +1,25 @@
+modLoader="javafml" #mandatory
+loaderVersion="[${forge_major},)" #mandatory (25 is current forge version)
+updateJSONURL="${update_json}" #optional
+issueTrackerURL="https://github.com/MiningMark48/Tiered-Magnets/issues" #optional
+logoFile="tieredmagnets_logo.png"
+credits="Codyrule for textures! Kaosjr for contributions!" #optional
+authors="MiningMark48"
+
+[[mods]] #mandatory
+    modId="tieredmagnets" #mandatory
+    version="${version}" #mandatory
+    displayName="Tiered Magnets" #mandatory
+    description='''Magnets!'''
+## A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+[[dependencies.tieredmagnets]] #optional
+    # the modid of the dependency
+    modId="forge" #mandatory
+    # Does this dependency have to exist - if not, ordering below must be specified
+    mandatory=true #mandatory
+    # The version range of the dependency
+    versionRange="[${forge_major},)" #mandatory
+    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    ordering="BEFORE"
+    # Side this dependency is applied on - BOTH, CLIENT or SERVER
+    side="BOTH"

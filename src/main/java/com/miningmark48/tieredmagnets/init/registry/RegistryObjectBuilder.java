@@ -34,7 +34,7 @@ public class RegistryObjectBuilder<T extends IForgeRegistryEntry<T>, B> {
         return registryName;
     }
 
-    protected T construct() {
+    public T construct() {
         Preconditions.checkState(factory!=null,"Cannot construct %s without a Factory function!",getRegistryName());
         Preconditions.checkState(builder!=null,"Cannot construct %s without a Builder!",getRegistryName());
         return factory.apply(builder).setRegistryName(getRegistryName());

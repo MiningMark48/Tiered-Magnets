@@ -1,42 +1,58 @@
 package com.miningmark48.tieredmagnets;
 
 import com.miningmark48.tieredmagnets.client.events.EventStitchParticles;
-import com.miningmark48.tieredmagnets.init.ModBlocks;
-import com.miningmark48.tieredmagnets.init.ModItems;
 import com.miningmark48.tieredmagnets.init.ModRegistry;
+import com.miningmark48.tieredmagnets.init.registry.BuildingObjects;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
+import com.miningmark48.tieredmagnets.proxy.ClientProxy;
 import com.miningmark48.tieredmagnets.reference.Reference;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.function.Consumer;
 
 @Mod(value = Reference.MOD_ID)
 public class TieredMagnets {
 
-//    @Mod.Instance(Reference.MOD_ID)
-    public static TieredMagnets instance;
+    private static TieredMagnets instance = null;
 
-//    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-//    public static CommonProxy proxy;
+    public static TieredMagnets getInstance() {
+        assert instance != null;
+        return instance;
+    }
 
     public TieredMagnets() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-//        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        //TODO: CONFIGS
+
+        eventBus.addListener(this::setup);
+        eventBus.addListener(this::finishLoad);
+
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+            eventBus.addListener((Consumer<FMLClientSetupEvent>) event -> ClientProxy.clientSetup(eventBus));
+//            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> GuiMod::openScreen);
+        });
+
+        BuildingObjects.init();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
     }
 
 
-    public void setup(FMLCommonSetupEvent event) {
-//        proxy.preInit(event);
-
-        ModBlocks.init();
-        ModTileEntities.init();
-        ModItems.init();
-        ModRegistry.init();
+    private void setup(FMLCommonSetupEvent event) {
+        instance = (TieredMagnets) ModLoadingContext.get().getActiveContainer().getMod();
+        DeferredWorkQueue.runLater(PacketHandler::registerMessages);
 
         MinecraftForge.EVENT_BUS.register(new ModRegistry());
 //        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
@@ -48,16 +64,8 @@ public class TieredMagnets {
 
     }
 
-//    @Mod.EventHandler
-//    public void init(FMLInitializationEvent event){
-//        proxy.init(event);
-//        proxy.registerRenders();
-//        ModLogger.info(ModTranslate.toLocal("log.info.init"));
-//    }
-//
-//    @Mod.EventHandler
-//    public void postInit(FMLPostInitializationEvent event){
-//        ModLogger.info(ModTranslate.toLocal("log.info.postinit"));
-//    }
+    private void finishLoad(FMLLoadCompleteEvent event) {
+        BuildingObjects.cleanup();
+    }
 
 }

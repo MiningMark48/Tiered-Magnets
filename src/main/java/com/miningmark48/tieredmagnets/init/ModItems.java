@@ -1,79 +1,217 @@
 package com.miningmark48.tieredmagnets.init;
 
+import com.miningmark48.tieredmagnets.init.registry.RegistryObjectBuilder;
+import com.miningmark48.tieredmagnets.init.registry.container.RegistryContainer;
 import com.miningmark48.tieredmagnets.item.*;
-import net.minecraft.creativetab.CreativeTabs;
+import com.miningmark48.tieredmagnets.item.base.EnumMagnetTiers;
+import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.function.Function;
 
 public class ModItems {
 
+    private ModItems() {
+
+    }
+
+    private static final RegistryContainer<Item, RegistryObjectBuilder<Item, Item.Properties>> container = new RegistryContainer<>();
+
     //Durability Magnets
-    public static Item ItemMagnetDurabilityStone;
-    public static Item ItemMagnetDurabilityIron;
-    public static Item ItemMagnetDurabilityRedstone;
-    public static Item ItemMagnetDurabilityGold;
-    public static Item ItemMagnetDurabilityObsidian;
-    public static Item ItemMagnetDurabilityLapis;
-    public static Item ItemMagnetDurabilityDiamond;
-    public static Item ItemMagnetDurabilityEmerald;
-    public static Item ItemMagnetMagicDurabilityStone;
-    public static Item ItemMagnetMagicDurabilityIron;
-    public static Item ItemMagnetMagicDurabilityRedstone;
-    public static Item ItemMagnetMagicDurabilityGold;
-    public static Item ItemMagnetMagicDurabilityObsidian;
-    public static Item ItemMagnetMagicDurabilityLapis;
-    public static Item ItemMagnetMagicDurabilityDiamond;
-    public static Item ItemMagnetMagicDurabilityEmerald;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_STONE)
+    public static ItemMagnetDurability ItemMagnetDurabilityStone;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_IRON)
+    public static ItemMagnetDurability ItemMagnetDurabilityIron;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_REDSTONE)
+    public static ItemMagnetDurability ItemMagnetDurabilityRedstone;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_GOLD)
+    public static ItemMagnetDurability ItemMagnetDurabilityGold;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_OBSIDIAN)
+    public static ItemMagnetDurability ItemMagnetDurabilityObsidian;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_LAPIS)
+    public static ItemMagnetDurability ItemMagnetDurabilityLapis;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_DIAMOND)
+    public static ItemMagnetDurability ItemMagnetDurabilityDiamond;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_EMERALD)
+    public static ItemMagnetDurability ItemMagnetDurabilityEmerald;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_STONE)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityStone;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_IRON)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityIron;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_REDSTONE)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityRedstone;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_GOLD)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityGold;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_OBSIDIAN)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityObsidian;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_LAPIS)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityLapis;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_DIAMOND)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityDiamond;
+    @ObjectHolder(ItemReference.MAGNET_DURABILITY_MAGIC_EMERALD)
+    public static ItemMagnetDurability ItemMagnetMagicDurabilityEmerald;
 
     //Electromagnets
-    public static Item ItemMagnetElectromagnetLeadstone;
-    public static Item ItemMagnetElectromagnetHardened;
-    public static Item ItemMagnetElectromagnetReinforced;
-    public static Item ItemMagnetElectromagnetSignalum;
-    public static Item ItemMagnetElectromagnetResonant;
-    public static Item ItemMagnetMagicElectromagnetLeadstone;
-    public static Item ItemMagnetMagicElectromagnetHardened;
-    public static Item ItemMagnetMagicElectromagnetReinforced;
-    public static Item ItemMagnetMagicElectromagnetSignalum;
-    public static Item ItemMagnetMagicElectromagnetResonant;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_LEADSTONE)
+    public static ItemMagnetRF ItemMagnetElectromagnetLeadstone;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_HARDENED)
+    public static ItemMagnetRF ItemMagnetElectromagnetHardened;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_REINFORCED)
+    public static ItemMagnetRF ItemMagnetElectromagnetReinforced;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_SIGNALUM)
+    public static ItemMagnetRF ItemMagnetElectromagnetSignalum;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_RESONANT)
+    public static ItemMagnetRF ItemMagnetElectromagnetResonant;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_MAGIC_LEADSTONE)
+    public static ItemMagnetRF ItemMagnetMagicElectromagnetLeadstone;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_MAGIC_HARDENED)
+    public static ItemMagnetRF ItemMagnetMagicElectromagnetHardened;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_MAGIC_REINFORCED)
+    public static ItemMagnetRF ItemMagnetMagicElectromagnetReinforced;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_MAGIC_SIGNALUM)
+    public static ItemMagnetRF ItemMagnetMagicElectromagnetSignalum;
+    @ObjectHolder(ItemReference.MAGNET_ENERGY_MAGIC_RESONANT)
+    public static ItemMagnetRF ItemMagnetMagicElectromagnetResonant;
+
 
     //Free Magnets
-    public static Item ItemMagnetFree;
-    public static Item ItemMagnetMagicFree;
+    @ObjectHolder(ItemReference.MAGNET_FREE)
+    public static ItemMagnetFree ItemMagnetFree;
+    @ObjectHolder(ItemReference.MAGNET_MAGIC_FREE)
+    public static ItemMagnetFree ItemMagnetMagicFree;
 
     public static void init() {
         //Durability Magnets
-        ItemMagnetDurabilityStone = new ItemMagnetDurability(0, false).setUnlocalizedName("magnet_durability_stone").setRegistryName("magnet_durability_stone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityIron = new ItemMagnetDurability(1, false).setUnlocalizedName("magnet_durability_iron").setRegistryName("magnet_durability_iron").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityRedstone = new ItemMagnetDurability(2, false).setUnlocalizedName("magnet_durability_redstone").setRegistryName("magnet_durability_redstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityGold = new ItemMagnetDurability(3, false).setUnlocalizedName("magnet_durability_gold").setRegistryName("magnet_durability_gold").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityObsidian = new ItemMagnetDurability(4, false).setUnlocalizedName("magnet_durability_obsidian").setRegistryName("magnet_durability_obsidian").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityLapis = new ItemMagnetDurability(5, false).setUnlocalizedName("magnet_durability_lapis").setRegistryName("magnet_durability_lapis").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityDiamond = new ItemMagnetDurability(6, false).setUnlocalizedName("magnet_durability_diamond").setRegistryName("magnet_durability_diamond").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetDurabilityEmerald = new ItemMagnetDurability(7, false).setUnlocalizedName("magnet_durability_emerald").setRegistryName("magnet_durability_emerald").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityStone = new ItemMagnetDurability(0, true).setUnlocalizedName("magnet_magic_durability_stone").setRegistryName("magnet_magic_durability_stone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityIron = new ItemMagnetDurability(1, true).setUnlocalizedName("magnet_magic_durability_iron").setRegistryName("magnet_magic_durability_iron").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityRedstone = new ItemMagnetDurability(2, true).setUnlocalizedName("magnet_magic_durability_redstone").setRegistryName("magnet_magic_durability_redstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityGold = new ItemMagnetDurability(3, true).setUnlocalizedName("magnet_magic_durability_gold").setRegistryName("magnet_magic_durability_gold").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityObsidian = new ItemMagnetDurability(4, true).setUnlocalizedName("magnet_magic_durability_obsidian").setRegistryName("magnet_magic_durability_obsidian").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityLapis = new ItemMagnetDurability(5, true).setUnlocalizedName("magnet_magic_durability_lapis").setRegistryName("magnet_magic_durability_lapis").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityDiamond = new ItemMagnetDurability(6, true).setUnlocalizedName("magnet_magic_durability_diamond").setRegistryName("magnet_magic_durability_diamond").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicDurabilityEmerald = new ItemMagnetDurability(7, true).setUnlocalizedName("magnet_magic_durability_emerald").setRegistryName("magnet_magic_durability_emerald").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_STONE_RL, unstackableItemProperties(), EnumMagnetTiers.T1_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_IRON_RL, unstackableItemProperties(), EnumMagnetTiers.T2_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_REDSTONE_RL, unstackableItemProperties(), EnumMagnetTiers.T3_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_GOLD_RL, unstackableItemProperties(), EnumMagnetTiers.T4_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_OBSIDIAN_RL, unstackableItemProperties(), EnumMagnetTiers.T5_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_LAPIS_RL, unstackableItemProperties(), EnumMagnetTiers.T6_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_DIAMOND_RL, unstackableItemProperties(), EnumMagnetTiers.T7_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_EMERALD_RL, unstackableItemProperties(), EnumMagnetTiers.T8_D_REG::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_STONE_RL, unstackableItemProperties(), EnumMagnetTiers.T1_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_IRON_RL, unstackableItemProperties(), EnumMagnetTiers.T2_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_REDSTONE_RL, unstackableItemProperties(), EnumMagnetTiers.T3_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_GOLD_RL, unstackableItemProperties(), EnumMagnetTiers.T4_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_OBSIDIAN_RL, unstackableItemProperties(), EnumMagnetTiers.T5_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_LAPIS_RL, unstackableItemProperties(), EnumMagnetTiers.T6_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_DIAMOND_RL, unstackableItemProperties(), EnumMagnetTiers.T7_D_MAGIC::createDurability);
+        addItemBuilder(ItemReference.MAGNET_DURABILITY_MAGIC_EMERALD_RL, unstackableItemProperties(), EnumMagnetTiers.T8_D_MAGIC::createDurability);
 
         //Electromagnets
-        ItemMagnetElectromagnetLeadstone = new ItemMagnetRF(0, false).setUnlocalizedName("magnet_energy_leadstone").setRegistryName("magnet_energy_leadstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetElectromagnetHardened = new ItemMagnetRF(1, false).setUnlocalizedName("magnet_energy_hardened").setRegistryName("magnet_energy_hardened").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetElectromagnetReinforced = new ItemMagnetRF(2, false).setUnlocalizedName("magnet_energy_reinforced").setRegistryName("magnet_energy_reinforced").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetElectromagnetSignalum = new ItemMagnetRF(3, false).setUnlocalizedName("magnet_energy_signalum").setRegistryName("magnet_energy_signalum").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetElectromagnetResonant = new ItemMagnetRF(4, false).setUnlocalizedName("magnet_energy_resonant").setRegistryName("magnet_energy_resonant").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicElectromagnetLeadstone = new ItemMagnetRF(0, true).setUnlocalizedName("magnet_magic_energy_leadstone").setRegistryName("magnet_magic_energy_leadstone").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicElectromagnetHardened = new ItemMagnetRF(1, true).setUnlocalizedName("magnet_magic_energy_hardened").setRegistryName("magnet_magic_energy_hardened").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicElectromagnetReinforced = new ItemMagnetRF(2, true).setUnlocalizedName("magnet_magic_energy_reinforced").setRegistryName("magnet_magic_energy_reinforced").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicElectromagnetSignalum = new ItemMagnetRF(3, true).setUnlocalizedName("magnet_magic_energy_signalum").setRegistryName("magnet_magic_energy_signalum").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicElectromagnetResonant = new ItemMagnetRF(4, true).setUnlocalizedName("magnet_magic_energy_resonant").setRegistryName("magnet_magic_energy_resonant").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_LEADSTONE_RL, unstackableItemProperties(), EnumMagnetTiers.T1_E_REG::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_HARDENED_RL, unstackableItemProperties(), EnumMagnetTiers.T2_E_REG::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_REINFORCED_RL, unstackableItemProperties(), EnumMagnetTiers.T3_E_REG::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_SIGNALUM_RL, unstackableItemProperties(), EnumMagnetTiers.T4_E_REG::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_RESONANT_RL, unstackableItemProperties(), EnumMagnetTiers.T5_E_REG::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_MAGIC_LEADSTONE_RL, unstackableItemProperties(), EnumMagnetTiers.T1_E_MAGIC::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_MAGIC_HARDENED_RL, unstackableItemProperties(), EnumMagnetTiers.T2_E_MAGIC::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_MAGIC_REINFORCED_RL, unstackableItemProperties(), EnumMagnetTiers.T3_E_MAGIC::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_MAGIC_SIGNALUM_RL, unstackableItemProperties(), EnumMagnetTiers.T4_E_MAGIC::createEnergy);
+        addItemBuilder(ItemReference.MAGNET_ENERGY_MAGIC_RESONANT_RL, unstackableItemProperties(), EnumMagnetTiers.T5_E_MAGIC::createEnergy);
 
         //Free Magnets
-        ItemMagnetFree = new ItemMagnetFree(false).setUnlocalizedName("magnet_free").setRegistryName("magnet_free").setCreativeTab(ModCreativeTab.Magnets_Tab);
-        ItemMagnetMagicFree = new ItemMagnetFree( true).setUnlocalizedName("magnet_magic_free").setRegistryName("magnet_magic_free").setCreativeTab(ModCreativeTab.Magnets_Tab);
+        addItemBuilder(ItemReference.MAGNET_FREE_RL, unstackableItemProperties(), EnumMagnetTiers.F_REG::createFree);
+        addItemBuilder(ItemReference.MAGNET_MAGIC_FREE_RL, unstackableItemProperties(), EnumMagnetTiers.F_MAGIC::createFree);
+
+    }
+
+    private static void addItemBuilder(ResourceLocation registryName, Item.Properties properties, Function<Item.Properties, Item> factory) {
+        container.add(new RegistryObjectBuilder<Item, Item.Properties>(registryName)
+                .builder(properties)
+                .factory(factory));
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        container.register(event);
+    }
+
+    static Item.Properties itemProperties() {
+        return new Item.Properties().group(ModCreativeTab.Magnets_Tab);
+    }
+
+    static Item.Properties unstackableItemProperties() {
+        return itemProperties().maxStackSize(1);
+    }
+
+    public static void cleanup() {
+        container.clear();
+    }
+
+    public static final class ItemReference {
+        //Durability
+        public static final String MAGNET_DURABILITY_STONE = Reference.MOD_ID + ":magnet_durability_stone";
+        public static final String MAGNET_DURABILITY_IRON = Reference.MOD_ID + ":magnet_durability_iron";
+        public static final String MAGNET_DURABILITY_REDSTONE = Reference.MOD_ID + ":magnet_durability_redstone";
+        public static final String MAGNET_DURABILITY_GOLD = Reference.MOD_ID + ":magnet_durability_gold";
+        public static final String MAGNET_DURABILITY_OBSIDIAN = Reference.MOD_ID + ":magnet_durability_obsidian";
+        public static final String MAGNET_DURABILITY_LAPIS = Reference.MOD_ID + ":magnet_durability_lapis";
+        public static final String MAGNET_DURABILITY_DIAMOND = Reference.MOD_ID + ":magnet_durability_diamond";
+        public static final String MAGNET_DURABILITY_EMERALD = Reference.MOD_ID + ":magnet_durability_emerald";
+        public static final String MAGNET_DURABILITY_MAGIC_STONE = Reference.MOD_ID + ":magnet_durability_magic_stone";
+        public static final String MAGNET_DURABILITY_MAGIC_IRON = Reference.MOD_ID + ":magnet_durability_magic_iron";
+        public static final String MAGNET_DURABILITY_MAGIC_REDSTONE = Reference.MOD_ID + ":magnet_durability_magic_redstone";
+        public static final String MAGNET_DURABILITY_MAGIC_GOLD = Reference.MOD_ID + ":magnet_durability_magic_gold";
+        public static final String MAGNET_DURABILITY_MAGIC_OBSIDIAN = Reference.MOD_ID + ":magnet_durability_magic_obsidian";
+        public static final String MAGNET_DURABILITY_MAGIC_LAPIS = Reference.MOD_ID + ":magnet_durability_magic_lapis";
+        public static final String MAGNET_DURABILITY_MAGIC_DIAMOND = Reference.MOD_ID + ":magnet_durability_magic_diamond";
+        public static final String MAGNET_DURABILITY_MAGIC_EMERALD = Reference.MOD_ID + ":magnet_durability_magic_emerald";
+
+        //Electromagnets
+        public static final String MAGNET_ENERGY_LEADSTONE = Reference.MOD_ID + ":magnet_energy_leadstone";
+        public static final String MAGNET_ENERGY_HARDENED = Reference.MOD_ID + ":magnet_energy_hardened";
+        public static final String MAGNET_ENERGY_REINFORCED = Reference.MOD_ID + ":magnet_energy_reinforced";
+        public static final String MAGNET_ENERGY_SIGNALUM = Reference.MOD_ID + ":magnet_energy_signalum";
+        public static final String MAGNET_ENERGY_RESONANT = Reference.MOD_ID + ":magnet_energy_resonant";
+        public static final String MAGNET_ENERGY_MAGIC_LEADSTONE = Reference.MOD_ID + ":magnet_energy_magic_leadstone";
+        public static final String MAGNET_ENERGY_MAGIC_HARDENED = Reference.MOD_ID + ":magnet_energy_magic_hardened";
+        public static final String MAGNET_ENERGY_MAGIC_REINFORCED = Reference.MOD_ID + ":magnet_energy_magic_reinforced";
+        public static final String MAGNET_ENERGY_MAGIC_SIGNALUM = Reference.MOD_ID + ":magnet_energy_magic_signalum";
+        public static final String MAGNET_ENERGY_MAGIC_RESONANT = Reference.MOD_ID + ":magnet_energy_magic_resonant";
+
+        //Free Magnets
+        public static final String MAGNET_FREE = Reference.MOD_ID + ":magnet_free";
+        public static final String MAGNET_MAGIC_FREE = Reference.MOD_ID + ":magnet_magic_free";
+
+        //Durability RL
+        public static final ResourceLocation MAGNET_DURABILITY_STONE_RL = new ResourceLocation(MAGNET_DURABILITY_STONE);
+        public static final ResourceLocation MAGNET_DURABILITY_IRON_RL = new ResourceLocation(MAGNET_DURABILITY_IRON);
+        public static final ResourceLocation MAGNET_DURABILITY_REDSTONE_RL = new ResourceLocation(MAGNET_DURABILITY_REDSTONE);
+        public static final ResourceLocation MAGNET_DURABILITY_GOLD_RL = new ResourceLocation(MAGNET_DURABILITY_GOLD);
+        public static final ResourceLocation MAGNET_DURABILITY_OBSIDIAN_RL = new ResourceLocation(MAGNET_DURABILITY_OBSIDIAN);
+        public static final ResourceLocation MAGNET_DURABILITY_LAPIS_RL = new ResourceLocation(MAGNET_DURABILITY_LAPIS);
+        public static final ResourceLocation MAGNET_DURABILITY_DIAMOND_RL = new ResourceLocation(MAGNET_DURABILITY_DIAMOND);
+        public static final ResourceLocation MAGNET_DURABILITY_EMERALD_RL = new ResourceLocation(MAGNET_DURABILITY_EMERALD);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_STONE_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_STONE);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_IRON_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_IRON);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_REDSTONE_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_REDSTONE);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_GOLD_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_GOLD);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_OBSIDIAN_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_OBSIDIAN);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_LAPIS_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_LAPIS);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_DIAMOND_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_DIAMOND);
+        public static final ResourceLocation MAGNET_DURABILITY_MAGIC_EMERALD_RL = new ResourceLocation(MAGNET_DURABILITY_MAGIC_EMERALD);
+
+        //Electromagnets RL
+        public static final ResourceLocation MAGNET_ENERGY_LEADSTONE_RL = new ResourceLocation(MAGNET_ENERGY_LEADSTONE);
+        public static final ResourceLocation MAGNET_ENERGY_HARDENED_RL = new ResourceLocation(MAGNET_ENERGY_HARDENED);
+        public static final ResourceLocation MAGNET_ENERGY_REINFORCED_RL = new ResourceLocation(MAGNET_ENERGY_REINFORCED);
+        public static final ResourceLocation MAGNET_ENERGY_SIGNALUM_RL = new ResourceLocation(MAGNET_ENERGY_SIGNALUM);
+        public static final ResourceLocation MAGNET_ENERGY_RESONANT_RL = new ResourceLocation(MAGNET_ENERGY_RESONANT);
+        public static final ResourceLocation MAGNET_ENERGY_MAGIC_LEADSTONE_RL = new ResourceLocation(MAGNET_ENERGY_MAGIC_LEADSTONE);
+        public static final ResourceLocation MAGNET_ENERGY_MAGIC_HARDENED_RL = new ResourceLocation(MAGNET_ENERGY_MAGIC_HARDENED);
+        public static final ResourceLocation MAGNET_ENERGY_MAGIC_REINFORCED_RL = new ResourceLocation(MAGNET_ENERGY_MAGIC_REINFORCED);
+        public static final ResourceLocation MAGNET_ENERGY_MAGIC_SIGNALUM_RL = new ResourceLocation(MAGNET_ENERGY_MAGIC_SIGNALUM);
+        public static final ResourceLocation MAGNET_ENERGY_MAGIC_RESONANT_RL = new ResourceLocation(MAGNET_ENERGY_MAGIC_RESONANT);
+
+        //Free Magnets RL
+        public static final ResourceLocation MAGNET_FREE_RL = new ResourceLocation(MAGNET_FREE);
+        public static final ResourceLocation MAGNET_MAGIC_FREE_RL = new ResourceLocation(MAGNET_MAGIC_FREE);
 
     }
 

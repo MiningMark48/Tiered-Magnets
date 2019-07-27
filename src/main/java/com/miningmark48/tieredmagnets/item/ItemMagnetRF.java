@@ -22,8 +22,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
     private final int transfer;
     private int usageEnergy;
 
-    public ItemMagnetRF(int tier, boolean isMagic) {
-        super(new Item.Properties(), ModConfig.thermalExpansionConfigs.baseRange + (ModConfig.thermalExpansionConfigs.baseRange * ModConfig.thermalExpansionConfigs.multiplierRange * tier), ModConfig.thermalExpansionConfigs.speed, isMagic);
+    public ItemMagnetRF(Properties properties, int tier, boolean isMagic) {
+        super(properties, ModConfig.thermalExpansionConfigs.baseRange + (ModConfig.thermalExpansionConfigs.baseRange * ModConfig.thermalExpansionConfigs.multiplierRange * tier), ModConfig.thermalExpansionConfigs.speed, isMagic);
 
         this.maxPower = ModConfig.thermalExpansionConfigs.baseEnergy + (ModConfig.thermalExpansionConfigs.baseEnergy * ModConfig.thermalExpansionConfigs.multiplierEnergy * tier);
         this.transfer = ModConfig.thermalExpansionConfigs.transferRate;

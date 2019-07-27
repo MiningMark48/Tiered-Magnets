@@ -32,7 +32,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     public TileEntityMagneticProjector() {
-        this(ModTileEntities.MAGNETIC_PROJECTOR);
+        this(ModBlocks.ModTileEntities.MAGNETIC_PROJECTOR);
     }
 
     @Override

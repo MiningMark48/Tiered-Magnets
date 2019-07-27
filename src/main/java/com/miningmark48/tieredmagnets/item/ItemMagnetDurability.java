@@ -21,8 +21,8 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     private final boolean isMagic;
 
-    public ItemMagnetDurability(int tier, boolean isMagic) {
-        super(new Item.Properties().maxDamage((int) Math.round(ModConfig.vanillaConfigs.baseDurability + (ModConfig.vanillaConfigs.baseDurability * ModConfig.vanillaConfigs.multiplierDurability * tier))), ModConfig.vanillaConfigs.baseRange + (ModConfig.vanillaConfigs.baseRange * ModConfig.vanillaConfigs.multiplierRange * tier), ModConfig.vanillaConfigs.speed, isMagic);
+    public ItemMagnetDurability(Properties properties, int tier, boolean isMagic) {
+        super(properties.maxDamage((int) Math.round(ModConfig.vanillaConfigs.baseDurability + (ModConfig.vanillaConfigs.baseDurability * ModConfig.vanillaConfigs.multiplierDurability * tier))), ModConfig.vanillaConfigs.baseRange + (ModConfig.vanillaConfigs.baseRange * ModConfig.vanillaConfigs.multiplierRange * tier), ModConfig.vanillaConfigs.speed, isMagic);
 
         this.isMagic = isMagic;
     }

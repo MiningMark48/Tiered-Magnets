@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.block;
 
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
@@ -15,6 +16,8 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
@@ -33,7 +36,7 @@ import javax.annotation.Nullable;
 @SuppressWarnings("Duplicates")
 public class BlockMagneticProjector extends ContainerBlock {
 
-    public static final DirectionProperty FACING = DirectionProperty.create("facing");
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
     private static AxisAlignedBB BOUNDING_BOX_ACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5625D, 0.9375D);
@@ -42,6 +45,13 @@ public class BlockMagneticProjector extends ContainerBlock {
     public BlockMagneticProjector(Properties properties) {
         super(properties);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
+    }
+
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+        super.fillStateContainer(builder);
+        builder.add(FACING);
+        builder.add(POWERED);
     }
 
 //    @Override
@@ -74,7 +84,7 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-        if (!player.isSneaking()) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(pos));
+        if (!player.isSneaking() && !world.isRemote) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(pos));
         return true;
     }
 

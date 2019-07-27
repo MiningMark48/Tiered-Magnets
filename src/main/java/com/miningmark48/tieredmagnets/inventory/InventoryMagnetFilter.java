@@ -1,15 +1,16 @@
 package com.miningmark48.tieredmagnets.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 public class InventoryMagnetFilter implements IInventory {
 
@@ -21,11 +22,11 @@ public class InventoryMagnetFilter implements IInventory {
 
         invItem = stack;
 
-        if(!stack.hasTagCompound()){
-            stack.setTagCompound(new NBTTagCompound());
+        if(!stack.hasTag()){
+            stack.setTag(new CompoundNBT());
         }
 
-        readFromNBT(stack.getTagCompound());
+        readFromNBT(stack.getTag());
 
     }
 
@@ -52,7 +53,7 @@ public class InventoryMagnetFilter implements IInventory {
         ItemStack stack = getStackInSlot(index);
         if(stack != null){
             if(stack.getCount() > count){
-                stack = stack.splitStack(count);
+                stack = stack.split(count);
                 markDirty();
             }else{
                 setInventorySlotContents(index, ItemStack.EMPTY);
@@ -94,21 +95,21 @@ public class InventoryMagnetFilter implements IInventory {
             }
         }
 
-        writeToNBT(invItem.getTagCompound());
+        writeToNBT(invItem.getTag());
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(PlayerEntity player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(PlayerEntity player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(PlayerEntity player) {
 
     }
 
@@ -117,68 +118,68 @@ public class InventoryMagnetFilter implements IInventory {
         return true;
     }
 
-    public void readFromNBT(NBTTagCompound compound){
-        NBTTagList items = compound.getTagList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+    public void readFromNBT(CompoundNBT compound){
+        ListNBT items = compound.getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
 
-        for (int i = 0; i < items.tagCount(); i++){
-            NBTTagCompound item = (NBTTagCompound) items.getCompoundTagAt(i);
-            int slot = item.getInteger("Slot");
+        for (int i = 0; i < items.size(); i++){
+            CompoundNBT item = items.getCompound(i);
+            int slot = item.getInt("Slot");
 
             if(slot >= 0 && slot < getSizeInventory()){
-                inventory.set(slot, new ItemStack(item));
+                inventory.set(slot, new ItemStack((IItemProvider) item));
             }
 
         }
     }
 
-    public void writeToNBT(NBTTagCompound compound){
-        NBTTagList items = new NBTTagList();
+    public void writeToNBT(CompoundNBT compound){
+        ListNBT items = new ListNBT();
 
         for(int i = 0; i < getSizeInventory(); i++){
             if(getStackInSlot(i) != null){
-                NBTTagCompound item = new NBTTagCompound();
-                item.setInteger("Slot", i);
-                getStackInSlot(i).writeToNBT(item);
-                items.appendTag(item);
+                CompoundNBT item = new CompoundNBT();
+                item.putInt("Slot", i);
+                Objects.requireNonNull(getStackInSlot(i)).write(item);
+                items.add(item);
             }
         }
 
-        compound.setTag("ItemInventory", items);
+        compound.put("ItemInventory", items);
     }
 
-    @Override
-    public int getField(int id) {
-        return 0;
-    }
-
-    @Override
-    public void setField(int id, int value) {
-
-    }
-
-    @Override
-    public int getFieldCount() {
-        return 0;
-    }
+//    @Override
+//    public int getField(int id) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void setField(int id, int value) {
+//
+//    }
+//
+//    @Override
+//    public int getFieldCount() {
+//        return 0;
+//    }
 
     @Override
     public void clear() {
 
     }
 
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public boolean hasCustomName() {
-        return false;
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return null;
-    }
+//    @Override
+//    public String getName() {
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean hasCustomName() {
+//        return false;
+//    }
+//
+//    @Override
+//    public ITextComponent getDisplayName() {
+//        return null;
+//    }
 
 }
