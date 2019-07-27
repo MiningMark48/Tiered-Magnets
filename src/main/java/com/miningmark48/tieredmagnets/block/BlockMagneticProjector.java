@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets.block;
 
 import com.miningmark48.tieredmagnets.init.ModBlocks;
+import com.miningmark48.tieredmagnets.init.ModGui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -84,7 +85,7 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-        if (!player.isSneaking() && !world.isRemote) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) world.getTileEntity(pos));
+        if (!player.isSneaking() && !world.isRemote) ModGui.MAGNETIC_PROJECTOR.openContainer(player, world, pos);
         return true;
     }
 
