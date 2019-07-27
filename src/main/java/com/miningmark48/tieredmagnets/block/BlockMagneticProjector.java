@@ -3,10 +3,7 @@ package com.miningmark48.tieredmagnets.block;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.ModGui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -211,12 +208,12 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState state1, boolean p_196243_5_) {
-        TileEntity tileentity = world.getTileEntity(pos);
-
-        if (tileentity instanceof IInventory)
-        {
-            InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileentity);
-            world.updateComparatorOutputLevel(pos, this);
+        if (state1.getBlock() == Blocks.AIR) {
+            TileEntity tileentity = world.getTileEntity(pos);
+            if (tileentity instanceof IInventory) {
+                InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileentity);
+                world.updateComparatorOutputLevel(pos, this);
+            }
         }
 
         super.onReplaced(state, world, pos, state1, p_196243_5_);
