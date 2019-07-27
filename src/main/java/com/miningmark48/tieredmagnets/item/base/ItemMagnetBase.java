@@ -4,8 +4,10 @@ import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
 import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
+import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
@@ -16,6 +18,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -31,6 +35,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,7 +52,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     private final int defaultRange;
 
     public ItemMagnetBase(Properties properties, int range, double speed, boolean isMagic){
-        super(properties.maxStackSize(1));
+        super(properties);
 
         this.defaultRange = range;
         this.speed = speed;
@@ -77,7 +83,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
             } else {
-//                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(Hand.MAIN_HAND).getItem() == this) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) stack);
+//                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(Hand.MAIN_HAND).getItem() == this) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) );
             }
         }
         return new ActionResult(ActionResultType.SUCCESS, stack);
@@ -113,17 +119,8 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
         player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.miscconfigs.cooldownTime);
     }
 
-//    @Override
-//    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected){
-//        if (entity instanceof PlayerEntity) {
-//            PlayerEntity player = (PlayerEntity) entity;
-//            if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.abilities.isCreativeMode);
-//        }
-//    }
-
-
     @Override
-    public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
             if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.abilities.isCreativeMode);
