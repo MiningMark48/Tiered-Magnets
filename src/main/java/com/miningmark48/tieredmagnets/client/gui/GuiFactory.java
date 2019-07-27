@@ -1,7 +1,7 @@
 package com.miningmark48.tieredmagnets.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraftforge.fml.client.IModGuiFactory;
 
 import java.util.Set;
@@ -19,8 +19,8 @@ public class GuiFactory implements IModGuiFactory {
     }
 
     @Override
-    public GuiScreen createConfigGui(GuiScreen parentScreen) {
-        return new GuiModConfig(parentScreen);
+    public Screen createConfigGui(Screen parentScreen) {
+        return null;
     }
 
     @Override

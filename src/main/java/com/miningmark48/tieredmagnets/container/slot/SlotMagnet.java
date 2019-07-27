@@ -2,7 +2,7 @@ package com.miningmark48.tieredmagnets.container.slot;
 
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 public class SlotMagnet extends Slot {

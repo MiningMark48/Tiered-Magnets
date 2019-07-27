@@ -1,6 +1,6 @@
 package com.miningmark48.tieredmagnets.block;
 
-import com.miningmark48.tieredmagnets.init.ModTileEntities;
+import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -32,15 +32,15 @@ public class BlockMagneticInsulator extends ContainerBlock {
     private static final DirectionProperty FACING = DirectionProperty.create("facing");
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    public BlockMagneticInsulator() {
-        super(Properties.create(Material.ROCK, MaterialColor.GRAY).hardnessAndResistance(2.0f));
+    public BlockMagneticInsulator(Properties properties) {
+        super(properties);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
     }
 
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityMagneticInsulator(ModTileEntities.MAGNETIC_INSULATOR);
+        return new TileEntityMagneticInsulator(ModBlocks.ModTileEntities.MAGNETIC_INSULATOR);
     }
 
     @Override
@@ -64,6 +64,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
 //        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
 //    }
 
+    @SuppressWarnings("Duplicates")
     private void setDefaultFacing(World worldIn, BlockPos pos, BlockState state)
     {
         if (!worldIn.isRemote) {

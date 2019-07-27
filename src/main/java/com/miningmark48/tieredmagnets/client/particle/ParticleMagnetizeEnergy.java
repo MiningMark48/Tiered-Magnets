@@ -10,22 +10,21 @@ public class ParticleMagnetizeEnergy extends ParticleMagnetize {
     }
 
     @Override
-    public void onUpdate() {
+    public void tick() {
 
-        if (this.particleAge-- <= 0) {
+        if (this.age-- <= 0) {
             this.setExpired();
         }
 
-        if (this.particleAge % 4 == 0) {
+        if (this.age % 4 == 0) {
             this.particleRed = (float) 0.25;
-        } else if (this.particleAge % 4 == 1) {
+        } else if (this.age % 4 == 1) {
             this.particleRed = (float) 0.5;
-        } else if (this.particleAge % 4 == 2) {
+        } else if (this.age % 4 == 2) {
             this.particleRed = (float) 0.75;
         } else {
             this.particleRed = (float) 1;
         }
 
     }
-
 }

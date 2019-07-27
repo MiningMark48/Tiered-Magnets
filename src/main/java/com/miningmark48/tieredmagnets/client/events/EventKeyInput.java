@@ -3,28 +3,27 @@ package com.miningmark48.tieredmagnets.client.events;
 import com.miningmark48.tieredmagnets.client.KeyBindings;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.network.packets.PacketToggleMagnet;
+import com.miningmark48.tieredmagnets.reference.Reference;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, value = Dist.CLIENT)
 public class EventKeyInput {
 
     @SubscribeEvent
-    public static void onKeyInput(@SuppressWarnings("unused") InputEvent.KeyInputEvent event) {
-        handleEventInput();
-    }
+    public static void handleEventInput(ClientTickEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.player == null || event.phase == Phase.START)
+            return;
 
-    @SubscribeEvent
-    public static void onMouseInput(@SuppressWarnings("unused") InputEvent.MouseInputEvent event) {
-        handleEventInput();
-    }
-
-    private static void handleEventInput() {
         if (KeyBindings.toggleMagnet.isPressed()) {
-            PacketHandler.INSTANCE.sendToServer(new PacketToggleMagnet());
+            PacketHandler.sendToServer(new PacketToggleMagnet());
         }
+
     }
 
 }

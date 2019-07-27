@@ -1,7 +1,7 @@
 package com.miningmark48.tieredmagnets.container.slot;
 
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 
 public class SlotFilter extends Slot {
 

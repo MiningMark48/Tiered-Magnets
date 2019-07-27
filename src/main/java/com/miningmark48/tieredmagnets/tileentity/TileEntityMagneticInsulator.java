@@ -3,7 +3,6 @@ package com.miningmark48.tieredmagnets.tileentity;
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.ModConfig;
-import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;

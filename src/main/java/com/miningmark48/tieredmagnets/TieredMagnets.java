@@ -4,7 +4,6 @@ import com.miningmark48.tieredmagnets.client.events.EventStitchParticles;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.ModItems;
 import com.miningmark48.tieredmagnets.init.ModRegistry;
-import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraftforge.common.MinecraftForge;

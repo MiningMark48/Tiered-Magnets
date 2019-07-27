@@ -6,40 +6,41 @@ import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import org.lwjgl.opengl.GL11;
 
-public class GuiMagneticProjector extends GuiContainer {
+public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProjector> {
 
     private ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/gui_magnetic_projector.png");
     private IInventory playerInv;
-    private EntityPlayer player;
+    private PlayerEntity player;
     private TileEntityMagneticProjector te;
 
-    public GuiMagneticProjector(IInventory playerInv, TileEntityMagneticProjector te, EntityPlayer player) {
-        super(new ContainerMagneticProjector(playerInv, te));
+    public GuiMagneticProjector(ContainerMagneticProjector container, PlayerInventory playerInventory, ITextComponent title) {
+        this(container.getTe(), container, playerInventory);
+    }
+
+    public GuiMagneticProjector(TileEntityMagneticProjector te, ContainerMagneticProjector container, PlayerInventory playerInv) {
+        super(container, playerInv, new StringTextComponent("Magnetic Projector"));
 
         this.xSize = 176;
         this.ySize = 166;
 
         this.playerInv = playerInv;
         this.te = te;
-        this.player = player;
-
-    }
-
-    public void onGuiClosed() {
-        super.onGuiClosed();
+        this.player = playerInv.player;
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = ModTranslate.toLocal("gui.magnetic_projector.name");
-        int x = UtilGui.getXCenter(text, this.fontRenderer, xSize);
-        this.fontRenderer.drawString(text, x, 5, 0x404040);
+        int x = UtilGui.getXCenter(text, this.font, xSize);
+        this.font.drawString(text, x, 5, 0x404040);
 
         renderTooltips(mouseX, mouseY);
     }
@@ -47,25 +48,8 @@ public class GuiMagneticProjector extends GuiContainer {
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
         GL11.glColor4f(1F, 1F, 1F, 1F);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
-    }
-
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.func_191948_b(mouseX, mouseY);
-    }
-
-    @Override
-    public void initGui() {
-        super.initGui();
-    }
-
-    @Override
-    protected void actionPerformed(GuiButton button) {
-
+        Minecraft.getInstance().getTextureManager().bindTexture(texture);
+        blit(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     @SuppressWarnings("Duplicates")

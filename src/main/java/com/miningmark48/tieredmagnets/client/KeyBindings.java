@@ -1,35 +1,37 @@
 package com.miningmark48.tieredmagnets.client;
 
+import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.util.InputMappings;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 
-@SideOnly(Side.CLIENT)
 public class KeyBindings {
 
     private static final KeyConflictContextMagnet CONFLICT_CONTEXT_MAGNET = new KeyConflictContextMagnet();
     public static KeyBinding toggleMagnet;
 
     public static void init() {
-        toggleMagnet = createBinding("toggle_magnet", Keyboard.KEY_M);
+        toggleMagnet = createBinding("toggle_magnet", GLFW.GLFW_KEY_M);
     }
 
     private static KeyBinding createBinding(String name, int key) {
-        KeyBinding keyBinding = new KeyBinding("key." + name, CONFLICT_CONTEXT_MAGNET, key, "key.categories.tieredmagnets");
+        KeyBinding keyBinding = new KeyBinding(getKey(name), CONFLICT_CONTEXT_MAGNET, InputMappings.Type.KEYSYM.getOrMakeInput(key), getKey("category"));
         ClientRegistry.registerKeyBinding(keyBinding);
         return keyBinding;
     }
 
-    public static class KeyConflictContextMagnet implements IKeyConflictContext
-    {
+    private static String getKey(String name) {
+        return String.join(".", "key", Reference.MOD_ID, name);
+    }
+
+    public static class KeyConflictContextMagnet implements IKeyConflictContext {
         @Override
         public boolean isActive() {
-            return !KeyConflictContext.GUI.isActive() && Minecraft.getMinecraft().player != null;
+            return !KeyConflictContext.GUI.isActive() && Minecraft.getInstance().player != null;
         }
 
         @Override

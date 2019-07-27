@@ -1,49 +1,61 @@
 package com.miningmark48.tieredmagnets.container;
 
 import com.miningmark48.tieredmagnets.container.slot.SlotFilter;
+import com.miningmark48.tieredmagnets.init.ModContainers;
 import com.miningmark48.tieredmagnets.inventory.InventoryMagnetFilter;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ClickType;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.Hand;
 
 public class ContainerMagnetFilter extends Container {
 
     public final InventoryMagnetFilter inventory;
-    public EntityPlayer player;
+    public final PlayerEntity player;
     private static final int INV_START = InventoryMagnetFilter.INV_SIZE, INV_END = INV_START + 26, HOTBAR_START = INV_END + 1, HOTBAR_END = HOTBAR_START + 8;
 
-    public ContainerMagnetFilter(EntityPlayer player, InventoryPlayer invPlayer, InventoryMagnetFilter item) {
-        this.inventory = item;
-        this.player = player;
+    public ContainerMagnetFilter(int windowId, PlayerInventory invPlayer, PacketBuffer packetBuffer) {
+        this(windowId, invPlayer, packetBuffer.readItemStack());
+    }
 
-        int i;
-        for (i = 0; i < InventoryMagnetFilter.INV_SIZE; i++){
-            this.addSlotToContainer(new SlotFilter(this.inventory, i, 26 + (18 * (int)(i%3)), 17 + (18 * (int)(i/3))));
+    public ContainerMagnetFilter(int windowId, PlayerInventory invPlayer, ItemStack stack) {
+        super(ModContainers.CONTAINER_MAGNET_FILTER, windowId);
+        this.inventory = new InventoryMagnetFilter(stack);
+        this.player = invPlayer.player;
+        addOwnSlots();
+        addPlayerSlots(invPlayer);
+    }
+
+    public void addOwnSlots() {
+        for (int i = 0; i < InventoryMagnetFilter.INV_SIZE; i++){
+            this.addSlot(new SlotFilter(this.inventory, i, 26 + (18 * (int)(i%3)), 17 + (18 * (int)(i/3))));
         }
+    }
 
+    public void addPlayerSlots(PlayerInventory invPlayer) {
+        int i;
         for (i = 0; i < 3; i++){
             for (int j = 0; j < 9; j++){
-                this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         for (i = 0; i < 9; i++){
-            this.addSlotToContainer(new Slot(invPlayer, i, 8 + i * 18, 142));
+            this.addSlot(new Slot(invPlayer, i, 8 + i * 18, 142));
         }
-
     }
 
     @Override
-    public boolean canInteractWith(EntityPlayer playerIn) {
+    public boolean canInteractWith(PlayerEntity playerIn) {
         return inventory.isUsableByPlayer(playerIn);
     }
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer player, int index){
+    public ItemStack transferStackInSlot(PlayerEntity player, int index){
         ItemStack stack = ItemStack.EMPTY;
         Slot slot = (Slot) this.inventorySlots.get(index);
 
@@ -82,8 +94,8 @@ public class ContainerMagnetFilter extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slot, int button, ClickType flag, EntityPlayer player){
-        if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem(EnumHand.MAIN_HAND)){
+    public ItemStack slotClick(int slot, int button, ClickType flag, PlayerEntity player){
+        if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem(Hand.MAIN_HAND)){
             return ItemStack.EMPTY;
         }
         return super.slotClick(slot, button, flag, player);

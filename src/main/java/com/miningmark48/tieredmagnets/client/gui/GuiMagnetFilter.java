@@ -10,36 +10,40 @@ import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiMagnetFilter extends GuiContainer {
+public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
 
     private ResourceLocation texture = new ResourceLocation(Reference.MOD_ID + ":textures/gui/gui_magnet_filter.png");
     private final InventoryMagnetFilter inventory;
     private final ItemStack magnet;
-    private final EntityPlayer player;
+    private final PlayerEntity player;
     private int range = 0;
 
-    private GuiButton buttonFilterToggle;
+    private Button buttonFilterToggle, buttonRangeDecrease, buttonRangeIncrease;
     private boolean buttonModeBlacklist = true;
-    private GuiButton buttonRangeDecrease;
-    private GuiButton buttonRangeIncrease;
 
-    public GuiMagnetFilter(ContainerMagnetFilter containerItem, ItemStack stack) {
-        super(containerItem);
+    public GuiMagnetFilter(ContainerMagnetFilter container, PlayerInventory invPlayer, ITextComponent title) {
+        this(container, invPlayer, title, invPlayer.getCurrentItem());
+    }
+
+    public GuiMagnetFilter(ContainerMagnetFilter containerItem, PlayerInventory invPlayer, ITextComponent title, ItemStack stack) {
+        super(containerItem, invPlayer, title);
         this.inventory = containerItem.inventory;
         this.magnet = stack;
         this.player = containerItem.player;
@@ -51,97 +55,96 @@ public class GuiMagnetFilter extends GuiContainer {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
             range = m.getRange(stack);
         }
-
-    }
-
-    public void onGuiClosed() {
-        super.onGuiClosed();
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = ModTranslate.toLocal("gui.magnet_filter.name");
-        int x = UtilGui.getXCenter(text, this.fontRenderer, xSize);
-        this.fontRenderer.drawString(text, x, 5, 0x404040);
+        int x = UtilGui.getXCenter(text, this.font, xSize);
+        this.font.drawString(text, x, 5, 0x404040);
 
         if (magnet.getItem() instanceof ItemMagnetBase) {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
-            range = m.getRange(player.getHeldItem(EnumHand.MAIN_HAND));
+            range = m.getRange(player.getHeldItem(Hand.MAIN_HAND));
         }
-        this.fontRenderer.drawString(ModTranslate.toLocal("gui.magnet_filter.label.range.name"), 110, 44, 0x404040);
-        this.fontRenderer.drawString(String.valueOf(range), 118, 61, 0x404040);
+        this.font.drawString(ModTranslate.toLocal("gui.magnet_filter.label.range.name"), 110, 44, 0x404040);
+        this.font.drawString(String.valueOf(range), 118, 61, 0x404040);
 
         renderTooltips(mouseX, mouseY);
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
-        GL11.glColor4f(1F, 1F, 1F, 1F);
-        Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
-        drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+        GlStateManager.color4f(1, 1, 1, 1);
+        getMinecraft().getTextureManager().bindTexture(texture);
+        blit(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
-    @Override
-    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground();
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        this.func_191948_b(mouseX, mouseY);
-    }
+//    @Override
+//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+//        this.drawDefaultBackground();
+//        super.drawScreen(mouseX, mouseY, partialTicks);
+//        this.func_191948_b(mouseX, mouseY);
+//    }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
-        if (!this.magnet.hasTagCompound()) {
-            this.magnet.setTagCompound(new NBTTagCompound());
-            this.magnet.getTagCompound().setBoolean("filterModeBlacklist", true);
+        if (!this.magnet.hasTag()) {
+            this.magnet.setTag(new CompoundNBT());
+            assert this.magnet.getTag() != null;
+            this.magnet.getTag().putBoolean("filterModeBlacklist", true);
         }
-        buttonModeBlacklist = this.magnet.getTagCompound().getBoolean("filterModeBlacklist");
+        assert this.magnet.getTag() != null;
+        buttonModeBlacklist = this.magnet.getTag().getBoolean("filterModeBlacklist");
 
-        buttonFilterToggle = new GuiButton(0, getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
-        buttonRangeDecrease = new GuiButton(1, getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<");
-        buttonRangeIncrease = new GuiButton(2, getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">");
-        this.buttonList.add(buttonFilterToggle);
-        this.buttonList.add(buttonRangeDecrease);
-        this.buttonList.add(buttonRangeIncrease);
+        buttonFilterToggle = addButton(createAndAddButton(getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"), (button) -> {
+            buttonModeBlacklist = !buttonModeBlacklist;
+            button.setMessage(buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
+            PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
+        }));
+
+        buttonRangeDecrease = addButton(createAndAddButton(getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<", (button) -> {
+            if (KeyChecker.isHoldingShift()) {
+                PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(-5));
+            } else {
+                PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(-1));
+            }
+        }));
+
+        buttonRangeIncrease = addButton(createAndAddButton(getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">", (button) -> {
+            if (KeyChecker.isHoldingShift()) {
+                PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(5));
+            } else {
+                PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(1));
+            }
+        }));
+
+//        buttonFilterToggle = new Button( getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
+//        buttonRangeDecrease = new Button( getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<");
+//        buttonRangeIncrease = new Button( getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">");
+//        this.buttonList.add(buttonFilterToggle);
+//        this.buttonList.add(buttonRangeDecrease);
+//        this.buttonList.add(buttonRangeIncrease);
     }
 
-    @Override
-    protected void actionPerformed(GuiButton button) {
-        if (button.mousePressed(Minecraft.getMinecraft(), button.x, button.y)) {
-            if (button.id == buttonFilterToggle.id) {
-                buttonModeBlacklist = !buttonModeBlacklist;
-                button.displayString = buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist");
-                PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
-            }
-            if (button.id == buttonRangeDecrease.id) {
-                if (KeyChecker.isHoldingShift()) {
-                    PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(-5));
-                } else {
-                    PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(-1));
-                }
-            }
-            if (button.id == buttonRangeIncrease.id) {
-                if (KeyChecker.isHoldingShift()) {
-                    PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(5));
-                } else {
-                    PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(1));
-                }
-            }
-        }
+    private Button createAndAddButton(int x, int y, int width, int height, String text, Button.IPressable action) {
+        return new Button(guiLeft + x, guiTop + y, width, height, text, action);
     }
 
     @SuppressWarnings("Duplicates")
     private void renderTooltips(int mouseX, int mouseY) {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
             List<String> text = new ArrayList<>();
             text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal("gui.tooltips.adjust_range.name"));
             text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.none"));
             text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.shift"));
-            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
+            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.mainWindow.getWidth(), mc.mainWindow.getHeight(), -1, mc.fontRenderer);
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private boolean isMouseOver(int mouseX, int mouseY, int minX, int minY, int maxX, int maxY){
         int actualX = mouseX - ((this.width - this.xSize) / 2);
         int actualY = mouseY - ((this.height - this.ySize) / 2);

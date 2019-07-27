@@ -2,7 +2,6 @@ package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
-import com.miningmark48.tieredmagnets.init.ModTileEntities;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
