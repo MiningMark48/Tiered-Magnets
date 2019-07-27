@@ -1,15 +1,15 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "minecraft:blocks/anvil_base",
-		"1": "minecraft:blocks/iron_block",
-		"2": "minecraft:blocks/end_rod",
-		"3": "minecraft:blocks/cauldron_inner",
-		"4": "minecraft:blocks/concrete_gray",
-		"5": "minecraft:blocks/concrete_silver",
-		"7": "minecraft:blocks/wool_colored_yellow",
-		"8": "minecraft:blocks/wool_colored_blue",
-		"particle": "minecraft:blocks/anvil_base"
+		"0": "minecraft:block/anvil",
+		"1": "minecraft:block/iron_block",
+		"2": "minecraft:block/end_rod",
+		"3": "minecraft:block/cauldron_inner",
+		"4": "minecraft:block/gray_concrete",
+		"5": "minecraft:block/light_gray_concrete",
+		"7": "minecraft:block/yellow_wool",
+		"8": "minecraft:block/blue_wool",
+		"particle": "minecraft:block/anvil"
 	},
 	"elements": [
 		{

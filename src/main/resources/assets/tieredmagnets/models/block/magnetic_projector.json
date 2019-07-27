@@ -1,13 +1,13 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "minecraft:blocks/glass",
-		"1": "minecraft:blocks/redstone_lamp_off",
-		"2": "minecraft:blocks/iron_block",
-		"3": "minecraft:blocks/stone_slab_top",
-		"4": "minecraft:blocks/anvil_base",
-		"5": "minecraft:blocks/gold_block",
-		"particle": "minecraft:blocks/glass"
+		"0": "minecraft:block/glass",
+		"1": "minecraft:block/redstone_lamp",
+		"2": "minecraft:block/iron_block",
+		"3": "minecraft:block/smooth_stone",
+		"4": "minecraft:block/anvil",
+		"5": "minecraft:block/gold_block",
+		"particle": "minecraft:block/glass"
 	},
 	"elements": [
 		{
