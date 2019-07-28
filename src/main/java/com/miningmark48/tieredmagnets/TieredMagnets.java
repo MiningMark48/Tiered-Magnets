@@ -55,7 +55,6 @@ public class TieredMagnets {
         DeferredWorkQueue.runLater(PacketHandler::registerMessages);
 
         MinecraftForge.EVENT_BUS.register(new ModRegistry());
-//        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 //        MinecraftForge.EVENT_BUS.register(proxy);
 
         MinecraftForge.EVENT_BUS.register(new EventStitchParticles());
