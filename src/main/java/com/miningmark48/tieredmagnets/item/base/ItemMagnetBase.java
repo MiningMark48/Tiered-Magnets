@@ -18,7 +18,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -76,14 +78,29 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     @Override
     public ActionResult onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = getMagnet(player);
         setTagDefaults(stack);
 
         if (!world.isRemote) {
             if (!player.isSneaking()) {
                 toggleMagnet(stack, player);
             } else {
-//                if (ModConfig.miscconfigs.doFilter && player.getHeldItem(Hand.MAIN_HAND).getItem() == this) NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) );
+                if (player instanceof ServerPlayerEntity) {
+                    if (ModConfig.miscconfigs.doFilter && stack.getItem() == this) {
+                        NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+                            @Override
+                            public ITextComponent getDisplayName() {
+                                return stack.getDisplayName();
+                            }
+
+                            @Nullable
+                            @Override
+                            public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                                return new ContainerMagnetFilter(i, playerInventory, stack);
+                            }
+                        }, packetBuffer -> packetBuffer.writeItemStack(stack));
+                    }
+                }
             }
         }
         return new ActionResult(ActionResultType.SUCCESS, stack);
@@ -141,7 +158,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                 ListNBT invItems = stack.getTag().getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < invItems.size(); i++) {
                     CompoundNBT item = invItems.getCompound(i);
-                    inventory.add(new ItemStack((IItemProvider) item).getItem());
+                    inventory.add(ItemStack.read(item).getItem());
                 }
             }
 

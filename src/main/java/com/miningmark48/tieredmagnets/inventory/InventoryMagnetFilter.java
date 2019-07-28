@@ -2,6 +2,8 @@ package com.miningmark48.tieredmagnets.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -119,32 +121,13 @@ public class InventoryMagnetFilter implements IInventory {
     }
 
     public void readFromNBT(CompoundNBT compound){
-        ListNBT items = compound.getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+        this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
-        for (int i = 0; i < items.size(); i++){
-            CompoundNBT item = items.getCompound(i);
-            int slot = item.getInt("Slot");
-
-            if(slot >= 0 && slot < getSizeInventory()){
-                inventory.set(slot, new ItemStack((IItemProvider) item));
-            }
-
-        }
+        ItemStackHelper.loadAllItems(compound, this.inventory);
     }
 
     public void writeToNBT(CompoundNBT compound){
-        ListNBT items = new ListNBT();
-
-        for(int i = 0; i < getSizeInventory(); i++){
-            if(getStackInSlot(i) != null){
-                CompoundNBT item = new CompoundNBT();
-                item.putInt("Slot", i);
-                Objects.requireNonNull(getStackInSlot(i)).write(item);
-                items.add(item);
-            }
-        }
-
-        compound.put("ItemInventory", items);
+        ItemStackHelper.saveAllItems(compound, this.inventory);
     }
 
 //    @Override

@@ -3,6 +3,7 @@ package com.miningmark48.tieredmagnets.container;
 import com.miningmark48.tieredmagnets.container.slot.SlotFilter;
 import com.miningmark48.tieredmagnets.init.ModContainers;
 import com.miningmark48.tieredmagnets.inventory.InventoryMagnetFilter;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -11,6 +12,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
+import net.minecraftforge.fml.ModLoadingContext;
 
 public class ContainerMagnetFilter extends Container {
 

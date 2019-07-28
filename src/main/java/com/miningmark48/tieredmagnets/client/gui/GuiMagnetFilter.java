@@ -98,13 +98,13 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
         assert this.magnet.getTag() != null;
         buttonModeBlacklist = this.magnet.getTag().getBoolean("filterModeBlacklist");
 
-        buttonFilterToggle = addButton(createAndAddButton(getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"), (button) -> {
+        buttonFilterToggle = addButton(createAndAddButton(95, 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"), (button) -> {
             buttonModeBlacklist = !buttonModeBlacklist;
             button.setMessage(buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
             PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
         }));
 
-        buttonRangeDecrease = addButton(createAndAddButton(getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<", (button) -> {
+        buttonRangeDecrease = addButton(createAndAddButton(100, 55, 15, 20, "<", (button) -> {
             if (KeyChecker.isHoldingShift()) {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(-5));
             } else {
@@ -112,7 +112,7 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
             }
         }));
 
-        buttonRangeIncrease = addButton(createAndAddButton(getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">", (button) -> {
+        buttonRangeIncrease = addButton(createAndAddButton(136, 55, 15, 20, ">", (button) -> {
             if (KeyChecker.isHoldingShift()) {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(5));
             } else {

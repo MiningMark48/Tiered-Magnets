@@ -51,7 +51,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-        if (!player.isSneaking() && !world.isRemote) ModGui.MAGNETIC_INSULATOR.openContainer(player, world, pos);
+        if (!player.isSneaking()) ModGui.MAGNETIC_INSULATOR.openContainer(player, world, pos);
         return true;
     }
 
