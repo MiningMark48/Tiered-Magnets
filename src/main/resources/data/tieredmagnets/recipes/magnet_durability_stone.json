@@ -1,0 +1,24 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_durability_stone"
+  },
+  "pattern": [
+    "MMM",
+    "M M",
+    "R R"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "minecraft:cobblestone"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_vanilla"
+    }
+  ]
+}

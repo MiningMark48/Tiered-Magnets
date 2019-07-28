@@ -1,6 +1,6 @@
 package com.miningmark48.tieredmagnets.tileentity.renderer;
 
-import com.miningmark48.tieredmagnets.init.ModConfig;
+import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;

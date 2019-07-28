@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets;
 
 import com.miningmark48.tieredmagnets.client.events.EventStitchParticles;
+import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
 import com.miningmark48.tieredmagnets.init.ModRegistry;
 import com.miningmark48.tieredmagnets.init.registry.BuildingObjects;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
@@ -52,7 +53,10 @@ public class TieredMagnets {
 
     private void setup(FMLCommonSetupEvent event) {
         instance = (TieredMagnets) ModLoadingContext.get().getActiveContainer().getMod();
-        DeferredWorkQueue.runLater(PacketHandler::registerMessages);
+        DeferredWorkQueue.runLater(() -> {
+            PacketHandler.registerMessages();
+            ModCraftingConditions.init();
+        });
 
         MinecraftForge.EVENT_BUS.register(new ModRegistry());
 //        MinecraftForge.EVENT_BUS.register(proxy);

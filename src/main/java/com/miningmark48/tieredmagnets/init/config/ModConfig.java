@@ -1,4 +1,4 @@
-package com.miningmark48.tieredmagnets.init;
+package com.miningmark48.tieredmagnets.init.config;
 
 //@Config(modid = Reference.MOD_ID, name = Reference.MOD_NAME, category = Reference.MOD_ID)
 public class ModConfig {
