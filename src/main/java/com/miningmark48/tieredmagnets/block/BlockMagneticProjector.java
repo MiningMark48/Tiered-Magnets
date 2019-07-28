@@ -1,14 +1,16 @@
 package com.miningmark48.tieredmagnets.block;
 
+import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
-import com.miningmark48.tieredmagnets.init.ModGui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -25,10 +27,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("Duplicates")
@@ -82,7 +86,26 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-        if (!player.isSneaking()) ModGui.MAGNETIC_PROJECTOR.openContainer(player, world, pos);
+        if (!player.isSneaking()) {
+            if (player instanceof ServerPlayerEntity) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof TileEntityMagneticProjector) {
+                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+                        @Nonnull
+                        @Override
+                        public ITextComponent getDisplayName() {
+                            return state.getBlock().getNameTextComponent();
+                        }
+
+                        @Nonnull
+                        @Override
+                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
+                            return new ContainerMagneticProjector(i, playerInventory, (TileEntityMagneticProjector) te);
+                        }
+                    }, packetBuffer -> packetBuffer.writeBlockPos(pos));
+                }
+            }
+        }
         return true;
     }
 

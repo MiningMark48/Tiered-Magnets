@@ -79,21 +79,21 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
     public void init() {
         super.init();
 
-        buttonRangeDecrease = addButton(createAndAddButton(getGuiLeft() + 63, getGuiTop() + 30, 15, 20, "<", (button) -> {
+        buttonRangeDecrease = addButton(createAndAddButton(63, 30, 15, 20, "<", (button) -> {
             if (KeyChecker.isHoldingShift()) {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), -5));
             } else {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), -1));
             }
         }));
-        buttonRangeIncrease = addButton(createAndAddButton(getGuiLeft() + 99, getGuiTop() + 30, 15, 20, ">", (button) -> {
+        buttonRangeIncrease = addButton(createAndAddButton(99, 30, 15, 20, ">", (button) -> {
             if (KeyChecker.isHoldingShift()) {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), 5));
             } else {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), 1));
             }
         }));
-        buttonTogglePreview = addButton(createAndAddButton(getGuiLeft() + 51, getGuiTop() + 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"), (button) -> {
+        buttonTogglePreview = addButton(createAndAddButton(51, 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"), (button) -> {
             buttonTogglePreview.setMessage(!this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"));
             PacketHandler.INSTANCE.sendToServer(new PacketTogglePreview(this.te.getPos()));
         }));

@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.container;
 
+import com.miningmark48.tieredmagnets.container.slot.SlotMagnet;
 import com.miningmark48.tieredmagnets.init.ModContainers;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.client.Minecraft;
@@ -22,6 +23,7 @@ public class ContainerMagneticProjector extends Container {
         super(ModContainers.CONTAINER_MAGNETIC_PROJECTOR, windowId);
         this.te = te;
         addPlayerSlots(invPlayer);
+        this.addSlot(new SlotMagnet(te, 0, 80, 34));
     }
 
     @SuppressWarnings("Duplicates")

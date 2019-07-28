@@ -40,6 +40,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -88,6 +89,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                 if (player instanceof ServerPlayerEntity) {
                     if (ModConfig.miscconfigs.doFilter && stack.getItem() == this) {
                         NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+                            @Nonnull
                             @Override
                             public ITextComponent getDisplayName() {
                                 return stack.getDisplayName();
@@ -95,7 +97,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
                             @Nullable
                             @Override
-                            public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+                            public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
                                 return new ContainerMagnetFilter(i, playerInventory, stack);
                             }
                         }, packetBuffer -> packetBuffer.writeItemStack(stack));
