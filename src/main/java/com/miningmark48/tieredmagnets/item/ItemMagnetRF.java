@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.block.base.CustomEnergyStorage;
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
@@ -8,11 +9,20 @@ import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -143,7 +153,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 //    }
 //
 //    @Override
-//    public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+//    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
 //        return new EnergyCapabilityProvider(stack, this);
 //    }
 //
@@ -155,8 +165,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
 //            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer) {
 //                @Override
 //                public int getEnergyStored() {
-//                    if (stack.hasTagCompound()) {
-//                        return stack.getTagCompound().getInteger("Energy");
+//                    if (stack.hasTag()) {
+//                        return stack.getTag().getInt("Energy");
 //                    } else {
 //                        return 0;
 //                    }
@@ -164,26 +174,24 @@ public class ItemMagnetRF extends ItemMagnetBase {
 //
 //                @Override
 //                public void setEnergyStored(int energy) {
-//                    if (!stack.hasTagCompound()) {
-//                        stack.setTagCompound(new NBTTagCompound());
+//                    if (!stack.hasTag()) {
+//                        stack.setTag(new CompoundNBT());
 //                    }
 //
-//                    stack.getTagCompound().setInteger("Energy", energy);
+//                    stack.getTag().putInt("Energy", energy);
 //                }
 //            };
 //        }
 //
+//        @Nonnull
 //        @Override
-//        public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-//            return this.getCapability(capability, facing) != null;
-//        }
-//
-//        @Nullable
-//        @Override
-//        public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-//            if (capability == CapabilityEnergy.ENERGY) { return CapabilityEnergy.ENERGY.cast(this.storage); }
+//        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
+//            if (capability == CapabilityEnergy.ENERGY) {
+//                return CapabilityEnergy.ENERGY.cast(this.storage);
+//            }
 //            return null;
 //        }
+//
 //    }
 
 
