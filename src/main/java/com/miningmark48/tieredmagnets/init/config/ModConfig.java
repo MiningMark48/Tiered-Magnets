@@ -1,263 +1,232 @@
 package com.miningmark48.tieredmagnets.init.config;
 
-//@Config(modid = Reference.MOD_ID, name = Reference.MOD_NAME, category = Reference.MOD_ID)
+import com.miningmark48.tieredmagnets.reference.Reference;
+import com.miningmark48.tieredmagnets.util.ModLogger;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec.*;
+import net.minecraftforge.fml.common.Mod;
+
+import static net.minecraftforge.fml.Logging.CORE;
+
+@Mod.EventBusSubscriber
+@SuppressWarnings("Duplicates")
 public class ModConfig {
 
-//    @Config.Name("Modules")
-//    @Config.Comment("Module control")
-    public static Modules modules = new Modules();
+    private static final String CATEGORY_GENERAL = "general";
 
-//    @Config.Name("Vanilla")
-//    @Config.Comment("Vanilla configuration settings")
-    public static VanillaConfigs vanillaConfigs = new VanillaConfigs();
+    private static final Builder COMMON_BUILDER = new Builder();
+    private static final Builder SERVER_BUILDER = new Builder();
+    private static final Builder CLIENT_BUILDER = new Builder();
 
-//    @Config.Name("Thermal Expansion")
-//    @Config.Comment("Thermal Expansion configuration settings")
-    public static ThermalExpansionConfigs thermalExpansionConfigs = new ThermalExpansionConfigs();
+    public static final CategoryGeneral GENERAL = new CategoryGeneral();
+    public static final CategoryModules MODULES = new CategoryModules();
+    public static final CategoryVanilla MODULE_VANILLA = new CategoryVanilla();
+    public static final CategoryThermalExpansion MODULE_TE = new CategoryThermalExpansion();
+    public static final CategoryCursed MODULE_CURSED = new CategoryCursed();
 
-//    @Config.Name("Cursed Magnets")
-//    @Config.Comment("Cursed Magnets configuration settings")
-    public static CursedMagnetConfigs cursedMagnetsConfigs = new CursedMagnetConfigs();
+    public static final class CategoryGeneral {
 
-//    @Config.Name("Utility Blocks")
-//    @Config.Comment("Magnetic Insulator configuration settings")
-    public static UtilityBlockConfigs utilityBlockConfigs = new UtilityBlockConfigs();
+        public final BooleanValue enableParticles;
 
-//    @Config.Name("Misc")
-//    @Config.Comment("Miscellaneous configuration settings")
-    public static MiscConfigs miscconfigs = new MiscConfigs();
+        private static String modules_name = "general";
+        private static String general_comment = "General mod settings";
 
-    public static class Modules {
-//        @Config.Name("Vanilla")
-//        @Config.Comment("If true, enables Vanilla-based, durability magnets.")
-//        @Config.RequiresMcRestart
-        public boolean vanillaModule = true;
+        private CategoryGeneral() {
+            SERVER_BUILDER.comment(general_comment).push(modules_name);
+            CLIENT_BUILDER.comment(general_comment).push(modules_name);
+            COMMON_BUILDER.comment(general_comment).push(modules_name);
 
-//        @Config.Name("Thermal Expansion")
-//        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets (Requires Thermal Expansion).")
-//        @Config.RequiresMcRestart
-        public boolean thermalExpansionModule = true;
+            enableParticles = CLIENT_BUILDER
+                    .comment("If true, particles will be displayed.")
+                    .define("Enable Particles", true);
 
-//        @Config.Name("Vanilla - Magic")
-//        @Config.Comment("If true, enables Vanilla-based, durability magnets that teleport items to the player.")
-//        @Config.RequiresMcRestart
-        public boolean vanillaMagicModule = true;
-
-//        @Config.Name("Thermal Expansion - Magic")
-//        @Config.Comment("If true, enables Thermal Expansion-based, RF-powered magnets that teleport items to the player (Requires Thermal Expansion).")
-//        @Config.RequiresMcRestart
-        public boolean thermalExpansionMagicModule = true;
-
-//        @Config.Name("Cursed Magnets")
-//        @Config.Comment("If true, enables magnets that have no cost to use.")
-//        @Config.RequiresMcRestart
-        public boolean cursedMagnetsModule = true;
-
-//        @Config.Name("Utility Blocks")
-//        @Config.Comment("If true, utility blocks for the magnets will be enabled.")
-        public boolean utilityBlocksModule = true;
-
-//        @Config.Name("Patchouli")
-//        @Config.Comment("If true, enables the Tiered Magnets manual added by Patchouli.")
-//        @Config.RequiresMcRestart
-        public boolean patchouliModule = true;
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
 
     }
 
-    public static class VanillaConfigs {
+    public static final class CategoryModules {
 
-//        @Config.Name("Has Cost")
-//        @Config.Comment("If true, magnets will take damage when used.")
-        public boolean hasCost = true;
+        public final BooleanValue enableModuleVanilla;
+        public final BooleanValue enableModuleVanillaMagic;
+        public final BooleanValue enableModuleCursed;
+        public final BooleanValue enableModuleCursedMagic;
+        public final BooleanValue enableUtilityBlocks;
 
-//        @Config.Name("Speed")
-//        @Config.RangeDouble(min = 0.01)
-//        @Config.Comment("Affects the speed in which items are attracted.")
-//        @Config.RequiresMcRestart
-        public double speed = 0.05D;
+        private static String modules_name = "modules";
+        private static String modules_comment = "Module control settings";
 
-//        @Config.Name("Base Range")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Set the base range for the vanilla magnets.")
-//        @Config.RequiresMcRestart
-        public int baseRange = 2;
+        private CategoryModules() {
+            SERVER_BUILDER.comment(modules_comment).push(modules_name);
+            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
+            COMMON_BUILDER.comment(modules_comment).push(modules_name);
 
-//        @Config.Name("Multiplier Range")
-//        @Config.RangeInt(min = 0)
-//        @Config.Comment("Affects the increase in range between tiers.")
-//        @Config.RequiresMcRestart
-        public int multiplierRange = 4;
 
-//        @Config.Name("Base Durability")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Set the base durability for the vanilla magnets.")
-//        @Config.RequiresMcRestart
-        public int baseDurability = 1024;
+            enableModuleVanilla = SERVER_BUILDER
+                    .comment("If true, enables recipes for Vanilla-based, durability magnets.")
+                    .define("Vanilla", true);
+            enableModuleVanillaMagic = SERVER_BUILDER
+                    .comment("If true, enables recipes for Vanilla-based, durability magnets that teleport items to the player.")
+                    .define("Vanilla - Magic", true);
+            enableModuleCursed = SERVER_BUILDER
+                    .comment("If true, enables recipes for magnets that have no cost to use.")
+                    .define("Cursed", true);
+            enableModuleCursedMagic = SERVER_BUILDER
+                    .comment("If true, enables recipes for magnets that teleport items to the player while having no cost to use.")
+                    .define("Cursed - Magic", true);
+            enableUtilityBlocks = SERVER_BUILDER
+                    .comment("If true, utility blocks for the magnets will be enabled.")
+                    .define("Utility Blocks", true);
 
-//        @Config.Name("Multiplier Durability")
-//        @Config.RangeDouble(min = 0)
-//        @Config.Comment("Affects the increase in durability between magnet tiers.")
-//        @Config.RequiresMcRestart
-        public double multiplierDurability = 0.5D;
+            //TODO: Thermal and Patchouli once they're updated
 
-//        @Config.Name("Multiplier Magic")
-//        @Config.RangeInt(min = 0)
-//        @Config.Comment("Affects the increase in damage in the magic magnets.")
-//        @Config.RequiresMcRestart
-        public int multiplierMagic = 3;
 
-    }
-
-    public static class ThermalExpansionConfigs {
-
-//        @Config.Name("Has Cost")
-//        @Config.Comment("If true, magnets will consume energy when used.")
-        public boolean hasCost = true;
-
-//        @Config.Name("Speed")
-//        @Config.RangeDouble(min = 0.01)
-//        @Config.Comment("Affects the speed in which items are attracted.")
-//        @Config.RequiresMcRestart
-        public double speed = 0.075D;
-
-//        @Config.Name("Energy Transfer Rate")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("The rate at which the magnet can be charged by a machine.")
-//        @Config.RequiresMcRestart
-        public int transferRate = 2500;
-
-//        @Config.Name("Base Range")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Set the base range for the vanilla magnets.")
-//        @Config.RequiresMcRestart
-        public int baseRange = 8;
-
-//        @Config.Name("Multiplier Range")
-//        @Config.RangeInt(min = 0)
-//        @Config.Comment("Affects the increase in range between tiers.")
-//        @Config.RequiresMcRestart
-        public int multiplierRange = 1;
-
-//        @Config.Name("Base Energy")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Set the max energy storage for the electromagnets.")
-//        @Config.RequiresMcRestart
-        public int baseEnergy = 25000;
-
-//        @Config.Name("Multiplier Energy")
-//        @Config.RangeInt(min = 0)
-//        @Config.Comment("Affects the increase in energy storage between electromagnet tiers.")
-//        @Config.RequiresMcRestart
-        public int multiplierEnergy = 4;
-
-//        @Config.Name("Base Energy Usage")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("The amount of energy used per tick for each tier.")
-//        @Config.RequiresMcRestart
-        public int baseUsageEnergy = 10;
-
-//        @Config.Name("Multiplier Energy Usage")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Affects the increase in energy usage between electromagnet tiers.")
-//        @Config.RequiresMcRestart
-        public int multiplierUsageEnergy = 1;
-
-//        @Config.Name("Multiplier Magic Energy Usage")
-//        @Config.RangeDouble(min = 0)
-//        @Config.Comment("Affects the increase in energy usage in the magic magnets.")
-//        @Config.RequiresMcRestart
-        public double multiplierMagic = 3D;
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
 
     }
 
-    public static class CursedMagnetConfigs {
-//        @Config.Name("Cursed Magnet")
-//        @Config.Comment("If true, the Cursed Magnet will be enabled.")
-//        @Config.RequiresMcRestart
-        public boolean cursedMagnet = true;
+    public static final class CategoryVanilla {
 
-//        @Config.Name("Magic Cursed Magnet")
-//        @Config.Comment("If true, the Magic Cursed Magnet will be enabled.")
-//        @Config.RequiresMcRestart
-        public boolean magicCursedMagnet = true;
+        //Defaults
+        public final int defaultBaseRange = 2;
+        public final int defaultMultiplierRange = 4;
+        public final int defaultBaseDurability = 1024;
+        public final int defaultMultiplierDurability = 1;
+        public final int defaultMultiplierMagic = 3;
 
-//        @Config.Name("Curse of Vanishing")
-//        @Config.Comment("If true, the Curse of Vanishing will be applied to the magnet, causing it to be lost on death.")
-        public boolean vanishing = true;
+        public final BooleanValue hasCost;
+        public final DoubleValue speed;
+        public final IntValue baseRange;
+        public final IntValue multiplierRange;
+        public final IntValue baseDurability;
+        public final IntValue multiplierDurability;
+        public final IntValue multiplierMagic;
 
-//        @Config.Name("Speed")
-//        @Config.RangeDouble(min = 0.01)
-//        @Config.Comment("Affects the speed in which items are attracted.")
-//        @Config.RequiresMcRestart
-        public double speed = 0.05D;
+        private static String modules_name = "vanilla";
+        private static String modules_comment = "Vanilla module control settings";
 
-//        @Config.Name("Range")
-//        @Config.RangeInt(min = 1)
-//        @Config.Comment("Set the range for the Cursed Magnets.")
-//        @Config.RequiresMcRestart
-        public int range = 64;
+        private CategoryVanilla() {
+            SERVER_BUILDER.comment(modules_comment).push(modules_name);
+            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
+            COMMON_BUILDER.comment(modules_comment).push(modules_name);
 
-    }
 
-    public static class UtilityBlockConfigs {
-        //M. Insulator
-//        @Config.Name("Magnetic Insulator")
-//        @Config.Comment("If true, enables a block to prevent items from being picked up.")
-//        @Config.RequiresMcRestart
-        public boolean insulator = true;
+            hasCost = SERVER_BUILDER
+                    .comment("If true, magnets will take damage when used.")
+                    .define("Has Cost", true);
 
-//        @Config.Name("Magnetic Insulator - Range")
-//        @Config.Comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
-        public int insulatorRange = 16;
+            speed = SERVER_BUILDER
+                    .comment("Speed in which items are pulled toward the player.")
+                    .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
 
-        //M. Projector
-//        @Config.Name("Magnetic Projector")
-//        @Config.Comment("If true, enables a block to recreate a magnet in block-form.")
-//        @Config.RequiresMcRestart
-        public boolean projector = true;
+            baseRange = SERVER_BUILDER
+                    .comment("Set the base range for the vanilla magnets.")
+                    .defineInRange("Base Range", defaultBaseRange, 1, Integer.MAX_VALUE);
+            multiplierRange = SERVER_BUILDER
+                    .comment("Affects the increase in range between tiers.")
+                    .defineInRange("Multiplier Range", defaultMultiplierRange, 0, Integer.MAX_VALUE);
+            baseDurability = SERVER_BUILDER
+                    .comment("Set the base durability for the vanilla magnets.")
+                    .defineInRange("[DISABLED] Base Durability", defaultBaseDurability, 1, Integer.MAX_VALUE);
+            multiplierDurability = SERVER_BUILDER
+                    .comment("Affects the increase in durability between magnet tiers.")
+                    .defineInRange("[DISABLED] Multiplier Durability", defaultMultiplierDurability, 1, Integer.MAX_VALUE);
+            multiplierMagic = SERVER_BUILDER
+                    .comment("Affects the increase in damage in the magic magnets.")
+                    .defineInRange("Multiplier Magic", defaultMultiplierMagic, 0, Integer.MAX_VALUE);
 
-//        @Config.Name("Magnetic Projector - Lamp Render")
-//        @Config.Comment("If true, a lamp render will be displayed on the Magnetic Projector.")
-        public boolean projectorLampRender = true;
-    }
 
-    public static class MiscConfigs { // heh heh ;)
-//        @Config.Name("Particles")
-//        @Config.Comment("If true, particles will be displayed as items are attracted.")
-        public boolean doParticles = true;
-
-//        @Config.Name("Glow")
-//        @Config.Comment("If true, magnets will glow when enabled.")
-        public boolean doGlow = true;
-
-//        @Config.Name("Filter")
-//        @Config.Comment("If true, magnets will be able to be filtered.")
-        public boolean doFilter = true;
-
-//        @Config.Name("XP Vacuum")
-//        @Config.Comment("If true, XP will be vacuumed toward the player.")
-        public boolean doXPVacuum = true;
-
-//        @Config.Name("Cooldown Time")
-//        @Config.Comment("The time (in ticks) the player can enable/disable a magnet.")
-//        @Config.RangeInt(min = 0)
-        public int cooldownTime = 10;
-
-//        @Config.Name("Cost for Distance")
-//        @Config.Comment("The maximum distance in which magnetizing items and XP begins to have a cost.")
-//        @Config.RangeDouble(min = 0)
-        public double costForDistance = 1.5D;
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
 
     }
 
-//    @Mod.EventBusSubscriber
-//    public static class ConfigHolder {
-//        @SubscribeEvent
-//        public static void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-//            if (event.getModID().equals(Reference.MOD_ID)) {
-//                ConfigManager.sync(Reference.MOD_ID, Config.Type.INSTANCE);
-//            }
-//        }
-//    }
+    public static final class CategoryThermalExpansion {
+
+        public final DoubleValue speed;
+
+        private static String modules_name = "thermal_expansion";
+        private static String modules_comment = "Thermal module control settings";
+
+        private CategoryThermalExpansion() {
+            SERVER_BUILDER.comment(modules_comment).push(modules_name);
+            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
+            COMMON_BUILDER.comment(modules_comment).push(modules_name);
+
+            speed = SERVER_BUILDER
+                    .comment("Speed in which items are pulled toward the player.")
+                    .defineInRange("Speed", 0.075D, 0.01D, Double.MAX_VALUE);
+
+            //TODO: Rest of configs once energy is added
+
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
+
+    }
+
+    public static final class CategoryCursed {
+
+        //Defaults
+        public final int defaultRange = 64;
+
+        public final DoubleValue speed;
+        public final IntValue range;
+
+        private static String modules_name = "cursed";
+        private static String modules_comment = "Cursed module control settings";
+
+        private CategoryCursed() {
+            SERVER_BUILDER.comment(modules_comment).push(modules_name);
+            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
+            COMMON_BUILDER.comment(modules_comment).push(modules_name);
+
+
+            speed = SERVER_BUILDER
+                    .comment("Speed in which items are pulled toward the player.")
+                    .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
+
+            range = SERVER_BUILDER
+                    .comment("Set the range for the Cursed Magnets.")
+                    .defineInRange("Range", defaultRange, 1, Integer.MAX_VALUE);
+
+
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
+
+    }
+
+    public static final ForgeConfigSpec COMMON_CONFIG = COMMON_BUILDER.build();
+    public static final ForgeConfigSpec SERVER_CONFIG = SERVER_BUILDER.build();
+    public static final ForgeConfigSpec CLIENT_CONFIG = CLIENT_BUILDER.build();
+    private static boolean serverCfgLoaded = false;
+
+    private static void loadServerConfig() {
+        serverCfgLoaded = true;
+    }
+
+    public static void onLoad(final net.minecraftforge.fml.config.ModConfig.Loading configEvent) {
+        if (configEvent.getConfig().getSpec() == ModConfig.SERVER_CONFIG)
+            loadServerConfig();
+        ModLogger.debug("Loaded {} config file {}", Reference.MOD_ID, configEvent.getConfig().getFileName());
+    }
+
+    public static void onFileChange(final net.minecraftforge.fml.config.ModConfig.ConfigReloading configEvent) {
+        ModLogger.fatal(CORE, "{} config just got changed on the file system!", Reference.MOD_ID);
+    }
+
+    public static boolean isServerConfigLoaded() {
+        return serverCfgLoaded;
+    }
 
 }

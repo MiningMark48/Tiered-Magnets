@@ -3,12 +3,12 @@ package com.miningmark48.tieredmagnets.init;
 public class ModRecipes {
 
 //    public static void init(RegistryEvent.Register<IRecipe> e) {
-//        if (ModConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
+//        if (OldConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
 //            IntegrationThermalExpansion.init();
 //        }
 //
 //        //Manual
-//        if (ModConfig.modules.patchouliModule && Loader.isModLoaded(Reference.PATCHOULI)) {
+//        if (OldConfig.modules.patchouliModule && Loader.isModLoaded(Reference.PATCHOULI)) {
 //            IntegrationPatchouli.init();
 //            GameRegistry.addShapelessRecipe(new ResourceLocation(Reference.MOD_ID + ":magnet_manual"), null, IntegrationPatchouli.magnet_manual,
 //                    Ingredient.func_193369_a(new ItemStack(Items.BOOK)), Ingredient.func_193369_a(new ItemStack(Items.REDSTONE)), Ingredient.func_193369_a(new ItemStack(Items.IRON_INGOT))
@@ -16,7 +16,7 @@ public class ModRecipes {
 //        }
 //
 //        // Vanilla
-//        if (ModConfig.modules.vanillaModule) {
+//        if (OldConfig.modules.vanillaModule) {
 //            GameRegistry.addShapedRecipe(
 //                    new ResourceLocation(Reference.MOD_ID + ":magnet_durability_stone"), null, new ItemStack(ModItems.ItemMagnetDurabilityStone),
 //                    "MMM", "M M", "R R",
@@ -61,7 +61,7 @@ public class ModRecipes {
 //        }
 //
 //        // Vanilla - Magic
-//        if (ModConfig.modules.vanillaMagicModule) {
+//        if (OldConfig.modules.vanillaMagicModule) {
 //            GameRegistry.addShapedRecipe(
 //                    new ResourceLocation(Reference.MOD_ID + ":magnet_magic_durability_stone"), null, new ItemStack(ModItems.ItemMagnetMagicDurabilityStone),
 //                    " E ", "GMG", " E ",
@@ -105,7 +105,7 @@ public class ModRecipes {
 //        }
 //
 //        // Thermal Expansion
-//        if (ModConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
+//        if (OldConfig.modules.thermalExpansionModule && Loader.isModLoaded(Reference.TE)) {
 //            GameRegistry.addShapedRecipe(
 //                new ResourceLocation(Reference.MOD_ID + ":magnet_energy_leadstone"), null, new ItemStack(ModItems.ItemMagnetElectromagnetLeadstone),
 //                " G ", "C R", " G ",
@@ -154,7 +154,7 @@ public class ModRecipes {
 //        }
 //
 //        // Thermal Expansion - Magic
-//        if (ModConfig.modules.thermalExpansionMagicModule && Loader.isModLoaded(Reference.TE)) {
+//        if (OldConfig.modules.thermalExpansionMagicModule && Loader.isModLoaded(Reference.TE)) {
 //            new ShapedCopyNBTRecipe(
 //                    e, new ResourceLocation(Reference.MOD_ID + ":magnet_magic_energy_leadstone"), new ItemStack(ModItems.ItemMagnetMagicElectromagnetLeadstone), new ItemStack(ModItems.ItemMagnetElectromagnetLeadstone),
 //                    " E ", "GMG", " E ",
@@ -182,9 +182,9 @@ public class ModRecipes {
 //            );
 //        }
 //
-//        if (ModConfig.modules.cursedMagnetsModule) {
+//        if (OldConfig.modules.cursedMagnetsModule) {
 //            //Free
-//            if (ModConfig.cursedMagnetsConfigs.cursedMagnet) {
+//            if (OldConfig.cursedMagnetsConfigs.cursedMagnet) {
 //                GameRegistry.addShapedRecipe(
 //                        new ResourceLocation(Reference.MOD_ID + ":magnet_free"), null, new ItemStack(ModItems.ItemMagnetFree),
 //                        "DGD", "ISI", "R R",
@@ -192,7 +192,7 @@ public class ModRecipes {
 //                );
 //            }
 //            //Magic Free
-//            if (ModConfig.cursedMagnetsConfigs.magicCursedMagnet) {
+//            if (OldConfig.cursedMagnetsConfigs.magicCursedMagnet) {
 //                GameRegistry.addShapedRecipe(
 //                        new ResourceLocation(Reference.MOD_ID + ":magnet_magic_free"), null, new ItemStack(ModItems.ItemMagnetMagicFree),
 //                        " E ", "GMG", " E ",
@@ -201,9 +201,9 @@ public class ModRecipes {
 //            }
 //        }
 //
-//        if (ModConfig.modules.utilityBlocksModule) {
+//        if (OldConfig.modules.utilityBlocksModule) {
 //            //Magnetic Insulator
-//            if (ModConfig.utilityBlockConfigs.insulator) {
+//            if (OldConfig.utilityBlockConfigs.insulator) {
 //                GameRegistry.addShapedRecipe(
 //                        new ResourceLocation(Reference.MOD_ID + ":magnetic_insulator"), null, new ItemStack(ModBlocks.BlockMagneticInsulator),
 //                        "EGE", " G ", "III",
@@ -212,7 +212,7 @@ public class ModRecipes {
 //            }
 //
 //            //Magnetic Projector
-//            if (ModConfig.utilityBlockConfigs.projector) {
+//            if (OldConfig.utilityBlockConfigs.projector) {
 //                GameRegistry.addShapedRecipe(
 //                        new ResourceLocation(Reference.MOD_ID + ":magnetic_projector"), null, new ItemStack(ModBlocks.BlockMagneticProjector),
 //                        "IPI", "GRG", "IHI",

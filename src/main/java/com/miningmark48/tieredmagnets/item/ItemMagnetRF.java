@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
+import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import net.minecraft.client.util.ITooltipFlag;
@@ -14,18 +15,21 @@ import java.util.List;
 
 public class ItemMagnetRF extends ItemMagnetBase {
 
+    private final int tier;
     private final int maxPower;
     private final int transfer;
     private int usageEnergy;
 
     public ItemMagnetRF(Properties properties, int tier, boolean isMagic) {
-        super(properties, ModConfig.thermalExpansionConfigs.baseRange + (ModConfig.thermalExpansionConfigs.baseRange * ModConfig.thermalExpansionConfigs.multiplierRange * tier), ModConfig.thermalExpansionConfigs.speed, isMagic);
+        super(properties, isMagic);
 
-        this.maxPower = ModConfig.thermalExpansionConfigs.baseEnergy + (ModConfig.thermalExpansionConfigs.baseEnergy * ModConfig.thermalExpansionConfigs.multiplierEnergy * tier);
-        this.transfer = ModConfig.thermalExpansionConfigs.transferRate;
-        this.usageEnergy = ModConfig.thermalExpansionConfigs.baseUsageEnergy + (ModConfig.thermalExpansionConfigs.baseUsageEnergy * ModConfig.thermalExpansionConfigs.multiplierUsageEnergy * tier);
+        this.tier = tier;
 
-        if (isMagic) usageEnergy *= ModConfig.thermalExpansionConfigs.multiplierMagic;
+        this.maxPower = OldConfig.thermalExpansionConfigs.baseEnergy + (OldConfig.thermalExpansionConfigs.baseEnergy * OldConfig.thermalExpansionConfigs.multiplierEnergy * tier);
+        this.transfer = OldConfig.thermalExpansionConfigs.transferRate;
+        this.usageEnergy = OldConfig.thermalExpansionConfigs.baseUsageEnergy + (OldConfig.thermalExpansionConfigs.baseUsageEnergy * OldConfig.thermalExpansionConfigs.multiplierUsageEnergy * tier);
+
+        if (isMagic) usageEnergy *= OldConfig.thermalExpansionConfigs.multiplierMagic;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
         if (KeyChecker.isHoldingShift()) {
 //            list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy1") + TextFormatting.AQUA + " " + this.getEnergyStored(stack) + " / " + this.getMaxEnergyStored(stack) + " " + TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy2")));
-//            list.add(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.cost") + " " + TextFormatting.RED + usageEnergy + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.energy") + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks1") + " " + TextFormatting.LIGHT_PURPLE + ModConfig.miscconfigs.costForDistance + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks2")));
+//            list.add(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.cost") + " " + TextFormatting.RED + usageEnergy + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.energy") + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks1") + " " + TextFormatting.LIGHT_PURPLE + OldConfig.miscconfigs.costForDistance + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks2")));
         }
     }
 
@@ -45,7 +49,25 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-//        if (ModConfig.thermalExpansionConfigs.hasCost) this.extractEnergyInternal(stack, usageEnergy, false);
+//        if (OldConfig.thermalExpansionConfigs.hasCost) this.extractEnergyInternal(stack, usageEnergy, false);
+    }
+
+    @Override
+    public void setTagDefaults(ItemStack stack) {
+        super.setTagDefaults(stack);
+        assert stack.getTag() != null;
+        stack.getTag().putInt("range", calculateRange(OldConfig.thermalExpansionConfigs.baseRange, OldConfig.thermalExpansionConfigs.multiplierRange, tier));
+    }
+
+    @Override
+    public int getDefaultRange() {
+//        IntSupplier baseRange = ModConfig.MODULE_VANILLA.baseRange::get;
+        return calculateRange(OldConfig.thermalExpansionConfigs.baseRange, OldConfig.thermalExpansionConfigs.multiplierRange, tier);
+    }
+
+    @Override
+    public double getSpeed() {
+        return ModConfig.MODULE_TE.speed.get();
     }
 
     @Override

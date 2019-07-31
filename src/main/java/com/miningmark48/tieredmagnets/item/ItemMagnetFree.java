@@ -6,8 +6,6 @@ import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -21,7 +19,7 @@ import java.util.List;
 public class ItemMagnetFree extends ItemMagnetBase {
 
     public ItemMagnetFree(Properties properties, boolean isMagic) {
-        super(properties, ModConfig.cursedMagnetsConfigs.range, ModConfig.cursedMagnetsConfigs.speed, isMagic);
+        super(properties, isMagic);
     }
 
     @Override
@@ -31,13 +29,30 @@ public class ItemMagnetFree extends ItemMagnetBase {
             list.add(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal("tooltip.item.magnet_base.free")));
         }
 
-        if (ModConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("enchantment.vanishing_curse")));
+//        if (OldConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("enchantment.vanishing_curse")));
     }
 
     @Override
     public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
-        if (ModConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) stack.addEnchantment(Enchantments.VANISHING_CURSE, 1);
+//        if (OldConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) stack.addEnchantment(Enchantments.VANISHING_CURSE, 1);
         super.onUsingTick(stack, entity, count);
+    }
+
+    @Override
+    public void setTagDefaults(ItemStack stack) {
+        super.setTagDefaults(stack);
+        assert stack.getTag() != null;
+        stack.getTag().putInt("range", ModConfig.MODULE_CURSED.defaultRange);
+    }
+
+    @Override
+    public int getDefaultRange() {
+        return ModConfig.MODULE_CURSED.range.get();
+    }
+
+    @Override
+    public double getSpeed() {
+        return ModConfig.MODULE_CURSED.speed.get();
     }
 
     @Override
