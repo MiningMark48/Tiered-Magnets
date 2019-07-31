@@ -54,15 +54,16 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void setTagDefaults(ItemStack stack) {
-        super.setTagDefaults(stack);
-        assert stack.getTag() != null;
-        stack.getTag().putInt("range", calculateRange(OldConfig.thermalExpansionConfigs.baseRange, OldConfig.thermalExpansionConfigs.multiplierRange, tier));
+        if (!stack.hasTag()) {
+            super.setTagDefaults(stack);
+            assert stack.getTag() != null;
+            stack.getTag().putInt("range", calculateRange(ModConfig.MODULE_TE.defaultBaseRange, ModConfig.MODULE_TE.defaultMultiplierRange, tier));
+        }
     }
 
     @Override
     public int getDefaultRange() {
-//        IntSupplier baseRange = ModConfig.MODULE_VANILLA.baseRange::get;
-        return calculateRange(OldConfig.thermalExpansionConfigs.baseRange, OldConfig.thermalExpansionConfigs.multiplierRange, tier);
+        return calculateRange(ModConfig.MODULE_TE.baseRange.get(), ModConfig.MODULE_TE.multiplierRange.get(), tier);
     }
 
     @Override

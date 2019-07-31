@@ -23,10 +23,17 @@ public class ModConfig {
     public static final CategoryVanilla MODULE_VANILLA = new CategoryVanilla();
     public static final CategoryThermalExpansion MODULE_TE = new CategoryThermalExpansion();
     public static final CategoryCursed MODULE_CURSED = new CategoryCursed();
+    public static final CategoryUtilityBlocks MODULE_UTILITY_BLOCKS = new CategoryUtilityBlocks();
 
     public static final class CategoryGeneral {
 
+        //Client
         public final BooleanValue enableParticles;
+        //Server
+        public final IntValue cooldownTime;
+        public final DoubleValue costDistance;
+        public final BooleanValue enableFiltering;
+        public final BooleanValue enableXPMagnet;
 
         private static String modules_name = "general";
         private static String general_comment = "General mod settings";
@@ -36,9 +43,26 @@ public class ModConfig {
             CLIENT_BUILDER.comment(general_comment).push(modules_name);
             COMMON_BUILDER.comment(general_comment).push(modules_name);
 
+            //Client
             enableParticles = CLIENT_BUILDER
                     .comment("If true, particles will be displayed.")
                     .define("Enable Particles", true);
+
+            //Server
+            cooldownTime = SERVER_BUILDER
+                    .comment("The time (in ticks) between when the player can enable and disable a magnet.")
+                    .defineInRange("Cooldown Time", 10, 0, Integer.MAX_VALUE);
+
+            costDistance = SERVER_BUILDER
+                    .comment("The maximum distance in which magnetizing items and XP begins to have a cost.")
+                    .defineInRange("Cost Distance", 1.5D, 0, Double.MAX_VALUE);
+
+            enableFiltering = SERVER_BUILDER
+                    .comment("If true,  magnets will be able to be filtered.")
+                    .define("Enable Filtering", true);
+            enableXPMagnet = SERVER_BUILDER
+                    .comment("If true,  magnets will be able to be attract experience orbs.")
+                    .define("XP Magnet", true);
 
             SERVER_BUILDER.pop();
             CLIENT_BUILDER.pop();
@@ -150,7 +174,13 @@ public class ModConfig {
 
     public static final class CategoryThermalExpansion {
 
+        //Defaults
+        public final int defaultBaseRange = 8;
+        public final int defaultMultiplierRange = 1;
+
         public final DoubleValue speed;
+        public final IntValue baseRange;
+        public final IntValue multiplierRange;
 
         private static String modules_name = "thermal_expansion";
         private static String modules_comment = "Thermal module control settings";
@@ -163,6 +193,13 @@ public class ModConfig {
             speed = SERVER_BUILDER
                     .comment("Speed in which items are pulled toward the player.")
                     .defineInRange("Speed", 0.075D, 0.01D, Double.MAX_VALUE);
+
+            baseRange = SERVER_BUILDER
+                    .comment("Set the base range for the vanilla magnets.")
+                    .defineInRange("Base Range", defaultBaseRange, 1, Integer.MAX_VALUE);
+            multiplierRange = SERVER_BUILDER
+                    .comment("Affects the increase in range between tiers.")
+                    .defineInRange("Multiplier Range", defaultMultiplierRange, 0, Integer.MAX_VALUE);
 
             //TODO: Rest of configs once energy is added
 
@@ -197,6 +234,49 @@ public class ModConfig {
             range = SERVER_BUILDER
                     .comment("Set the range for the Cursed Magnets.")
                     .defineInRange("Range", defaultRange, 1, Integer.MAX_VALUE);
+
+
+            SERVER_BUILDER.pop();
+            CLIENT_BUILDER.pop();
+            COMMON_BUILDER.pop();
+        }
+
+    }
+
+    public static final class CategoryUtilityBlocks {
+
+        //Client
+        public final BooleanValue enableLampRender;
+
+        //Server
+        public final BooleanValue enableMInsulator;
+        public final BooleanValue enableMProjector;
+        public final IntValue insulatorRange;
+
+        private static String modules_name = "utility_blocks";
+        private static String modules_comment = "Utility Block module control settings";
+
+        private CategoryUtilityBlocks() {
+            SERVER_BUILDER.comment(modules_comment).push(modules_name);
+            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
+            COMMON_BUILDER.comment(modules_comment).push(modules_name);
+
+            //Client
+            enableLampRender = CLIENT_BUILDER
+                    .comment("If true, a lamp render will be displayed on the Magnetic Projector. Disabling MAY improve performance.")
+                    .define("Enable Magnetic Projector Render", true);
+
+            //Server
+            enableMInsulator = SERVER_BUILDER
+                    .comment("If true, enables a block to prevent items from being picked up.")
+                    .define("Enable Magnetic Insulator", true);
+            enableMProjector = SERVER_BUILDER
+                    .comment("If true, enables a block to recreate a magnet in block-form.")
+                    .define("Enable Magnetic Projector", true);
+
+            insulatorRange = SERVER_BUILDER
+                    .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
+                    .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);
 
 
             SERVER_BUILDER.pop();

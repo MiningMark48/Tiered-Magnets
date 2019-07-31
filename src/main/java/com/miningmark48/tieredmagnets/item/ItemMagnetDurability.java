@@ -36,12 +36,8 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         if (KeyChecker.isHoldingShift()) {
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage())));
 
-            int damageAmount = 1;
-            if (isMagic) damageAmount *= ModConfig.MODULE_VANILLA.defaultMultiplierMagic;
-            list.add(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.cost") + " " + TextFormatting.LIGHT_PURPLE + damageAmount + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.durability") + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks1") + " " + TextFormatting.LIGHT_PURPLE + OldConfig.miscconfigs.costForDistance + TextFormatting.AQUA + " " + ModTranslate.toLocal("tooltip.item.magnet_base.cost.blocks2")));
-
-            assert stack.getTag() != null;
-            list.add(new StringTextComponent(TextFormatting.GRAY + stack.getTag().toString()));
+//            assert stack.getTag() != null;
+//            list.add(new StringTextComponent(TextFormatting.GRAY + stack.getTag().toString()));
 
         }
 
@@ -60,9 +56,11 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public void setTagDefaults(ItemStack stack) {
-        super.setTagDefaults(stack);
-        assert stack.getTag() != null;
-        stack.getTag().putInt("range", calculateRange(ModConfig.MODULE_VANILLA.defaultBaseRange, ModConfig.MODULE_VANILLA.defaultMultiplierRange, tier));
+        if (!stack.hasTag()) {
+            super.setTagDefaults(stack);
+            assert stack.getTag() != null;
+            stack.getTag().putInt("range", calculateRange(ModConfig.MODULE_VANILLA.defaultBaseRange, ModConfig.MODULE_VANILLA.defaultMultiplierRange, tier));
+        }
     }
 
     @Override

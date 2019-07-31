@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnetic_projector"
+  },
+  "pattern": [
+    "IPI",
+    "GRG",
+    "IHI"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:glass_pane"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_ub_mprojector"
+    }
+  ]
+}

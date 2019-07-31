@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
+import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class TileEntityMagneticInsulator extends TileEntity implements ITickableTileEntity {
 
-    private int range = OldConfig.utilityBlockConfigs.insulatorRange;
+    private int range;// = OldConfig.utilityBlockConfigs.insulatorRange;
     private boolean doPreview = false;
 
     public TileEntityMagneticInsulator(TileEntityType<?> p_i48289_1_) {
@@ -97,7 +98,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     }
 
     public int getDefaultRange() {
-        return OldConfig.utilityBlockConfigs.insulatorRange;
+        return ModConfig.MODULE_UTILITY_BLOCKS.insulatorRange.get();
     }
 
     public boolean getDoPreview() {

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnetic_insulator"
+  },
+  "pattern": [
+    "EGE",
+    " G ",
+    "III"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:ender_pearl"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_ub_minsulator"
+    }
+  ]
+}

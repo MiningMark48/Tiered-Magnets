@@ -42,7 +42,7 @@ public class ItemMagnetFree extends ItemMagnetBase {
     public void setTagDefaults(ItemStack stack) {
         super.setTagDefaults(stack);
         assert stack.getTag() != null;
-        stack.getTag().putInt("range", ModConfig.MODULE_CURSED.defaultRange);
+        if (!stack.hasTag()) stack.getTag().putInt("range", ModConfig.MODULE_CURSED.defaultRange);
     }
 
     @Override

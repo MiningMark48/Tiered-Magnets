@@ -59,6 +59,7 @@
     "_comment": "Chat Messages",
     "chat.item.magnet_base.enabled": "Magnet enabled",
     "chat.item.magnet_base.disabled": "Magnet disabled",
+    "chat.item.magnet_base.filtering.disabled": "Filtering has been disabled!",
 
     "_comment": "Gui",
     "gui.tooltips.adjust_range.name": "Adjust Range",

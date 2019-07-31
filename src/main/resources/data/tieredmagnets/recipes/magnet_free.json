@@ -1,0 +1,33 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_free"
+  },
+  "pattern": [
+    "DGD",
+    "ISI",
+    "R R"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "G": {
+      "item": "minecraft:ghast_tear"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_cursed"
+    }
+  ]
+}

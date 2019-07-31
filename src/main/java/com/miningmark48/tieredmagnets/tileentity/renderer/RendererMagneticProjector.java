@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.tileentity.renderer;
 
+import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -31,7 +32,7 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
             if (!stack.isEmpty()) {
                 renderItem(te, stack, x, y, z);
 
-                if (OldConfig.utilityBlockConfigs.projectorLampRender) {
+                if (ModConfig.MODULE_UTILITY_BLOCKS.enableLampRender.get()) {
                     float red = 1f;
                     float green = 1f;
                     float blue = 0f;
