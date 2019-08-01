@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets.network.packets;
 
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -37,27 +38,33 @@ public class PacketChangeRangeInsulator extends PacketEmpty {
 
         @SuppressWarnings("Duplicates")
         public static void handle(PacketChangeRangeInsulator msg, Supplier<NetworkEvent.Context> ctx) {
-            ServerPlayerEntity playerEntity = ctx.get().getSender();
-            assert playerEntity != null;
-            World world = playerEntity.world;
-            BlockPos pos = msg.pos;
-            TileEntity te = world.getTileEntity(pos);
+            ctx.get().enqueueWork(() -> {
+                ServerPlayerEntity playerEntity = ctx.get().getSender();
+                assert playerEntity != null;
+                World world = playerEntity.world;
+                BlockPos pos = msg.pos;
+                TileEntity te = world.getTileEntity(pos);
 
-            if (te == null) return;
+                if (te == null) return;
 
-            if (te instanceof TileEntityMagneticInsulator) {
-                TileEntityMagneticInsulator mi = (TileEntityMagneticInsulator) te;
+                if (te instanceof TileEntityMagneticInsulator) {
+                    TileEntityMagneticInsulator mi = (TileEntityMagneticInsulator) te;
 
-                int newRange = mi.getRange() + msg.rangeChange;
-                if (newRange > mi.getDefaultRange()) {
-                    mi.setRange(mi.getDefaultRange());
-                } else if (newRange <= 0) {
-                    mi.setRange(1);
-                } else {
-                    mi.setRange(newRange);
+                    int newRange = mi.getRange() + msg.rangeChange;
+                    if (newRange > mi.getDefaultRange()) {
+                        mi.setRange(mi.getDefaultRange());
+                    } else if (newRange <= 0) {
+                        mi.setRange(1);
+                    } else {
+                        mi.setRange(newRange);
+                    }
+                    mi.markDirty();
+
                 }
-                mi.markDirty();
-            }
+            });
+
+            ctx.get().setPacketHandled(true);
+
 
         }
     }

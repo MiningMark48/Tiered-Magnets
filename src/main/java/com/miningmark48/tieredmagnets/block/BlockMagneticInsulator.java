@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,12 +27,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockMagneticInsulator extends ContainerBlock {
 
@@ -41,6 +44,14 @@ public class BlockMagneticInsulator extends ContainerBlock {
     public BlockMagneticInsulator(Properties properties) {
         super(properties);
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader p_190948_2_, List<ITextComponent> list, ITooltipFlag p_190948_4_) {
+        if (stack.hasTag()) {
+            assert stack.getTag() != null;
+            list.add(new StringTextComponent(stack.getTag().toString()));
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
+import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -16,12 +17,14 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class TileEntityMagneticInsulator extends TileEntity implements ITickableTileEntity {
 
-    private int range;// = OldConfig.utilityBlockConfigs.insulatorRange;
+    private int range = 1;// = OldConfig.utilityBlockConfigs.insulatorRange;
     private boolean doPreview = false;
 
     public TileEntityMagneticInsulator(TileEntityType<?> p_i48289_1_) {
@@ -112,32 +115,29 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        if (compound.hasUniqueId("range")) {
-            setRange(compound.getInt("range"));
-        }
-        if (compound.hasUniqueId("doPreview")) {
-            setDoPreview(compound.getBoolean("doPreview"));
-        }
+        setRange(compound.getInt("range"));
+        setDoPreview(compound.getBoolean("doPreview"));
     }
 
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
         compound.putInt("range", getRange());
         compound.putBoolean("doPreview", getDoPreview());
-        return compound;
+        return super.write(compound);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
     {
         this.read(pkt.getNbtCompound());
+        sendUpdates();
     }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()
     {
-        return new SUpdateTileEntityPacket(pos, 0, this.write(new CompoundNBT()));
+        return new SUpdateTileEntityPacket(pos, 1, this.write(new CompoundNBT()));
     }
 
     @Override
@@ -146,10 +146,9 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         return this.write(new CompoundNBT());
     }
 
-    public void sendUpdates() {
-//        world.block(pos, pos);
-        world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
-//        world.scheduleBlockUpdate(pos,this.getBlockType(),0,0);
+    private void sendUpdates() {
+        assert world != null;
+        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.NOTIFY_LISTENERS);
         markDirty();
     }
 
