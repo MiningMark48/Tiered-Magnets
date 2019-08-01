@@ -1,15 +1,29 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.block.base.CustomEnergyStorage;
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
+import com.miningmark48.tieredmagnets.util.ModTranslate;
+import com.miningmark48.tieredmagnets.util.exceptions.ExceptionCapabilityNotPresent;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -49,7 +63,9 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-//        if (OldConfig.thermalExpansionConfigs.hasCost) this.extractEnergyInternal(stack, usageEnergy, false);
+//        if (OldConfig.thermalExpansionConfigs.hasCost) {
+//            this.extractEnergyInternal(stack, usageEnergy, false);
+//        }
     }
 
     @Override
@@ -76,20 +92,26 @@ public class ItemMagnetRF extends ItemMagnetBase {
         return Particles.ENERGY;
     }
 
-//    @Override
-//    public boolean showDurabilityBar(ItemStack stack) {
-//        return this.getEnergyStored(stack) != this.getMaxEnergyStored(stack);
+    @Override
+    public boolean showDurabilityBar(ItemStack stack) {
+        return false; //this.getEnergyStored(stack) != this.getMaxEnergyStored(stack);
+    }
+
+//    private IEnergyStorage getStorage(ItemStack stack) {
+//        LazyOptional<IEnergyStorage> cap = stack.getCapability(CapabilityEnergy.ENERGY);
+//        if (cap.isPresent()) {
+//            cap.orElseThrow(ExceptionCapabilityNotPresent::new);
+//        }
+//        return null;
 //    }
 //
 //    @Override
 //    public double getDurabilityForDisplay(ItemStack stack) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage != null) {
-//                double maxAmount = storage.getMaxEnergyStored();
-//                double energyDif = maxAmount - storage.getEnergyStored();
-//                return energyDif / maxAmount;
-//            }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage != null) {
+//            double maxAmount = storage.getMaxEnergyStored();
+//            double energyDif = maxAmount - storage.getEnergyStored();
+//            return energyDif / maxAmount;
 //        }
 //        return super.getDurabilityForDisplay(stack);
 //    }
@@ -101,76 +123,64 @@ public class ItemMagnetRF extends ItemMagnetBase {
 //    }
 //
 //    public void setEnergy(ItemStack stack, int energy) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage instanceof CustomEnergyStorage) {
-//                ((CustomEnergyStorage) storage).setEnergyStored(energy);
-//            }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage instanceof CustomEnergyStorage) {
+//            ((CustomEnergyStorage) storage).setEnergyStored(energy);
 //        }
 //    }
 //
 //    public int receiveEnergyInternal(ItemStack stack, int maxReceive, boolean simulate) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage instanceof CustomEnergyStorage) {
-//                ((CustomEnergyStorage) storage).receiveEnergyInternal(maxReceive, simulate);
-//            }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage instanceof CustomEnergyStorage) {
+//            ((CustomEnergyStorage) storage).receiveEnergyInternal(maxReceive, simulate);
 //        }
 //        return 0;
 //    }
 //
 //    public int extractEnergyInternal(ItemStack stack, int maxExtract, boolean simulate) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage instanceof CustomEnergyStorage) {
-//                ((CustomEnergyStorage) storage).extractEnergyInternal(maxExtract, simulate);
-//            }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage instanceof CustomEnergyStorage) {
+//            ((CustomEnergyStorage) storage).extractEnergyInternal(maxExtract, simulate);
 //        }
 //        return 0;
 //    }
 //
 //    public int receiveEnergy(ItemStack stack, int maxReceive, boolean simulate) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage != null) { return storage.receiveEnergy(maxReceive, simulate); }
-//        }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage != null) { return storage.receiveEnergy(maxReceive, simulate); }
 //        return 0;
 //    }
 //
 //    public int extractEnergy(ItemStack stack, int maxExtract, boolean simulate) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage != null) { return storage.extractEnergy(maxExtract, simulate); }
-//        }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage != null) { return storage.extractEnergy(maxExtract, simulate); }
 //        return 0;
 //    }
 //
 //    public int getEnergyStored(ItemStack stack) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage != null) { return storage.getEnergyStored(); }
-//        }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage != null) { return storage.getEnergyStored(); }
 //        return 0;
 //    }
 //
 //    public int getMaxEnergyStored(ItemStack stack) {
-//        if (stack.hasCapability(CapabilityEnergy.ENERGY, null)) {
-//            IEnergyStorage storage = stack.getCapability(CapabilityEnergy.ENERGY, null);
-//            if (storage != null) { return storage.getMaxEnergyStored(); }
-//        }
+//        IEnergyStorage storage = getStorage(stack);
+//        if (storage != null) { return storage.getMaxEnergyStored(); }
 //        return 0;
 //    }
 //
+//    @Nullable
 //    @Override
-//    public ICapabilityProvider initCapabilities(ItemStack stack, CompoundNBT nbt) {
+//    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
 //        return new EnergyCapabilityProvider(stack, this);
 //    }
 //
 //    private static class EnergyCapabilityProvider implements ICapabilityProvider {
 //
-//        public final CustomEnergyStorage storage;
+//        private final CustomEnergyStorage storage;
+//        private final LazyOptional<CustomEnergyStorage> energyCapability;
 //
-//        public EnergyCapabilityProvider(final ItemStack stack, ItemMagnetRF item) {
+//        private EnergyCapabilityProvider(final ItemStack stack, ItemMagnetRF item) {
 //            this.storage = new CustomEnergyStorage(item.maxPower, item.transfer, item.transfer) {
 //                @Override
 //                public int getEnergyStored() {
@@ -190,15 +200,13 @@ public class ItemMagnetRF extends ItemMagnetBase {
 //                    stack.getTag().putInt("Energy", energy);
 //                }
 //            };
+//            this.energyCapability = LazyOptional.of(() -> storage);
 //        }
 //
 //        @Nonnull
 //        @Override
 //        public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side) {
-//            if (capability == CapabilityEnergy.ENERGY) {
-//                return CapabilityEnergy.ENERGY.cast(this.storage);
-//            }
-//            return null;
+//            return capability == CapabilityEnergy.ENERGY ? energyCapability.cast() : LazyOptional.empty();
 //        }
 //
 //    }
