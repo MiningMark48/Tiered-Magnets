@@ -47,14 +47,6 @@ public class BlockMagneticInsulator extends ContainerBlock {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader p_190948_2_, List<ITextComponent> list, ITooltipFlag p_190948_4_) {
-        if (stack.hasTag()) {
-            assert stack.getTag() != null;
-            list.add(new StringTextComponent(stack.getTag().toString()));
-        }
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(FACING);
