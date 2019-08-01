@@ -27,6 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -41,8 +42,9 @@ public class BlockMagneticProjector extends ContainerBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    private static AxisAlignedBB BOUNDING_BOX_ACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5625D, 0.9375D);
-    private static AxisAlignedBB BOUNDING_BOX_INACITVE = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.5D, 0.9375D);
+    private VoxelShape SHAPE_BASE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
+    private VoxelShape SHAPE_ACTIVE = VoxelShapes.or(SHAPE_BASE, Block.makeCuboidShape(5.0D, 6.0D, 5.0D, 11.0D, 9.0D, 11.0D));
+    private VoxelShape SHAPE_INACTIVE = VoxelShapes.or(SHAPE_BASE, Block.makeCuboidShape(5.0D, 6.0D, 5.0D, 11.0D, 8.25D, 11.0D));
 
     public BlockMagneticProjector(Properties properties) {
         super(properties);
@@ -56,26 +58,14 @@ public class BlockMagneticProjector extends ContainerBlock {
         builder.add(POWERED);
     }
 
-//    @Override
-//    public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos) {
-//        if (state.get(POWERED)) return BOUNDING_BOX_INACITVE;
-//        return BOUNDING_BOX_ACITVE;
-//    }
-
     @Override
-    public VoxelShape getShape(BlockState p_220053_1_, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-        return super.getShape(p_220053_1_, p_220053_2_, p_220053_3_, p_220053_4_);
+    public VoxelShape getShape(BlockState state, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
+        return !state.get(POWERED) ? SHAPE_ACTIVE : SHAPE_INACTIVE;
     }
 
-//    @Override
-//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
-//        if (state.getValue(POWERED)) addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_INACITVE);
-//        addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX_ACITVE);
-//    }
-
     @Override
-    public VoxelShape getCollisionShape(BlockState p_220071_1_, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
-        return super.getCollisionShape(p_220071_1_, p_220071_2_, p_220071_3_, p_220071_4_);
+    public VoxelShape getCollisionShape(BlockState state, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
+        return !state.get(POWERED) ? SHAPE_ACTIVE : SHAPE_INACTIVE;
     }
 
     @Nullable
