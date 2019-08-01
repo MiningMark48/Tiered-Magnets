@@ -1,14 +1,17 @@
 package com.miningmark48.tieredmagnets.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.InputMappings;
+import org.lwjgl.glfw.GLFW;
+
 public class KeyChecker {
 
     public static boolean isHoldingShift(){
-//        if (GLFW..dow.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)){
-//            return true;
-//        }else{
-//            return false;
-//        }
-        return true;
+        return isKeyDown(GLFW.GLFW_KEY_LEFT_SHIFT) || isKeyDown(GLFW.GLFW_KEY_RIGHT_SHIFT);
+    }
+
+    private static boolean isKeyDown(int keycode) {
+        return InputMappings.isKeyDown(Minecraft.getInstance().mainWindow.getHandle(), keycode);
     }
 
 }
