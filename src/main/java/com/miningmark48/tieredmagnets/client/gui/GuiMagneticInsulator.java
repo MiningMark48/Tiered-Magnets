@@ -49,6 +49,13 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
         this.player = playerInv.player;
     }
 
+    @Override
+    public void render(int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground();
+        super.render(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = ModTranslate.toLocal("gui.magnetic_insulator.name");
         int x = UtilGui.getXCenter(text, this.font, xSize);
@@ -66,13 +73,6 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
         Minecraft.getInstance().getTextureManager().bindTexture(texture);
         blit(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
-
-//    @Override
-//    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-//        this.drawDefaultBackground();
-//        super.drawScreen(mouseX, mouseY, partialTicks);
-//        this.func_191948_b(mouseX, mouseY);
-//    }
 
     @SuppressWarnings("Duplicates")
     @Override

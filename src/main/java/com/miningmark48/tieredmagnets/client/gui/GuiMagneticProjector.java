@@ -37,12 +37,17 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
         this.player = playerInv.player;
     }
 
+    @Override
+    public void render(int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground();
+        super.render(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+    }
+
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String text = ModTranslate.toLocal("gui.magnetic_projector.name");
         int x = UtilGui.getXCenter(text, this.font, xSize);
         this.font.drawString(text, x, 5, 0x404040);
-
-        renderTooltips(mouseX, mouseY);
     }
 
     @Override
@@ -52,8 +57,8 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
         blit(guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
-    @SuppressWarnings("Duplicates")
-    private void renderTooltips(int mouseX, int mouseY) {
+//    @SuppressWarnings("Duplicates")
+//    private void renderTooltips(int mouseX, int mouseY) {
 //        Minecraft mc = Minecraft.getMinecraft();
 //        if (this.isMouseOver(mouseX, mouseY, 63, 30, 76, 48) || this.isMouseOver(mouseX, mouseY, 99, 30, 112, 48)) {
 //            List<String> text = new ArrayList<>();
@@ -62,14 +67,14 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
 //            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.shift"));
 //            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) + 25, mc.displayWidth, mc.displayHeight, -1, mc.fontRenderer);
 //        }
-    }
-
-    @SuppressWarnings("Duplicates")
-    private boolean isMouseOver(int mouseX, int mouseY, int minX, int minY, int maxX, int maxY){
-        int actualX = mouseX - ((this.width - this.xSize) / 2);
-        int actualY = mouseY - ((this.height - this.ySize) / 2);
-//        ModLogger.info("x: " + actualX + ", y: " + actualY);
-        return (actualX >= minX) && (actualX <= maxX) && (actualY >= minY) && (actualY <= maxY);
-    }
+//    }
+//
+//    @SuppressWarnings("Duplicates")
+//    private boolean isMouseOver(int mouseX, int mouseY, int minX, int minY, int maxX, int maxY){
+//        int actualX = mouseX - ((this.width - this.xSize) / 2);
+//        int actualY = mouseY - ((this.height - this.ySize) / 2);
+////        ModLogger.info("x: " + actualX + ", y: " + actualY);
+//        return (actualX >= minX) && (actualX <= maxX) && (actualY >= minY) && (actualY <= maxY);
+//    }
 
 }
