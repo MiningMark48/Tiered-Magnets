@@ -18,9 +18,9 @@ public class EventKeyInput {
         if (mc.player == null || event.phase == TickEvent.Phase.START)
             return;
 
-//        if (KeyBindings.toggleMagnet.isPressed()) {
-//            PacketHandler.sendToServer(new PacketToggleMagnet());
-//        }
+        if (KeyBindings.toggleMagnet.isPressed()) {
+            PacketHandler.sendToServer(new PacketToggleMagnet());
+        }
 
     }
 
