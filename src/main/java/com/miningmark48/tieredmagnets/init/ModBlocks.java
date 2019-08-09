@@ -10,6 +10,8 @@ import com.miningmark48.tieredmagnets.init.registry.block.tile.TileEntityTypeBui
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
+import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticInsulator;
+import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticProjector;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -41,19 +43,21 @@ public class ModBlocks {
     public static void init() {
         //Magnetic Insulator
         container.add(new BlockBuilder(BlockReference.MAGNETIC_INSULATOR_RL)
-            .builder(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f))
-            .item(itemProperties())
-            .withTileEntity(new TileEntityBuilder<>(TileEntityReference.MAGNETIC_INSULATOR_RL)
-                .builder(new TileEntityTypeBuilder<>(TileEntityMagneticInsulator::new))
-                .factory(TileEntityTypeBuilder::build))
-            .factory(BlockMagneticInsulator::new));
+                .builder(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f))
+                .item(itemProperties())
+                .withTileEntity(new TileEntityBuilder<TileEntityMagneticInsulator>(TileEntityReference.MAGNETIC_INSULATOR_RL)
+                        .builder(new TileEntityTypeBuilder<>(TileEntityMagneticInsulator::new))
+                        .factory(TileEntityTypeBuilder::build)
+                        .renderer(TileEntityMagneticInsulator.class, () -> RendererMagneticInsulator::new))
+                .factory(BlockMagneticInsulator::new));
         //Magnetic Projector
         container.add(new BlockBuilder(BlockReference.MAGNETIC_PROJECTOR_RL)
                 .builder(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f))
                 .item(itemProperties())
-                .withTileEntity(new TileEntityBuilder<>(TileEntityReference.MAGNETIC_PROJECTOR_RL)
+                .withTileEntity(new TileEntityBuilder<TileEntityMagneticProjector>(TileEntityReference.MAGNETIC_PROJECTOR_RL)
                         .builder(new TileEntityTypeBuilder<>(TileEntityMagneticProjector::new))
-                        .factory(TileEntityTypeBuilder::build))
+                        .factory(TileEntityTypeBuilder::build)
+                        .renderer(TileEntityMagneticProjector.class, () -> RendererMagneticProjector::new))
                 .factory(BlockMagneticProjector::new));
     }
 

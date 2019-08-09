@@ -1,7 +1,6 @@
 package com.miningmark48.tieredmagnets.tileentity.renderer;
 
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
-import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
@@ -13,6 +12,8 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.opengl.GL11;
 
+import java.util.Objects;
+
 public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagneticProjector> {
 
     private ItemEntity entityItem = new ItemEntity(Minecraft.getInstance().world, 0D, 0D, 0D);
@@ -21,13 +22,14 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
 
     }
 
+    @SuppressWarnings("Duplicates")
     @Override
     public void render(TileEntityMagneticProjector te, double x, double y, double z, float p_199341_8_, int p_199341_9_) {
 
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder buf = tess.getBuffer();
 
-        if (te != null && !te.getWorld().isBlockPowered(te.getPos())) {
+        if (te != null && !Objects.requireNonNull(te.getWorld()).isBlockPowered(te.getPos())) {
             ItemStack stack = te.getStackInSlot(0);
             if (!stack.isEmpty()) {
                 renderItem(te, stack, x, y, z);
@@ -135,15 +137,15 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
         GlStateManager.popMatrix();
     }
 
-    public int getEffectSpeed() {
-        return 16;
+    private double getEffectSpeed() {
+        return 0.25;
     }
 
-    public boolean getDoesRotation() {
+    private boolean getDoesRotation() {
         return true;
     }
 
-    public boolean getDoesFloat() {
+    private boolean getDoesFloat() {
         return false;
     }
 

@@ -10,8 +10,4 @@ public class RendererMagneticInsulator extends TileEntityRenderer<TileEntityMagn
 
     }
 
-    @Override
-    public void renderTileEntityFast(TileEntityMagneticInsulator p_renderTileEntityFast_1_, double p_renderTileEntityFast_2_, double p_renderTileEntityFast_4_, double p_renderTileEntityFast_6_, float p_renderTileEntityFast_8_, int p_renderTileEntityFast_9_, BufferBuilder p_renderTileEntityFast_10_) {
-
-    }
 }
