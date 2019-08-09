@@ -250,11 +250,11 @@ public class ModConfig {
 //        if (configEvent.getConfig().getSpec() == ModConfig.serverSpec)
 //            loadServerConfig();
 
-        ModLogger.debug("Loaded {} config file {}", Reference.MOD_ID, configEvent.getConfig().getFileName());
+        ModLogger.debug("Loaded %s config file %s", Reference.MOD_ID, configEvent.getConfig().getFileName());
     }
 
     public static void onFileChange(final net.minecraftforge.fml.config.ModConfig.ConfigReloading configEvent) {
-        ModLogger.fatal(CORE, "{} config just got changed on the file system!", Reference.MOD_ID);
+        ModLogger.fatal("%s config just got changed on the file system!", Reference.MOD_ID);
     }
 
 //    public static boolean isServerConfigLoaded() {

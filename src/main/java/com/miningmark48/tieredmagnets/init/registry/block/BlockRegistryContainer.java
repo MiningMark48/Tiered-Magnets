@@ -31,12 +31,12 @@ public class BlockRegistryContainer extends RegistryContainer<Block, BlockBuilde
     }
 
     public void registerItemBlocks(RegistryEvent.Register<Item> event) {
-        ModLogger.debug("Registering {} ItemBlocks", Reference.MOD_ID);
+        ModLogger.debug("Registering %s ItemBlocks", Reference.MOD_ID);
         for (BlockBuilder builder:getBuilders()) {
             if (builder.hasItem())
                 event.getRegistry().register(builder.createItemFromBlock());
         }
-        ModLogger.debug("Finished Registering {} {} ItemBlock's", getBuilders().size(), Reference.MOD_ID);
+        ModLogger.debug("Finished Registering %s %s ItemBlock's", getBuilders().size(), Reference.MOD_ID);
     }
 
 }

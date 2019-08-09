@@ -33,7 +33,7 @@ public class TileEntityRegistryContainer extends ClientConstructContainer<TileEn
     }
 
     private void registerTERs(FMLClientSetupEvent event) {
-        ModLogger.info("Registering {} TileEntityRenderer's", Reference.MOD_ID);
+        ModLogger.info("Registering %s TileEntityRenderer's", Reference.MOD_ID);
         int count = 0;
         for (TileEntityBuilder<?> builder : getBuilders()) {
             if (builder.hasRenderer()) {
@@ -41,7 +41,7 @@ public class TileEntityRegistryContainer extends ClientConstructContainer<TileEn
                 ++ count;
             }
         }
-        ModLogger.info("Finished registering {} {} TileEntityRenderer's", count, Reference.MOD_ID);
+        ModLogger.info("Finished registering %s %s TileEntityRenderer's", count, Reference.MOD_ID);
     }
 
     @Nullable
