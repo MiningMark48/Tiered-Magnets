@@ -1,16 +1,10 @@
 package com.miningmark48.tieredmagnets.item.base;
 
-import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeEnergy;
-import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeFree;
-import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
-import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
@@ -24,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -219,20 +214,20 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     }
 
-//    @SideOnly(Side.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
-        ParticleManager pm = Minecraft.getInstance().particles;
         double yOffset = y + 0.3D;
+        float alpha = 0.5f;
+
         switch (getParticle()) {
             default:
             case VANILLA:
-                pm.addEffect(new ParticleMagnetizeVanilla(world, x, yOffset, z));
+                world.addParticle(new RedstoneParticleData(0, 0, 1, alpha), x, yOffset, z, 0, 0, 0);
                 break;
             case ENERGY:
-                pm.addEffect(new ParticleMagnetizeEnergy(world, x, yOffset, z));
+                world.addParticle(new RedstoneParticleData(1, 0, 0, alpha), x, yOffset, z, 0, 0, 0);
                 break;
             case FREE:
-                pm.addEffect(new ParticleMagnetizeFree(world, x, yOffset, z));
+                world.addParticle(new RedstoneParticleData(0.75f, 0.5f, 0.5f, alpha), x, yOffset, z, 0, 0, 0);
                 break;
         }
     }
@@ -249,8 +244,8 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     }
 
-    public Particles getParticle() {
-        return Particles.VANILLA;
+    public ParticleType getParticle() {
+        return ParticleType.VANILLA;
     }
 
     public int getDefaultRange() {
@@ -294,6 +289,12 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     public int calculateAmount(int base, int multiplier, int tier) {
         return base + (base * multiplier * tier);
+    }
+
+    public enum ParticleType {
+        ENERGY,
+        FREE,
+        VANILLA
     }
 
     /* Baubles */

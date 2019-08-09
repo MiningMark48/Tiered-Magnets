@@ -1,6 +1,5 @@
 package com.miningmark48.tieredmagnets.item;
 
-import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
@@ -74,8 +73,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     @Override
-    public Particles getParticle() {
-        return Particles.ENERGY;
+    public ParticleType getParticle() {
+        return ParticleType.ENERGY;
     }
 
     @Override

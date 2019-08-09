@@ -1,6 +1,5 @@
 package com.miningmark48.tieredmagnets.item;
 
-import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
@@ -58,8 +57,8 @@ public class ItemMagnetFree extends ItemMagnetBase {
     }
 
     @Override
-    public Particles getParticle() {
-        return Particles.FREE;
+    public ParticleType getParticle() {
+        return ParticleType.FREE;
     }
 
 }
