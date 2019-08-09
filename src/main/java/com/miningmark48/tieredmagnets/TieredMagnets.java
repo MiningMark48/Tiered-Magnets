@@ -3,7 +3,7 @@ package com.miningmark48.tieredmagnets;
 import com.miningmark48.tieredmagnets.client.events.EventStitchParticles;
 import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
-import com.miningmark48.tieredmagnets.init.registry.BuildingObjects;
+import com.miningmark48.tieredmagnets.init.registry.ModObjects;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.proxy.ClientProxy;
 import com.miningmark48.tieredmagnets.reference.Reference;
@@ -50,7 +50,7 @@ public class TieredMagnets {
 //            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> GuiMod::openScreen);
         });
 
-        BuildingObjects.init();
+        ModObjects.init();
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -74,7 +74,7 @@ public class TieredMagnets {
     }
 
     private void finishLoad(FMLLoadCompleteEvent event) {
-        BuildingObjects.cleanup();
+        ModObjects.cleanup();
     }
 
 }

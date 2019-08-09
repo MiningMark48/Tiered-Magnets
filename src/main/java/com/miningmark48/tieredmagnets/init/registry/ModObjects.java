@@ -6,14 +6,14 @@ import com.miningmark48.tieredmagnets.init.ModItems;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 
-public class BuildingObjects {
+public class ModObjects {
 
     public static void init() {
         ModBlocks.init();
         ModItems.init();
         ModBlocks.ModTileEntities.init();
         ModContainers.init();
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> BuildingObjects::clientInit);
+        DistExecutor.runWhenOn(Dist.CLIENT, () -> ModObjects::clientInit);
     }
 
     public static void clientSetup() {

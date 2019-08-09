@@ -1,7 +1,7 @@
 package com.miningmark48.tieredmagnets.proxy;
 
 import com.miningmark48.tieredmagnets.client.KeyBindings;
-import com.miningmark48.tieredmagnets.init.registry.BuildingObjects;
+import com.miningmark48.tieredmagnets.init.registry.ModObjects;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DeferredWorkQueue;
@@ -12,7 +12,7 @@ public class ClientProxy {
 
     public static void clientSetup(final IEventBus eventBus) {
         DeferredWorkQueue.runLater(KeyBindings::init);
-        BuildingObjects.clientSetup();
+        ModObjects.clientSetup();
     }
 
 }
