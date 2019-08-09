@@ -3,301 +3,253 @@ package com.miningmark48.tieredmagnets.init.config;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.*;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.common.Mod;
+import org.apache.commons.lang3.tuple.Pair;
 
 import static net.minecraftforge.fml.Logging.CORE;
 
 @Mod.EventBusSubscriber
-@SuppressWarnings("Duplicates")
+@SuppressWarnings({"Duplicates", "FieldCanBeLocal"})
 public class ModConfig {
 
-    private static final String CATEGORY_GENERAL = "general";
+    public static final ForgeConfigSpec serverSpec;
+    public static final ForgeConfigSpec clientSpec;
+    public static final ForgeConfigSpec commonSpec;
+    public static final ServerConfigs SERVER;
+    public static final ClientConfigs CLIENT;
+    public static final CommonConfigs COMMON;
 
-    private static final Builder COMMON_BUILDER = new Builder();
-    private static final Builder SERVER_BUILDER = new Builder();
-    private static final Builder CLIENT_BUILDER = new Builder();
+    private static String name_general = "general";
+    private static String comment_general = "General mod settings";
+    private static String name_modules = "modules";
+    private static String comment_modules = "Module control settings";
+    private static String name_vanilla = "vanilla";
+    private static String comment_vanilla = "Vanilla module control settings";
+    private static String name_thermal = "thermal_expansion";
+    private static String comment_thermal = "Thermal module control settings";
+    private static String name_cursed = "cursed";
+    private static String comment_cursed = "Cursed module control settings";
+    private static String name_utilityBlocks = "utility_blocks";
+    private static String comment_utilityBlocks = "Utility Block module control settings";
 
-    public static final CategoryGeneral GENERAL = new CategoryGeneral();
-    public static final CategoryModules MODULES = new CategoryModules();
-    public static final CategoryVanilla MODULE_VANILLA = new CategoryVanilla();
-    public static final CategoryThermalExpansion MODULE_TE = new CategoryThermalExpansion();
-    public static final CategoryCursed MODULE_CURSED = new CategoryCursed();
-    public static final CategoryUtilityBlocks MODULE_UTILITY_BLOCKS = new CategoryUtilityBlocks();
-
-    public static final class CategoryGeneral {
-
-        //Client
-        public final BooleanValue enableParticles;
-        //Server
-        public final IntValue cooldownTime;
-        public final DoubleValue costDistance;
-        public final BooleanValue enableFiltering;
-        public final BooleanValue enableXPMagnet;
-
-        private static String modules_name = "general";
-        private static String general_comment = "General mod settings";
-
-        private CategoryGeneral() {
-            SERVER_BUILDER.comment(general_comment).push(modules_name);
-            CLIENT_BUILDER.comment(general_comment).push(modules_name);
-            COMMON_BUILDER.comment(general_comment).push(modules_name);
-
-            //Client
-            enableParticles = CLIENT_BUILDER
-                    .comment("If true, particles will be displayed.")
-                    .define("Enable Particles", true);
-
-            //Server
-            cooldownTime = SERVER_BUILDER
-                    .comment("The time (in ticks) between when the player can enable and disable a magnet.")
-                    .defineInRange("Cooldown Time", 10, 0, Integer.MAX_VALUE);
-
-            costDistance = SERVER_BUILDER
-                    .comment("The maximum distance in which magnetizing items and XP begins to have a cost.")
-                    .defineInRange("Cost Distance", 1.5D, 0, Double.MAX_VALUE);
-
-            enableFiltering = SERVER_BUILDER
-                    .comment("If true,  magnets will be able to be filtered.")
-                    .define("Enable Filtering", true);
-            enableXPMagnet = SERVER_BUILDER
-                    .comment("If true,  magnets will be able to be attract experience orbs.")
-                    .define("XP Magnet", true);
-
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
-        }
-
+    static {
+        final Pair<ServerConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfigs::new);
+        serverSpec = specPair.getRight();
+        SERVER = specPair.getLeft();
     }
 
-    public static final class CategoryModules {
+    static {
+        final Pair<ClientConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ClientConfigs::new);
+        clientSpec = specPair.getRight();
+        CLIENT = specPair.getLeft();
+    }
 
+    static {
+        final Pair<CommonConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfigs::new);
+        commonSpec = specPair.getRight();
+        COMMON = specPair.getLeft();
+    }
+
+    public static final class ServerConfigs {
+
+        //General
+        public final IntValue general_cooldownTime;
+        public final DoubleValue general_costDistance;
+        public final BooleanValue general_enableFiltering;
+        public final BooleanValue general_enableXPMagnet;
+
+        //Modules
         public final BooleanValue enableModuleVanilla;
         public final BooleanValue enableModuleVanillaMagic;
         public final BooleanValue enableModuleCursed;
         public final BooleanValue enableModuleCursedMagic;
         public final BooleanValue enableUtilityBlocks;
 
-        private static String modules_name = "modules";
-        private static String modules_comment = "Module control settings";
+        //Module - Vanilla
+        public final BooleanValue vanilla_hasCost;
+        public final DoubleValue vanilla_speed;
+        public final IntValue vanilla_baseRange;
+        public final IntValue vanilla_multiplierRange;
+        public final int def_vanilla_baseRange = 2;
+        public final int def_vanilla_multiplierRange = 3;
+        public final IntValue vanilla_baseDurability;
+        public final IntValue vanilla_multiplierDurability;
+        public final IntValue vanilla_multiplierMagic;
 
-        private CategoryModules() {
-            SERVER_BUILDER.comment(modules_comment).push(modules_name);
-            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
-            COMMON_BUILDER.comment(modules_comment).push(modules_name);
+        //Module - Thermal Expansion
+        public final DoubleValue te_speed;
+        public final IntValue te_baseRange;
+        public final IntValue te_multiplierRange;
+        public final int def_te_baseRange = 8;
+        public final int def_te_multiplierRange = 1;
 
+        //Module - Cursed
+        public final DoubleValue cursed_speed;
+        public final IntValue cursed_range;
+        public final int def_cursed_range = 64;
 
-            enableModuleVanilla = SERVER_BUILDER
+        //Module - Utility Blocks
+        public final BooleanValue ub_enableMInsulator;
+        public final BooleanValue ub_enableMProjector;
+        public final IntValue ub_insulatorRange;
+
+        //Debug
+        public final BooleanValue debug_enableNbtTooltips;
+
+        private ServerConfigs(ForgeConfigSpec.Builder builder) {
+
+            //General
+            builder.comment(comment_general).push(name_general);
+            general_cooldownTime = builder
+                    .comment("The time (in ticks) between when the player can enable and disable a magnet.")
+                    .defineInRange("Cooldown Time", 10, 0, Integer.MAX_VALUE);
+            general_costDistance = builder
+                    .comment("The maximum distance in which magnetizing items and XP begins to have a cost.")
+                    .defineInRange("Cost Distance", 1.5D, 0, Double.MAX_VALUE);
+            general_enableFiltering = builder
+                    .comment("If true, magnets will be able to be filtered.")
+                    .define("Enable Filtering", true);
+            general_enableXPMagnet = builder
+                    .comment("If true, magnets will be able to be attract experience orbs.")
+                    .define("XP Magnet", true);
+            builder.pop();
+
+            //Modules
+            builder.comment(comment_modules).push(name_modules);
+            enableModuleVanilla = builder
                     .comment("If true, enables recipes for Vanilla-based, durability magnets.")
                     .define("Vanilla", true);
-            enableModuleVanillaMagic = SERVER_BUILDER
+            enableModuleVanillaMagic = builder
                     .comment("If true, enables recipes for Vanilla-based, durability magnets that teleport items to the player.")
                     .define("Vanilla - Magic", true);
-            enableModuleCursed = SERVER_BUILDER
+            enableModuleCursed = builder
                     .comment("If true, enables recipes for magnets that have no cost to use.")
                     .define("Cursed", true);
-            enableModuleCursedMagic = SERVER_BUILDER
+            enableModuleCursedMagic = builder
                     .comment("If true, enables recipes for magnets that teleport items to the player while having no cost to use.")
                     .define("Cursed - Magic", true);
-            enableUtilityBlocks = SERVER_BUILDER
+            enableUtilityBlocks = builder
                     .comment("If true, utility blocks for the magnets will be enabled.")
                     .define("Utility Blocks", true);
+            //TODO: Thermal Expansion and Patchouli
+            builder.pop();
 
-            //TODO: Thermal and Patchouli once they're updated
-
-
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
-        }
-
-    }
-
-    public static final class CategoryVanilla {
-
-        //Defaults
-        public final int defaultBaseRange = 2;
-        public final int defaultMultiplierRange = 4;
-        public final int defaultBaseDurability = 1024;
-        public final int defaultMultiplierDurability = 1;
-        public final int defaultMultiplierMagic = 3;
-
-        public final BooleanValue hasCost;
-        public final DoubleValue speed;
-        public final IntValue baseRange;
-        public final IntValue multiplierRange;
-        public final IntValue baseDurability;
-        public final IntValue multiplierDurability;
-        public final IntValue multiplierMagic;
-
-        private static String modules_name = "vanilla";
-        private static String modules_comment = "Vanilla module control settings";
-
-        private CategoryVanilla() {
-            SERVER_BUILDER.comment(modules_comment).push(modules_name);
-            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
-            COMMON_BUILDER.comment(modules_comment).push(modules_name);
-
-
-            hasCost = SERVER_BUILDER
+            //Module - Vanilla
+            builder.comment(comment_vanilla).push(name_vanilla);
+            vanilla_hasCost = builder
                     .comment("If true, magnets will take damage when used.")
                     .define("Has Cost", true);
-
-            speed = SERVER_BUILDER
+            vanilla_speed = builder
                     .comment("Speed in which items are pulled toward the player.")
                     .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
-
-            baseRange = SERVER_BUILDER
+            vanilla_baseRange = builder
                     .comment("Set the base range for the vanilla magnets.")
-                    .defineInRange("Base Range", defaultBaseRange, 1, Integer.MAX_VALUE);
-            multiplierRange = SERVER_BUILDER
+                    .defineInRange("[DISABLED] Base Range", 2, 1, Integer.MAX_VALUE);
+            vanilla_multiplierRange = builder
                     .comment("Affects the increase in range between tiers.")
-                    .defineInRange("Multiplier Range", defaultMultiplierRange, 0, Integer.MAX_VALUE);
-            baseDurability = SERVER_BUILDER
+                    .defineInRange("[DISABLED] Multiplier Range", 3, 0, Integer.MAX_VALUE);
+            vanilla_baseDurability = builder
                     .comment("Set the base durability for the vanilla magnets.")
-                    .defineInRange("[DISABLED] Base Durability", defaultBaseDurability, 1, Integer.MAX_VALUE);
-            multiplierDurability = SERVER_BUILDER
+                    .defineInRange("Base Durability", 1024, 1, Integer.MAX_VALUE);
+            vanilla_multiplierDurability = builder
                     .comment("Affects the increase in durability between magnet tiers.")
-                    .defineInRange("[DISABLED] Multiplier Durability", defaultMultiplierDurability, 1, Integer.MAX_VALUE);
-            multiplierMagic = SERVER_BUILDER
+                    .defineInRange("Multiplier Durability", 1, 1, Integer.MAX_VALUE);
+            vanilla_multiplierMagic = builder
                     .comment("Affects the increase in damage in the magic magnets.")
-                    .defineInRange("Multiplier Magic", defaultMultiplierMagic, 0, Integer.MAX_VALUE);
+                    .defineInRange("Multiplier Magic", 3, 0, Integer.MAX_VALUE);
+            builder.pop();
 
-
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
-        }
-
-    }
-
-    public static final class CategoryThermalExpansion {
-
-        //Defaults
-        public final int defaultBaseRange = 8;
-        public final int defaultMultiplierRange = 1;
-
-        public final DoubleValue speed;
-        public final IntValue baseRange;
-        public final IntValue multiplierRange;
-
-        private static String modules_name = "thermal_expansion";
-        private static String modules_comment = "Thermal module control settings";
-
-        private CategoryThermalExpansion() {
-            SERVER_BUILDER.comment(modules_comment).push(modules_name);
-            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
-            COMMON_BUILDER.comment(modules_comment).push(modules_name);
-
-            speed = SERVER_BUILDER
+            //Module - Thermal
+            builder.comment(comment_thermal).push(name_thermal);
+            te_speed = builder
                     .comment("Speed in which items are pulled toward the player.")
                     .defineInRange("Speed", 0.075D, 0.01D, Double.MAX_VALUE);
-
-            baseRange = SERVER_BUILDER
+            te_baseRange = builder
                     .comment("Set the base range for the vanilla magnets.")
-                    .defineInRange("Base Range", defaultBaseRange, 1, Integer.MAX_VALUE);
-            multiplierRange = SERVER_BUILDER
+                    .defineInRange("[DISABLED] Base Range", 8, 1, Integer.MAX_VALUE);
+            te_multiplierRange = builder
                     .comment("Affects the increase in range between tiers.")
-                    .defineInRange("Multiplier Range", defaultMultiplierRange, 0, Integer.MAX_VALUE);
-
+                    .defineInRange("[DISABLED] Multiplier Range", 1, 0, Integer.MAX_VALUE);
             //TODO: Rest of configs once energy is added
+            builder.pop();
 
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
-        }
-
-    }
-
-    public static final class CategoryCursed {
-
-        //Defaults
-        public final int defaultRange = 64;
-
-        public final DoubleValue speed;
-        public final IntValue range;
-
-        private static String modules_name = "cursed";
-        private static String modules_comment = "Cursed module control settings";
-
-        private CategoryCursed() {
-            SERVER_BUILDER.comment(modules_comment).push(modules_name);
-            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
-            COMMON_BUILDER.comment(modules_comment).push(modules_name);
-
-
-            speed = SERVER_BUILDER
+            //Module - Cursed
+            builder.comment(comment_cursed).push(name_cursed);
+            cursed_speed = builder
                     .comment("Speed in which items are pulled toward the player.")
                     .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
-
-            range = SERVER_BUILDER
+            cursed_range = builder
                     .comment("Set the range for the Cursed Magnets.")
-                    .defineInRange("Range", defaultRange, 1, Integer.MAX_VALUE);
+                    .defineInRange("[DISABLED] Range", 64, 1, Integer.MAX_VALUE);
+            builder.pop();
 
-
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
-        }
-
-    }
-
-    public static final class CategoryUtilityBlocks {
-
-        //Client
-        public final BooleanValue enableLampRender;
-
-        //Server
-        public final BooleanValue enableMInsulator;
-        public final BooleanValue enableMProjector;
-        public final IntValue insulatorRange;
-
-        private static String modules_name = "utility_blocks";
-        private static String modules_comment = "Utility Block module control settings";
-
-        private CategoryUtilityBlocks() {
-            SERVER_BUILDER.comment(modules_comment).push(modules_name);
-            CLIENT_BUILDER.comment(modules_comment).push(modules_name);
-            COMMON_BUILDER.comment(modules_comment).push(modules_name);
-
-            //Client
-            enableLampRender = CLIENT_BUILDER
-                    .comment("If true, a lamp render will be displayed on the Magnetic Projector. Disabling MAY improve performance.")
-                    .define("Enable Magnetic Projector Render", true);
-
-            //Server
-            enableMInsulator = SERVER_BUILDER
+            //Module - Utility Blocks
+            builder.comment(comment_utilityBlocks).push(name_utilityBlocks);
+            ub_enableMInsulator = builder
                     .comment("If true, enables a block to prevent items from being picked up.")
                     .define("Enable Magnetic Insulator", true);
-            enableMProjector = SERVER_BUILDER
+            ub_enableMProjector = builder
                     .comment("If true, enables a block to recreate a magnet in block-form.")
                     .define("Enable Magnetic Projector", true);
-
-            insulatorRange = SERVER_BUILDER
+            ub_insulatorRange = builder
                     .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
                     .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);
+            builder.pop();
 
+            builder.comment("Debug").push("Debug");
+            debug_enableNbtTooltips = builder
+                    .comment("If true, magnets will have tooltips that show their NBT.")
+                    .define("NBT Tooltips", true);
+            builder.pop();
 
-            SERVER_BUILDER.pop();
-            CLIENT_BUILDER.pop();
-            COMMON_BUILDER.pop();
         }
 
     }
 
-    public static final ForgeConfigSpec COMMON_CONFIG = COMMON_BUILDER.build();
-    public static final ForgeConfigSpec SERVER_CONFIG = SERVER_BUILDER.build();
-    public static final ForgeConfigSpec CLIENT_CONFIG = CLIENT_BUILDER.build();
-    private static boolean serverCfgLoaded = false;
+    public static final class ClientConfigs {
 
-    private static void loadServerConfig() {
-        serverCfgLoaded = true;
+        public final BooleanValue general_enableParticles;
+
+        public final BooleanValue ub_enableLampRender;
+
+        private ClientConfigs(ForgeConfigSpec.Builder builder) {
+            builder.comment(comment_general).push(name_general);
+            general_enableParticles = builder
+                    .comment("If true, particles will be displayed.")
+                    .define("Enable Particles", true);
+            builder.pop();
+
+            builder.comment(comment_utilityBlocks).push(name_utilityBlocks);
+            ub_enableLampRender = builder
+                    .comment("If true, a lamp render will be displayed on the Magnetic Projector. Disabling MAY improve performance.")
+                    .define("Enable Magnetic Projector Render", true);
+            builder.pop();
+
+        }
+
     }
 
+    public static final class CommonConfigs {
+
+        private CommonConfigs(ForgeConfigSpec.Builder builder) {
+
+        }
+
+    }
+
+//    private static boolean serverCfgLoaded = false;
+//
+//    private static void loadServerConfig() {
+//        serverCfgLoaded = true;
+//    }
+
     public static void onLoad(final net.minecraftforge.fml.config.ModConfig.Loading configEvent) {
-        if (configEvent.getConfig().getSpec() == ModConfig.SERVER_CONFIG)
-            loadServerConfig();
+//        if (configEvent.getConfig().getSpec() == ModConfig.serverSpec)
+//            loadServerConfig();
+
         ModLogger.debug("Loaded {} config file {}", Reference.MOD_ID, configEvent.getConfig().getFileName());
     }
 
@@ -305,8 +257,8 @@ public class ModConfig {
         ModLogger.fatal(CORE, "{} config just got changed on the file system!", Reference.MOD_ID);
     }
 
-    public static boolean isServerConfigLoaded() {
-        return serverCfgLoaded;
-    }
+//    public static boolean isServerConfigLoaded() {
+//        return serverCfgLoaded;
+//    }
 
 }

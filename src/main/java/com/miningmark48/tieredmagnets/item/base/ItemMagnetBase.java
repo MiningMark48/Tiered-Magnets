@@ -6,7 +6,6 @@ import com.miningmark48.tieredmagnets.client.particle.ParticleMagnetizeVanilla;
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
-import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -68,6 +67,10 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             list.add(new StringTextComponent(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift")));
         }
 
+//        if (ModConfig.SERVER.debug_enableNbtTooltips.get() && stack.getTag() != null) {
+//            list.add(new StringTextComponent(TextFormatting.GRAY + stack.getTag().toString()));
+//        }
+
     }
 
     @Override
@@ -80,7 +83,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                 toggleMagnet(stack, player);
             } else {
                 if (player instanceof ServerPlayerEntity) {
-                    if (ModConfig.GENERAL.enableFiltering.get() && stack.getItem() == this) {
+                    if (ModConfig.SERVER.general_enableFiltering.get() && stack.getItem() == this) {
                         NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                             @Nonnull
                             @Override
@@ -130,7 +133,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             setEnabled(stack, true);
             player.sendStatusMessage(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
         }
-        player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.GENERAL.cooldownTime.get());
+        player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.SERVER.general_cooldownTime.get());
     }
 
     @Override
@@ -152,7 +155,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             boolean blacklist = stack.getTag().getBoolean("filterModeBlacklist");
 
             Set<Item> inventory = new ObjectOpenHashSet<>();
-            if (ModConfig.GENERAL.enableFiltering.get()) {
+            if (ModConfig.SERVER.general_enableFiltering.get()) {
                 ListNBT invItems = stack.getTag().getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < invItems.size(); i++) {
                     CompoundNBT item = invItems.getCompound(i);
@@ -164,7 +167,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
             items.forEach(e -> {
                 if (canMagnetItem(e)) {
-                    if (ModConfig.GENERAL.enableFiltering.get()) {
+                    if (ModConfig.SERVER.general_enableFiltering.get()) {
                         if (blacklist) {
                             if (!inventory.contains(e.getItem().getItem())) {
                                 doMagnet(stack, e, x, y, z, noCost, true);
@@ -179,7 +182,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                     }
                 }
             });
-            if (ModConfig.GENERAL.enableXPMagnet.get()) {
+            if (ModConfig.SERVER.general_enableXPMagnet.get()) {
                 List<ExperienceOrbEntity> xp = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
                 xp.forEach(e -> {
                     if (canMagnetItem(e)) {
@@ -200,7 +203,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                 entity.setPositionAndUpdate(x, y, z);
             }
 
-            if (ModConfig.GENERAL.enableParticles.get() && particles && entity.world.isRemote) {
+            if (ModConfig.CLIENT.general_enableParticles.get() && particles && entity.world.isRemote) {
                 Random rand = new Random();
                 double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
                 double th = (rand.nextDouble() + 1) * 2 * Math.PI;
@@ -210,7 +213,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                 spawnParticles(entity.world, pX, entity.posY, pZ);
             }
 
-            if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.GENERAL.costDistance.get()) {
+            if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.SERVER.general_costDistance.get()) {
                 doCost(stack);
             }
 
@@ -289,7 +292,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
         }
     }
 
-    public int calculateRange(int base, int multiplier, int tier) {
+    public int calculateAmount(int base, int multiplier, int tier) {
         return base + (base * multiplier * tier);
     }
 

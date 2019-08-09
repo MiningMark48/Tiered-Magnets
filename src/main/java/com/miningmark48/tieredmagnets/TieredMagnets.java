@@ -35,9 +35,9 @@ public class TieredMagnets {
     public TieredMagnets() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModLoadingContext.get().registerConfig(Type.SERVER, ModConfig.SERVER_CONFIG);
-        ModLoadingContext.get().registerConfig(Type.CLIENT, ModConfig.CLIENT_CONFIG);
-        ModLoadingContext.get().registerConfig(Type.COMMON, ModConfig.COMMON_CONFIG);
+        ModLoadingContext.get().registerConfig(Type.SERVER, ModConfig.serverSpec);
+        ModLoadingContext.get().registerConfig(Type.CLIENT, ModConfig.clientSpec);
+        ModLoadingContext.get().registerConfig(Type.COMMON, ModConfig.commonSpec);
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::finishLoad);

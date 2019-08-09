@@ -101,7 +101,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     }
 
     public int getDefaultRange() {
-        return ModConfig.MODULE_UTILITY_BLOCKS.insulatorRange.get();
+        return ModConfig.SERVER.ub_insulatorRange.get();
     }
 
     public boolean getDoPreview() {

@@ -1,29 +1,15 @@
 package com.miningmark48.tieredmagnets.item;
 
-import com.miningmark48.tieredmagnets.block.base.CustomEnergyStorage;
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
-import com.miningmark48.tieredmagnets.util.ModTranslate;
-import com.miningmark48.tieredmagnets.util.exceptions.ExceptionCapabilityNotPresent;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.energy.CapabilityEnergy;
-import net.minecraftforge.energy.IEnergyStorage;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -63,7 +49,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-//        if (OldConfig.thermalExpansionConfigs.hasCost) {
+//        if (OldConfig.thermalExpansionConfigs.vanilla_hasCost) {
 //            this.extractEnergyInternal(stack, usageEnergy, false);
 //        }
     }
@@ -73,18 +59,18 @@ public class ItemMagnetRF extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", calculateRange(ModConfig.MODULE_TE.defaultBaseRange, ModConfig.MODULE_TE.defaultMultiplierRange, tier));
+            stack.getTag().putInt("range", calculateAmount(ModConfig.SERVER.def_te_baseRange, ModConfig.SERVER.def_te_multiplierRange, tier));
         }
     }
 
     @Override
     public int getDefaultRange() {
-        return calculateRange(ModConfig.MODULE_TE.baseRange.get(), ModConfig.MODULE_TE.multiplierRange.get(), tier);
+        return calculateAmount(ModConfig.SERVER.def_te_baseRange, ModConfig.SERVER.def_te_multiplierRange, tier);
     }
 
     @Override
     public double getSpeed() {
-        return ModConfig.MODULE_TE.speed.get();
+        return ModConfig.SERVER.te_speed.get();
     }
 
     @Override

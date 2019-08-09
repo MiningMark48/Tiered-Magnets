@@ -32,7 +32,7 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
             if (!stack.isEmpty()) {
                 renderItem(te, stack, x, y, z);
 
-                if (ModConfig.MODULE_UTILITY_BLOCKS.enableLampRender.get()) {
+                if (ModConfig.CLIENT.ub_enableLampRender.get()) {
                     float red = 1f;
                     float green = 1f;
                     float blue = 0f;

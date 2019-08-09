@@ -2,7 +2,6 @@ package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.client.particle.base.ParticleMagnetize.Particles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
-import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -45,9 +44,9 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-        if (ModConfig.MODULE_VANILLA.hasCost.get()) {
+        if (ModConfig.SERVER.vanilla_hasCost.get()) {
             int damageAmount = 1;
-            if (isMagic) damageAmount *= ModConfig.MODULE_VANILLA.multiplierMagic.get();
+            if (isMagic) damageAmount *= ModConfig.SERVER.vanilla_multiplierMagic.get();
             if (stack.attemptDamageItem(damageAmount, new Random(), null)) {
                 stack.shrink(1);
             }
@@ -59,26 +58,23 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", calculateRange(ModConfig.MODULE_VANILLA.defaultBaseRange, ModConfig.MODULE_VANILLA.defaultMultiplierRange, tier));
+            stack.getTag().putInt("range", calculateAmount(ModConfig.SERVER.def_vanilla_baseRange, ModConfig.SERVER.def_vanilla_multiplierRange, tier));
         }
     }
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-//        int baseDurability = ModConfig.MODULE_VANILLA.baseDurability.get();
-//        return baseDurability + (baseDurability * ModConfig.MODULE_VANILLA.multiplierDurability.get() * tier);
-        int baseDurability = ModConfig.MODULE_VANILLA.defaultBaseDurability;
-        return baseDurability + (baseDurability * ModConfig.MODULE_VANILLA.defaultMultiplierDurability * tier);
+        return calculateAmount(ModConfig.SERVER.vanilla_baseDurability.get(), ModConfig.SERVER.vanilla_multiplierDurability.get(), tier);
     }
 
     @Override
     public int getDefaultRange() {
-        return calculateRange(ModConfig.MODULE_VANILLA.baseRange.get(), ModConfig.MODULE_VANILLA.multiplierRange.get(), tier);
+        return calculateAmount(ModConfig.SERVER.def_vanilla_baseRange, ModConfig.SERVER.def_vanilla_multiplierRange, tier);
     }
 
     @Override
     public double getSpeed() {
-        return ModConfig.MODULE_VANILLA.speed.get();
+        return ModConfig.SERVER.vanilla_speed.get();
     }
 
     @Override

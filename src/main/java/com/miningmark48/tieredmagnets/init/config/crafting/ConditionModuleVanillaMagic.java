@@ -10,6 +10,6 @@ public class ConditionModuleVanillaMagic implements IConditionSerializer {
 
     @Override
     public BooleanSupplier parse(JsonObject json) {
-         return ModConfig.MODULES.enableModuleVanillaMagic::get;
+         return ModConfig.SERVER.enableModuleVanillaMagic::get;
     }
 }

@@ -10,6 +10,6 @@ public class ConditionBlockMInsulator implements IConditionSerializer {
 
     @Override
     public BooleanSupplier parse(JsonObject json) {
-        return ModConfig.MODULE_UTILITY_BLOCKS.enableMInsulator::get;
+        return ModConfig.SERVER.ub_enableMInsulator::get;
     }
 }
