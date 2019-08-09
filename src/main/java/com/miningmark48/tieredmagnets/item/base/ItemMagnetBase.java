@@ -28,6 +28,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -214,6 +216,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
         double yOffset = y + 0.3D;
         float alpha = 0.5f;
