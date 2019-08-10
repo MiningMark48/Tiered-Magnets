@@ -17,12 +17,8 @@ public enum EnumParticles {
         this.color = color;
     }
 
-    public Color getColor() {
-        return color;
-    }
-
     public void spawnParticle(World world, double x, double y, double z, float alpha) {
-        world.addParticle(new RedstoneParticleData(convertColor(getColor().getRed()), convertColor(getColor().getGreen()), convertColor(getColor().getBlue()), alpha), x, y, z, 0, 0, 0);
+        world.addParticle(new RedstoneParticleData(convertColor(color.getRed()), convertColor(color.getGreen()), convertColor(color.getBlue()), alpha), x, y, z, 0, 0, 0);
     }
 
     private float convertColor(int color) {
