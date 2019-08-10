@@ -9,8 +9,6 @@ import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
 
-import static net.minecraftforge.fml.Logging.CORE;
-
 @Mod.EventBusSubscriber
 @SuppressWarnings({"Duplicates", "FieldCanBeLocal"})
 public class ModConfig {
@@ -73,8 +71,6 @@ public class ModConfig {
         public final DoubleValue vanilla_speed;
         public final IntValue vanilla_baseRange;
         public final IntValue vanilla_multiplierRange;
-        public final int def_vanilla_baseRange = 2;
-        public final int def_vanilla_multiplierRange = 3;
         public final IntValue vanilla_baseDurability;
         public final IntValue vanilla_multiplierDurability;
         public final IntValue vanilla_multiplierMagic;
@@ -83,21 +79,15 @@ public class ModConfig {
         public final DoubleValue te_speed;
         public final IntValue te_baseRange;
         public final IntValue te_multiplierRange;
-        public final int def_te_baseRange = 8;
-        public final int def_te_multiplierRange = 1;
 
         //Module - Cursed
         public final DoubleValue cursed_speed;
         public final IntValue cursed_range;
-        public final int def_cursed_range = 64;
 
         //Module - Utility Blocks
         public final BooleanValue ub_enableMInsulator;
         public final BooleanValue ub_enableMProjector;
         public final IntValue ub_insulatorRange;
-
-        //Debug
-        public final BooleanValue debug_enableNbtTooltips;
 
         private ServerConfigs(ForgeConfigSpec.Builder builder) {
 
@@ -147,10 +137,10 @@ public class ModConfig {
                     .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
             vanilla_baseRange = builder
                     .comment("Set the base range for the vanilla magnets.")
-                    .defineInRange("[DISABLED] Base Range", 2, 1, Integer.MAX_VALUE);
+                    .defineInRange("Base Range", 2, 1, Integer.MAX_VALUE);
             vanilla_multiplierRange = builder
                     .comment("Affects the increase in range between tiers.")
-                    .defineInRange("[DISABLED] Multiplier Range", 3, 0, Integer.MAX_VALUE);
+                    .defineInRange("Multiplier Range", 3, 0, Integer.MAX_VALUE);
             vanilla_baseDurability = builder
                     .comment("Set the base durability for the vanilla magnets.")
                     .defineInRange("Base Durability", 1024, 1, Integer.MAX_VALUE);
@@ -169,10 +159,10 @@ public class ModConfig {
                     .defineInRange("Speed", 0.075D, 0.01D, Double.MAX_VALUE);
             te_baseRange = builder
                     .comment("Set the base range for the vanilla magnets.")
-                    .defineInRange("[DISABLED] Base Range", 8, 1, Integer.MAX_VALUE);
+                    .defineInRange("Base Range", 8, 1, Integer.MAX_VALUE);
             te_multiplierRange = builder
                     .comment("Affects the increase in range between tiers.")
-                    .defineInRange("[DISABLED] Multiplier Range", 1, 0, Integer.MAX_VALUE);
+                    .defineInRange("Multiplier Range", 1, 0, Integer.MAX_VALUE);
             //TODO: Rest of configs once energy is added
             builder.pop();
 
@@ -183,7 +173,7 @@ public class ModConfig {
                     .defineInRange("Speed", 0.05D, 0.01D, Double.MAX_VALUE);
             cursed_range = builder
                     .comment("Set the range for the Cursed Magnets.")
-                    .defineInRange("[DISABLED] Range", 64, 1, Integer.MAX_VALUE);
+                    .defineInRange("Range", 64, 1, Integer.MAX_VALUE);
             builder.pop();
 
             //Module - Utility Blocks
@@ -197,12 +187,6 @@ public class ModConfig {
             ub_insulatorRange = builder
                     .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
                     .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);
-            builder.pop();
-
-            builder.comment("Debug").push("Debug");
-            debug_enableNbtTooltips = builder
-                    .comment("If true, magnets will have tooltips that show their NBT.")
-                    .define("NBT Tooltips", true);
             builder.pop();
 
         }

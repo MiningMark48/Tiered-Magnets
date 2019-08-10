@@ -57,7 +57,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", calculateAmount(ModConfig.SERVER.def_vanilla_baseRange, ModConfig.SERVER.def_vanilla_multiplierRange, tier));
+            stack.getTag().putInt("range", getDefaultRange());
         }
     }
 
@@ -68,7 +68,11 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public int getDefaultRange() {
-        return calculateAmount(ModConfig.SERVER.def_vanilla_baseRange, ModConfig.SERVER.def_vanilla_multiplierRange, tier);
+        try {
+            return calculateAmount(ModConfig.SERVER.vanilla_baseRange.get(), ModConfig.SERVER.vanilla_multiplierRange.get(), tier);
+        } catch (NullPointerException e) {
+            return super.getDefaultRange();
+        }
     }
 
     @Override

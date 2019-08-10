@@ -42,13 +42,17 @@ public class ItemMagnetFree extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", ModConfig.SERVER.def_cursed_range);
+            stack.getTag().putInt("range", getDefaultRange());
         }
     }
 
     @Override
     public int getDefaultRange() {
-        return ModConfig.SERVER.def_cursed_range;
+        try {
+            return ModConfig.SERVER.cursed_range.get();
+        } catch (NullPointerException e) {
+            return super.getDefaultRange();
+        }
     }
 
     @Override

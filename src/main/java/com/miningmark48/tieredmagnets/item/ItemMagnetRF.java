@@ -58,13 +58,17 @@ public class ItemMagnetRF extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", calculateAmount(ModConfig.SERVER.def_te_baseRange, ModConfig.SERVER.def_te_multiplierRange, tier));
+            stack.getTag().putInt("range", getDefaultRange());
         }
     }
 
     @Override
     public int getDefaultRange() {
-        return calculateAmount(ModConfig.SERVER.def_te_baseRange, ModConfig.SERVER.def_te_multiplierRange, tier);
+        try {
+            return calculateAmount(ModConfig.SERVER.te_baseRange.get(), ModConfig.SERVER.te_multiplierRange.get(), tier);
+        } catch (NullPointerException e) {
+            return super.getDefaultRange();
+        }
     }
 
     @Override

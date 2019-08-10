@@ -64,7 +64,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             list.add(new StringTextComponent(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift")));
         }
 
-//        if (ModConfig.SERVER.debug_enableNbtTooltips.get() && stack.getTag() != null) {
+//        if (stack.getTag() != null) {
 //            list.add(new StringTextComponent(TextFormatting.GRAY + stack.getTag().toString()));
 //        }
 
