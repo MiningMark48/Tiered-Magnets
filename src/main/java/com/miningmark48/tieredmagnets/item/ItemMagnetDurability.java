@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
+import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
@@ -57,7 +58,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         if (!stack.hasTag()) {
             super.setTagDefaults(stack);
             assert stack.getTag() != null;
-            stack.getTag().putInt("range", getDefaultRange());
+            stack.getTag().putInt(NBTKeys.RANGE.getKey(), getDefaultRange());
         }
     }
 

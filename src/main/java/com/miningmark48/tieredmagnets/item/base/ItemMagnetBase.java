@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item.base;
 
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
+import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -149,11 +150,11 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
         if (isEnabled(stack) && (canMagnet(stack) || noCost)) {
             assert stack.getTag() != null;
-            boolean blacklist = stack.getTag().getBoolean("filterModeBlacklist");
+            boolean blacklist = stack.getTag().getBoolean(NBTKeys.FILTER_MODE.getKey());
 
             Set<Item> inventory = new ObjectOpenHashSet<>();
             if (ModConfig.SERVER.general_enableFiltering.get()) {
-                ListNBT invItems = stack.getTag().getList("ItemInventory", Constants.NBT.TAG_COMPOUND);
+                ListNBT invItems = stack.getTag().getList(NBTKeys.ITEM_INV.getKey(), Constants.NBT.TAG_COMPOUND);
                 for (int i = 0; i < invItems.size(); i++) {
                     CompoundNBT item = invItems.getCompound(i);
                     inventory.add(ItemStack.read(item).getItem());
@@ -236,7 +237,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     }
 
     private boolean canMagnetItem(Entity entity) {
-        return !entity.getEntityData().getBoolean("noMagnet") && !entity.getEntityData().getBoolean("PreventRemoteMovement");
+        return !entity.getEntityData().getBoolean(NBTKeys.NO_MAGNET.getKey()) && !entity.getEntityData().getBoolean(NBTKeys.INT_DEMAGNETIZE.getKey());
     }
 
     public boolean canMagnet(ItemStack stack) {
@@ -258,13 +259,13 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     public int getRange(ItemStack stack) {
 //        setTagDefaults(stack);
         assert stack.getTag() != null;
-        return stack.getTag().getInt("range");
+        return stack.getTag().getInt(NBTKeys.RANGE.getKey());
     }
 
     public void setRange(ItemStack stack, int range) {
 //        setTagDefaults(stack);
         assert stack.getTag() != null;
-        stack.getTag().putInt("range", range);
+        stack.getTag().putInt(NBTKeys.RANGE.getKey(), range);
     }
 
     public double getSpeed() {
@@ -273,20 +274,20 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     private static boolean isEnabled(ItemStack stack) {
         assert stack.getTag() != null;
-        return stack.getTag().getBoolean("enabled");
+        return stack.getTag().getBoolean(NBTKeys.ENABLED.getKey());
     }
 
     private static void setEnabled(ItemStack stack, boolean enabled) {
         assert stack.getTag() != null;
-        stack.getTag().putBoolean("enabled", enabled);
+        stack.getTag().putBoolean(NBTKeys.ENABLED.getKey(), enabled);
     }
 
     public void setTagDefaults(ItemStack stack) {
         if (!stack.hasTag()){
             stack.setTag(new CompoundNBT());
             assert stack.getTag() != null;
-            stack.getTag().putBoolean("enabled", false);
-            stack.getTag().putBoolean("filterModeBlacklist", true);
+            stack.getTag().putBoolean(NBTKeys.ENABLED.getKey(), false);
+            stack.getTag().putBoolean(NBTKeys.FILTER_MODE.getKey(), true);
         }
     }
 

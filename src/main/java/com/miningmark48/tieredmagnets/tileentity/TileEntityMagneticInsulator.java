@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
+import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -47,9 +48,9 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 
         List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - r, y - r, z - r, x + r, y + r, z + r));
         if (!world.isBlockPowered(pos)) {
-            items.forEach(item -> item.getEntityData().putBoolean("noMagnet", true));
+            items.forEach(item -> item.getEntityData().putBoolean(NBTKeys.NO_MAGNET.getKey(), true));
         } else {
-            items.forEach(item -> item.getEntityData().putBoolean("noMagnet", false));
+            items.forEach(item -> item.getEntityData().putBoolean(NBTKeys.NO_MAGNET.getKey(), false));
         }
 
         if (getDoPreview()) {
@@ -115,15 +116,15 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     @Override
     public void read(CompoundNBT compound) {
         super.read(compound);
-        setRange(compound.getInt("range"));
-        setDoPreview(compound.getBoolean("doPreview"));
+        setRange(compound.getInt(NBTKeys.RANGE.getKey()));
+        setDoPreview(compound.getBoolean(NBTKeys.PREVIEW.getKey()));
     }
 
     @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.putInt("range", getRange());
-        compound.putBoolean("doPreview", getDoPreview());
+        compound.putInt(NBTKeys.RANGE.getKey(), getRange());
+        compound.putBoolean(NBTKeys.PREVIEW.getKey(), getDoPreview());
         return super.write(compound);
     }
 
