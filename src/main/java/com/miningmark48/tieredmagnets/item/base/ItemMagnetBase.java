@@ -145,9 +145,6 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     }
 
     public void doUpdate(ItemStack stack, World world, double x, double y, double z, boolean noCost){
-//        setTagDefaults(stack);
-
-//        if (getRange(stack) == -1) setRange(stack, getDefaultRange());
         setRange(stack, MathHelper.clamp(getRange(stack), 1, getDefaultRange()));
 
         if (isEnabled(stack) && (canMagnet(stack) || noCost)) {
@@ -194,28 +191,28 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     }
 
     public void doMagnet(ItemStack stack, Entity entity, double x, double y, double z, boolean noCost, boolean particles) {
-            assert stack.getTag() != null;
-            if (!isMagic) {
-                double speed = getSpeed();
-                entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
+        assert stack.getTag() != null;
+        if (!isMagic) {
+            double speed = getSpeed();
+            entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
-            } else {
-                entity.setPositionAndUpdate(x, y, z);
-            }
+        } else {
+            entity.setPositionAndUpdate(x, y, z);
+        }
 
-            if (ModConfig.CLIENT.general_enableParticles.get() && particles && entity.world.isRemote) {
-                Random rand = new Random();
-                double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
-                double th = (rand.nextDouble() + 1) * 2 * Math.PI;
-                double pX = entity.posX + r * MathHelper.cos((float) th);
-                double pZ = entity.posZ + r * MathHelper.sin((float) th);
+        if (ModConfig.CLIENT.general_enableParticles.get() && particles && entity.world.isRemote) {
+            Random rand = new Random();
+            double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
+            double th = (rand.nextDouble() + 1) * 2 * Math.PI;
+            double pX = entity.posX + r * MathHelper.cos((float) th);
+            double pZ = entity.posZ + r * MathHelper.sin((float) th);
 
-                spawnParticles(entity.world, pX, entity.posY, pZ);
-            }
+            spawnParticles(entity.world, pX, entity.posY, pZ);
+        }
 
-            if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.SERVER.general_costDistance.get()) {
-                doCost(stack);
-            }
+        if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.SERVER.general_costDistance.get()) {
+            doCost(stack);
+        }
 
     }
 
