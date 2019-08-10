@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
@@ -12,6 +13,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
@@ -81,9 +83,10 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         return ModConfig.SERVER.vanilla_speed.get();
     }
 
+    @Nonnull
     @Override
-    public ParticleType getParticle() {
-        return ParticleType.VANILLA;
+    public EnumParticles getParticle() {
+        return EnumParticles.VANILLA;
     }
 
 }

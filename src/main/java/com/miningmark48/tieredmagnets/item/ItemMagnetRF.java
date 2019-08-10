@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.config.OldConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
@@ -10,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -77,9 +79,10 @@ public class ItemMagnetRF extends ItemMagnetBase {
         return ModConfig.SERVER.te_speed.get();
     }
 
+    @Nonnull
     @Override
-    public ParticleType getParticle() {
-        return ParticleType.ENERGY;
+    public EnumParticles getParticle() {
+        return EnumParticles.ENERGY;
     }
 
     @Override

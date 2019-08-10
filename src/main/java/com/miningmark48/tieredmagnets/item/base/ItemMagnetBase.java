@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item.base;
 
+import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
@@ -33,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -219,21 +221,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     @OnlyIn(Dist.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
-        double yOffset = y + 0.3D;
-        float alpha = 0.5f;
-
-        switch (getParticle()) {
-            default:
-            case VANILLA:
-                world.addParticle(new RedstoneParticleData(0, 0, 1, alpha), x, yOffset, z, 0, 0, 0);
-                break;
-            case ENERGY:
-                world.addParticle(new RedstoneParticleData(1, 0, 0, alpha), x, yOffset, z, 0, 0, 0);
-                break;
-            case FREE:
-                world.addParticle(new RedstoneParticleData(0.75f, 0.5f, 0.5f, alpha), x, yOffset, z, 0, 0, 0);
-                break;
-        }
+        getParticle().spawnParticle(world, x, y + 0.3D, z, 0.5f);
     }
 
     private boolean canMagnetItem(Entity entity) {
@@ -248,8 +236,9 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     }
 
-    public ParticleType getParticle() {
-        return ParticleType.VANILLA;
+    @NonNull
+    public EnumParticles getParticle() {
+        return EnumParticles.VANILLA;
     }
 
     public int getDefaultRange() {
@@ -293,12 +282,6 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     public int calculateAmount(int base, int multiplier, int tier) {
         return base + (base * multiplier * tier);
-    }
-
-    public enum ParticleType {
-        ENERGY,
-        FREE,
-        VANILLA
     }
 
     /* Baubles */
