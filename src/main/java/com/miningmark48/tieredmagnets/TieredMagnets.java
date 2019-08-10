@@ -1,6 +1,5 @@
 package com.miningmark48.tieredmagnets;
 
-import com.miningmark48.tieredmagnets.client.events.EventStitchParticles;
 import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.registry.ModObjects;
@@ -66,8 +65,6 @@ public class TieredMagnets {
         });
 
 //        MinecraftForge.EVENT_BUS.register(proxy);
-
-        MinecraftForge.EVENT_BUS.register(new EventStitchParticles());
 
         PacketHandler.registerMessages();
 
