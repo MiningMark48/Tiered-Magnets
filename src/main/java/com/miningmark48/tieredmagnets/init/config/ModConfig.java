@@ -94,6 +94,9 @@ public class ModConfig {
         public final BooleanValue ub_enableMProjector;
         public final IntValue ub_insulatorRange;
 
+        //Debug
+        public final BooleanValue debug_nbtTooltips;
+
         private ServerConfigs(ForgeConfigSpec.Builder builder) {
 
             //General
@@ -206,6 +209,13 @@ public class ModConfig {
             ub_insulatorRange = builder
                     .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
                     .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);
+            builder.pop();
+
+            //Debug
+            builder.push("debug");
+            debug_nbtTooltips = builder
+                    .comment("If true, tooltips will be added to the magnets to show their NBT.")
+                    .define("NBT Tooltips", false);
             builder.pop();
 
         }
