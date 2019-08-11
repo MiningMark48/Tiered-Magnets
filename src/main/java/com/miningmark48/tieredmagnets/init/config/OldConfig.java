@@ -28,7 +28,7 @@ public class OldConfig {
 //        @Config.RangeInt(min = 1)
 //        @Config.Comment("The rate at which the magnet can be charged by a machine.")
 //        @Config.RequiresMcRestart
-        public int transferRate = 2500;
+//        public int transferRate = 2500;
 
 //        @Config.Name("Base Range")
 //        @Config.RangeInt(min = 1)
@@ -46,31 +46,31 @@ public class OldConfig {
 //        @Config.RangeInt(min = 1)
 //        @Config.Comment("Set the max energy storage for the electromagnets.")
 //        @Config.RequiresMcRestart
-        public int baseEnergy = 25000;
+//        public int baseEnergy = 25000;
 
 //        @Config.Name("Multiplier Energy")
 //        @Config.RangeInt(min = 0)
 //        @Config.Comment("Affects the increase in energy storage between electromagnet tiers.")
 //        @Config.RequiresMcRestart
-        public int multiplierEnergy = 4;
+//        public int multiplierEnergy = 4;
 
 //        @Config.Name("Base Energy Usage")
 //        @Config.RangeInt(min = 1)
 //        @Config.Comment("The amount of energy used per tick for each tier.")
 //        @Config.RequiresMcRestart
-        public int baseUsageEnergy = 10;
+//        public int baseUsageEnergy = 10;
 
 //        @Config.Name("Multiplier Energy Usage")
 //        @Config.RangeInt(min = 1)
 //        @Config.Comment("Affects the increase in energy usage between electromagnet tiers.")
 //        @Config.RequiresMcRestart
-        public int multiplierUsageEnergy = 1;
+//        public int multiplierUsageEnergy = 1;
 
 //        @Config.Name("Multiplier Magic Energy Usage")
 //        @Config.RangeDouble(min = 0)
 //        @Config.Comment("Affects the increase in energy usage in the magic magnets.")
 //        @Config.RequiresMcRestart
-        public double multiplierMagic = 3D;
+//        public double multiplierMagic = 3D;
 
     }
 

@@ -53,12 +53,12 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     public int getEnergyMax() {
-        return OldConfig.thermalExpansionConfigs.baseEnergy + (OldConfig.thermalExpansionConfigs.baseEnergy * OldConfig.thermalExpansionConfigs.multiplierEnergy * tier);
+        return calculateAmount(ModConfig.SERVER.te_baseEnergy.get(), ModConfig.SERVER.te_multiplierEnergy.get(), tier);
     }
 
     public int getEnergyCost() {
-        int usageEnergy = OldConfig.thermalExpansionConfigs.baseUsageEnergy + (OldConfig.thermalExpansionConfigs.baseUsageEnergy * OldConfig.thermalExpansionConfigs.multiplierUsageEnergy * tier);
-        if (isMagic) usageEnergy *= OldConfig.thermalExpansionConfigs.multiplierMagic;
+        int usageEnergy = calculateAmount(ModConfig.SERVER.te_baseUsageEnergy.get(), ModConfig.SERVER.te_multiplierUsageEnergy.get(), tier);
+        if (isMagic) usageEnergy *= ModConfig.SERVER.te_multiplierMagic.get();
         return usageEnergy;
     }
 

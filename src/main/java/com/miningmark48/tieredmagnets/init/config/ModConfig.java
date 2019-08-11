@@ -79,6 +79,11 @@ public class ModConfig {
         public final DoubleValue te_speed;
         public final IntValue te_baseRange;
         public final IntValue te_multiplierRange;
+        public final IntValue te_baseEnergy;
+        public final IntValue te_multiplierEnergy;
+        public final IntValue te_baseUsageEnergy;
+        public final IntValue te_multiplierUsageEnergy;
+        public final DoubleValue te_multiplierMagic;
 
         //Module - Cursed
         public final DoubleValue cursed_speed;
@@ -163,7 +168,21 @@ public class ModConfig {
             te_multiplierRange = builder
                     .comment("Affects the increase in range between tiers.")
                     .defineInRange("Multiplier Range", 1, 0, Integer.MAX_VALUE);
-            //TODO: Rest of configs once energy is added
+            te_baseEnergy = builder
+                    .comment("Set the max energy storage for the electromagnets.")
+                    .defineInRange("Base Energy", 25000, 1, Integer.MAX_VALUE);
+            te_multiplierEnergy = builder
+                    .comment("Affects the increase in energy storage between electromagnet tiers.")
+                    .defineInRange("Multiplier Energy", 4, 1, Integer.MAX_VALUE);
+            te_baseUsageEnergy = builder
+                    .comment("The amount of energy used per tick for each tier when an item is within range.")
+                    .defineInRange("Base Energy Usage", 10, 1, Integer.MAX_VALUE);
+            te_multiplierUsageEnergy = builder
+                    .comment("Affects the increase in energy usage between electromagnet tiers.")
+                    .defineInRange("Multiplier Energy Usage", 1, 1, Integer.MAX_VALUE);
+            te_multiplierMagic = builder
+                    .comment("Affects the increase in energy usage in the magic magnets.")
+                    .defineInRange("Multiplier Magic Energy Usage", 3D, 0, Double.MAX_VALUE);
             builder.pop();
 
             //Module - Cursed
