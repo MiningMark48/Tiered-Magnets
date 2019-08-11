@@ -90,11 +90,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public int getDefaultRange() {
-        try {
-            return calculateAmount(ModConfig.SERVER.te_baseRange.get(), ModConfig.SERVER.te_multiplierRange.get(), tier);
-        } catch (NullPointerException e) {
-            return super.getDefaultRange();
-        }
+        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.SERVER.te_baseRange.get(), ModConfig.SERVER.te_multiplierRange.get(), tier) : super.getDefaultRange();
     }
 
     @Override
