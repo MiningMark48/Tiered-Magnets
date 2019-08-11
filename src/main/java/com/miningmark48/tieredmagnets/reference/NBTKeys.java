@@ -3,6 +3,7 @@ package com.miningmark48.tieredmagnets.reference;
 public enum NBTKeys {
 
     ENABLED("enabled"),
+    ENERGY("Energy"),
     FILTER_MODE("filterModeBlacklist"),
     ITEM_INV("ItemInventory"),
     NO_MAGNET("noMagnet"),

@@ -224,15 +224,15 @@ public class ModConfig {
 
     }
 
-//    private static boolean serverCfgLoaded = false;
-//
-//    private static void loadServerConfig() {
-//        serverCfgLoaded = true;
-//    }
+    private static boolean serverCfgLoaded = false;
+
+    private static void loadServerConfig() {
+        serverCfgLoaded = true;
+    }
 
     public static void onLoad(final net.minecraftforge.fml.config.ModConfig.Loading configEvent) {
-//        if (configEvent.getConfig().getSpec() == ModConfig.serverSpec)
-//            loadServerConfig();
+        if (configEvent.getConfig().getSpec() == ModConfig.serverSpec)
+            loadServerConfig();
 
         ModLogger.debug("Loaded %s config file %s", Reference.MOD_ID, configEvent.getConfig().getFileName());
     }
@@ -241,8 +241,8 @@ public class ModConfig {
         ModLogger.fatal("%s config just got changed on the file system!", Reference.MOD_ID);
     }
 
-//    public static boolean isServerConfigLoaded() {
-//        return serverCfgLoaded;
-//    }
+    public static boolean isServerConfigLoaded() {
+        return serverCfgLoaded;
+    }
 
 }
