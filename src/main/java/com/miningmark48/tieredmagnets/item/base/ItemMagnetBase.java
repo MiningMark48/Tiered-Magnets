@@ -209,7 +209,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
         }
 
         if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.COMMON.general_costDistance.get()) {
-            doCost(stack);
+            doCost(stack, entity.world, entity);
         }
 
     }
@@ -227,7 +227,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
         return true;
     }
 
-    public void doCost(ItemStack stack) {
+    public void doCost(ItemStack stack, World world, Entity entity) {
 
     }
 

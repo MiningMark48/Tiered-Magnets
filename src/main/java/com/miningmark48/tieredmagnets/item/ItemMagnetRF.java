@@ -11,6 +11,7 @@ import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilCapability.EnergyUtil;
 import com.miningmark48.tieredmagnets.util.exceptions.ExceptionCapabilityNotPresent;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
@@ -72,7 +73,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     @Override
-    public void doCost(ItemStack stack) {
+    public void doCost(ItemStack stack, World world, Entity entity) {
         if (ModConfig.COMMON.vanilla_hasCost.get()) {
             IEnergyStorage energy = EnergyUtil.getCap(stack).orElseThrow(ExceptionCapabilityNotPresent::new);
             energy.extractEnergy(getEnergyCost(), false);

@@ -2,11 +2,15 @@ package com.miningmark48.tieredmagnets.item;
 
 import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
+import com.miningmark48.tieredmagnets.inventory.InventoryMagnetFilter;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -41,11 +45,12 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     }
 
     @Override
-    public void doCost(ItemStack stack) {
+    public void doCost(ItemStack stack, World world, Entity entity) {
         if (ModConfig.COMMON.vanilla_hasCost.get()) {
             int damageAmount = 1;
             if (isMagic) damageAmount *= ModConfig.COMMON.vanilla_multiplierMagic.get();
             if (stack.attemptDamageItem(damageAmount, new Random(), null)) {
+                InventoryHelper.dropInventoryItems(world, entity, new InventoryMagnetFilter(stack));
                 stack.shrink(1);
             }
         }
