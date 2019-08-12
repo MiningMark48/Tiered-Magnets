@@ -52,7 +52,7 @@ public class ItemMagnetFree extends ItemMagnetBase {
     @Override
     public int getDefaultRange() {
         try {
-            return ModConfig.SERVER.cursed_range.get();
+            return ModConfig.COMMON.cursed_range.get();
         } catch (NullPointerException e) {
             return super.getDefaultRange();
         }
@@ -60,7 +60,7 @@ public class ItemMagnetFree extends ItemMagnetBase {
 
     @Override
     public double getSpeed() {
-        return ModConfig.SERVER.cursed_speed.get();
+        return ModConfig.COMMON.cursed_speed.get();
     }
 
     @Nonnull

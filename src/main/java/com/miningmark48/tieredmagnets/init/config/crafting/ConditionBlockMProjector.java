@@ -10,6 +10,6 @@ public class ConditionBlockMProjector implements IConditionSerializer {
 
     @Override
     public BooleanSupplier parse(JsonObject json) {
-        return ModConfig.SERVER.ub_enableMProjector::get;
+        return ModConfig.COMMON.ub_enableMProjector::get;
     }
 }

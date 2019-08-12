@@ -53,18 +53,18 @@ public class ItemMagnetRF extends ItemMagnetBase {
     }
 
     public int getEnergyMax() {
-        return calculateAmount(ModConfig.SERVER.te_baseEnergy.get(), ModConfig.SERVER.te_multiplierEnergy.get(), tier);
+        return calculateAmount(ModConfig.COMMON.te_baseEnergy.get(), ModConfig.COMMON.te_multiplierEnergy.get(), tier);
     }
 
     public int getEnergyCost() {
-        int usageEnergy = calculateAmount(ModConfig.SERVER.te_baseUsageEnergy.get(), ModConfig.SERVER.te_multiplierUsageEnergy.get(), tier);
-        if (isMagic) usageEnergy *= ModConfig.SERVER.te_multiplierMagic.get();
+        int usageEnergy = calculateAmount(ModConfig.COMMON.te_baseUsageEnergy.get(), ModConfig.COMMON.te_multiplierUsageEnergy.get(), tier);
+        if (isMagic) usageEnergy *= ModConfig.COMMON.te_multiplierMagic.get();
         return usageEnergy;
     }
 
     @Override
     public boolean canMagnet(ItemStack stack) {
-        if (ModConfig.SERVER.vanilla_hasCost.get()) {
+        if (ModConfig.COMMON.vanilla_hasCost.get()) {
             IEnergyStorage energy = EnergyUtil.getCap(stack).orElseThrow(ExceptionCapabilityNotPresent::new);
             return getEnergyCost() <= energy.getEnergyStored();
         }
@@ -73,7 +73,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public void doCost(ItemStack stack) {
-        if (ModConfig.SERVER.vanilla_hasCost.get()) {
+        if (ModConfig.COMMON.vanilla_hasCost.get()) {
             IEnergyStorage energy = EnergyUtil.getCap(stack).orElseThrow(ExceptionCapabilityNotPresent::new);
             energy.extractEnergy(getEnergyCost(), false);
         }
@@ -90,12 +90,12 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public int getDefaultRange() {
-        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.SERVER.te_baseRange.get(), ModConfig.SERVER.te_multiplierRange.get(), tier) : super.getDefaultRange();
+        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.COMMON.te_baseRange.get(), ModConfig.COMMON.te_multiplierRange.get(), tier) : super.getDefaultRange();
     }
 
     @Override
     public double getSpeed() {
-        return ModConfig.SERVER.te_speed.get();
+        return ModConfig.COMMON.te_speed.get();
     }
 
     @Nonnull

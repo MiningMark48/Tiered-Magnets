@@ -36,19 +36,15 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
         if (KeyChecker.isHoldingShift()) {
             list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage())));
-
-//            assert stack.getTag() != null;
-//            list.add(new StringTextComponent(TextFormatting.GRAY + stack.getTag().toString()));
-
         }
 
     }
 
     @Override
     public void doCost(ItemStack stack) {
-        if (ModConfig.SERVER.vanilla_hasCost.get()) {
+        if (ModConfig.COMMON.vanilla_hasCost.get()) {
             int damageAmount = 1;
-            if (isMagic) damageAmount *= ModConfig.SERVER.vanilla_multiplierMagic.get();
+            if (isMagic) damageAmount *= ModConfig.COMMON.vanilla_multiplierMagic.get();
             if (stack.attemptDamageItem(damageAmount, new Random(), null)) {
                 stack.shrink(1);
             }
@@ -66,17 +62,17 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return calculateAmount(ModConfig.SERVER.vanilla_baseDurability.get(), ModConfig.SERVER.vanilla_multiplierDurability.get(), tier);
+        return calculateAmount(ModConfig.COMMON.vanilla_baseDurability.get(), ModConfig.COMMON.vanilla_multiplierDurability.get(), tier);
     }
 
     @Override
     public int getDefaultRange() {
-        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.SERVER.vanilla_baseRange.get(), ModConfig.SERVER.vanilla_multiplierRange.get(), tier) : super.getDefaultRange();
+        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.COMMON.vanilla_baseRange.get(), ModConfig.COMMON.vanilla_multiplierRange.get(), tier) : super.getDefaultRange();
     }
 
     @Override
     public double getSpeed() {
-        return ModConfig.SERVER.vanilla_speed.get();
+        return ModConfig.COMMON.vanilla_speed.get();
     }
 
     @Nonnull

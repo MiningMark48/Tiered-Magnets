@@ -34,6 +34,12 @@ public class ModConfig {
     private static String comment_utilityBlocks = "Utility Block module control settings";
 
     static {
+        final Pair<CommonConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfigs::new);
+        commonSpec = specPair.getRight();
+        COMMON = specPair.getLeft();
+    }
+
+    static {
         final Pair<ServerConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ServerConfigs::new);
         serverSpec = specPair.getRight();
         SERVER = specPair.getLeft();
@@ -45,13 +51,7 @@ public class ModConfig {
         CLIENT = specPair.getLeft();
     }
 
-    static {
-        final Pair<CommonConfigs, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(CommonConfigs::new);
-        commonSpec = specPair.getRight();
-        COMMON = specPair.getLeft();
-    }
-
-    public static final class ServerConfigs {
+    public static final class CommonConfigs {
 
         //General
         public final IntValue general_cooldownTime;
@@ -97,7 +97,7 @@ public class ModConfig {
         //Debug
         public final BooleanValue debug_nbtTooltips;
 
-        private ServerConfigs(ForgeConfigSpec.Builder builder) {
+        private CommonConfigs(ForgeConfigSpec.Builder builder) {
 
             //General
             builder.comment(comment_general).push(name_general);
@@ -222,6 +222,14 @@ public class ModConfig {
 
     }
 
+    public static final class ServerConfigs {
+
+        private ServerConfigs(ForgeConfigSpec.Builder builder) {
+
+        }
+
+    }
+
     public static final class ClientConfigs {
 
         public final BooleanValue general_enableParticles;
@@ -240,14 +248,6 @@ public class ModConfig {
                     .comment("If true, a lamp render will be displayed on the Magnetic Projector. Disabling MAY improve performance.")
                     .define("Enable Magnetic Projector Render", true);
             builder.pop();
-
-        }
-
-    }
-
-    public static final class CommonConfigs {
-
-        private CommonConfigs(ForgeConfigSpec.Builder builder) {
 
         }
 
