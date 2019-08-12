@@ -5,7 +5,7 @@ public enum NBTKeys {
     ENABLED("enabled"),
     ENERGY("Energy"),
     FILTER_MODE("filterModeBlacklist"),
-    ITEM_INV("ItemInventory"),
+    ITEM_INV("Items"),
     NO_MAGNET("noMagnet"),
     PREVIEW("doPreview"),
     RANGE("range"),
