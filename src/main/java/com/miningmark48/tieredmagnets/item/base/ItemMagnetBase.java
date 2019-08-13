@@ -20,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -242,8 +241,11 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     public int getRange(ItemStack stack) {
 //        setTagDefaults(stack);
-        assert stack.getTag() != null;
-        return stack.getTag().getInt(NBTKeys.RANGE.getKey());
+        if (stack.hasTag()) {
+            assert stack.getTag() != null;
+            return stack.getTag().getInt(NBTKeys.RANGE.getKey());
+        }
+        return 0;
     }
 
     public void setRange(ItemStack stack, int range) {
