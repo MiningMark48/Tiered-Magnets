@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
+import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
@@ -8,8 +9,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -44,6 +43,8 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         int z = pos.getZ();
         int r = getRange();
 
+        if (world == null) return;
+
         List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - r, y - r, z - r, x + r, y + r, z + r));
         if (!world.isBlockPowered(pos)) {
             items.forEach(item -> item.getEntityData().putBoolean(NBTKeys.NO_MAGNET.getKey(), true));
@@ -54,39 +55,38 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         if (getDoPreview()) {
             double offset = 0.5D;
             double pSpeed = 0.075D * (r * 0.5D);
-            BasicParticleType particle = ParticleTypes.FLAME;
+            EnumParticles particle = EnumParticles.FLAME;
 
             // Square - Corner 1
-            world.addParticle(particle, x - r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
-            world.addParticle(particle, x - r + offset, y + offset * 2, z - r + offset, pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
+            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, pSpeed, 0D, 0D);
             // Square - Corner 2
-            world.addParticle(particle, x + r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
-            world.addParticle(particle, x + r + offset, y + offset * 2, z + r + offset, -pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
+            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, -pSpeed, 0D, 0D);
             // Square - Corner 3
-            world.addParticle(particle, x + r + offset, y + offset * 2, z - r + offset, -pSpeed, 0D, 0D);
-            world.addParticle(particle, x + r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
+            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, -pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
             // Square - Corner 4
-            world.addParticle(particle, x - r + offset, y + offset * 2, z + r + offset, pSpeed, 0D, 0D);
-            world.addParticle(particle, x - r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
+            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
             // Verticals
-            world.addParticle(particle, x + offset, y + r + offset, z + offset, 0D, -pSpeed, 0D);
-            world.addParticle(particle, x + offset, y - r + offset, z + offset, 0D, pSpeed, 0D);
+            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, -pSpeed, 0D);
+            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, pSpeed, 0D);
             // Vert Cross - Up
-            world.addParticle(particle, x + offset, y + r + offset, z + offset, 0D, 0D, pSpeed);
-            world.addParticle(particle, x + offset, y + r + offset, z + offset, 0D, 0D, -pSpeed);
-            world.addParticle(particle, x + offset, y + r + offset, z + offset, pSpeed, 0D, 0D);
-            world.addParticle(particle, x + offset, y + r + offset, z + offset, -pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, pSpeed);
+            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, -pSpeed);
+            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, -pSpeed, 0D, 0D);
             // Vert Cross - Down
-            world.addParticle(particle, x + offset, y - r + offset, z + offset, 0D, 0D, pSpeed);
-            world.addParticle(particle, x + offset, y - r + offset, z + offset, 0D, 0D, -pSpeed);
-            world.addParticle(particle, x + offset, y - r + offset, z + offset, pSpeed, 0D, 0D);
-            world.addParticle(particle, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
-
+            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, pSpeed);
+            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, -pSpeed);
+            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, pSpeed, 0D, 0D);
+            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
         }
 
-        if (this.world.getBlockState(pos).getBlock() == ModBlocks.BlockMagneticInsulator){
-            BlockMagneticInsulator solar = (BlockMagneticInsulator) this.world.getBlockState(pos).getBlock();
-            solar.setState(this.world, this.pos, world.isBlockPowered(pos));
+        if (world.getBlockState(pos).getBlock() == ModBlocks.BlockMagneticInsulator){
+            BlockMagneticInsulator solar = (BlockMagneticInsulator) world.getBlockState(pos).getBlock();
+            solar.setState(world, pos, world.isBlockPowered(pos));
         }
 
     }

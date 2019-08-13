@@ -215,7 +215,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     @OnlyIn(Dist.CLIENT)
     private void spawnParticles(World world, double x, double y, double z) {
-        getParticle().spawnParticle(world, x, y + 0.3D, z, 0.5f);
+        getParticle().spawnParticleRedstone(world, x, y + 0.3D, z, 0.5f);
     }
 
     private boolean canMagnetItem(Entity entity) {
