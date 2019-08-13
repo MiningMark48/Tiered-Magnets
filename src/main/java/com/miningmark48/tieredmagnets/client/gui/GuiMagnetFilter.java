@@ -119,13 +119,6 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeMagnetFilter(1));
             }
         }));
-
-//        buttonFilterToggle = new Button( getGuiLeft() + 95, getGuiTop() + 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
-//        buttonRangeDecrease = new Button( getGuiLeft() + 100, getGuiTop() + 55, 15, 20, "<");
-//        buttonRangeIncrease = new Button( getGuiLeft() + 136, getGuiTop() + 55, 15, 20, ">");
-//        this.buttonList.add(buttonFilterToggle);
-//        this.buttonList.add(buttonRangeDecrease);
-//        this.buttonList.add(buttonRangeIncrease);
     }
 
     private Button createAndAddButton(int x, int y, int width, int height, String text, Button.IPressable action) {
