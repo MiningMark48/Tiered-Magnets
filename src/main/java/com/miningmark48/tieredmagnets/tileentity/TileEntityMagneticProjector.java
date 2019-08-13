@@ -177,7 +177,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
 
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-        return true;
+        return stack.getItem() instanceof ItemMagnetBase;
     }
 
 //    @Override
