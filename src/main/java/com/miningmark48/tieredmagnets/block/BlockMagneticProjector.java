@@ -2,6 +2,8 @@ package com.miningmark48.tieredmagnets.block;
 
 import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
+import com.miningmark48.tieredmagnets.init.config.ModConfig;
+import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
@@ -22,7 +24,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -77,6 +78,19 @@ public class BlockMagneticProjector extends ContainerBlock {
     @Override
     public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
         if (!player.isSneaking()) {
+            ItemStack magnet = ItemMagnetBase.getMagnet(player);
+            if (!magnet.isEmpty() && !world.isRemote && ModConfig.COMMON.ub_enableMagnetSwap.get()) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof TileEntityMagneticProjector) {
+                    TileEntityMagneticProjector projector = (TileEntityMagneticProjector) te;
+                    if (!projector.getStackInSlot(0).isEmpty()) {
+                        InventoryHelper.dropInventoryItems(world, pos, projector);
+                    }
+                    projector.setInventorySlotContents(0, magnet.copy());
+                    magnet.shrink(1);
+                }
+                return true;
+            }
             if (player instanceof ServerPlayerEntity) {
                 TileEntity te = world.getTileEntity(pos);
                 if (te instanceof TileEntityMagneticProjector) {

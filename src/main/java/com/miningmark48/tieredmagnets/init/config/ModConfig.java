@@ -4,8 +4,6 @@ import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
@@ -96,6 +94,7 @@ public class ModConfig {
         //Module - Utility Blocks
         public final BooleanValue ub_enableMInsulator;
         public final BooleanValue ub_enableMProjector;
+        public final BooleanValue ub_enableMagnetSwap;
         public final IntValue ub_insulatorRange;
 
         //Debug
@@ -210,6 +209,9 @@ public class ModConfig {
             ub_enableMProjector = builder
                     .comment("If true, enables a block to recreate a magnet in block-form.")
                     .define("Enable Magnetic Projector", true);
+            ub_enableMagnetSwap = builder
+                    .comment("If true, a magnet can be inserted into the Magnetic Projector by right clicking the block while holding a magnet.")
+                    .define("Enable Magnet Swap", true);
             ub_insulatorRange = builder
                     .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
                     .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);
