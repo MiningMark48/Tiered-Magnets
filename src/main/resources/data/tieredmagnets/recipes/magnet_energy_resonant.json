@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_energy_resonant"
+  },
+  "pattern": [
+    " E ",
+    "DMD",
+    " E "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "tieredmagnets:magnet_energy_signalum"
+    },
+    "D" : {
+      "item": "minecraft:diamond"
+    },
+    "E": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_te"
+    }
+  ]
+}

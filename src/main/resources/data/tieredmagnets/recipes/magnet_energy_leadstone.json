@@ -1,0 +1,30 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_energy_leadstone"
+  },
+  "pattern": [
+    "INI",
+    "IRI",
+    "IGI"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "N": {
+      "item": "minecraft:gold_nugget"
+    },
+    "I" : {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_te"
+    }
+  ]
+}

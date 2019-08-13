@@ -11,6 +11,9 @@ public class ModCraftingConditions {
         //Vanilla
         CraftingHelper.register(ConditionsReference.CONDITION_VANILLA_ID, new ConditionModuleVanilla());
         CraftingHelper.register(ConditionsReference.CONDITION_VANILLA_MAGIC_ID, new ConditionModuleVanillaMagic());
+        //Thermal Expansion
+        CraftingHelper.register(ConditionsReference.CONDITION_TE_ID, new ConditionModuleTE());
+        CraftingHelper.register(ConditionsReference.CONDITION_TE_MAGIC_ID, new ConditionModuleTEMagic());
         //Cursed
         CraftingHelper.register(ConditionsReference.CONDITION_CURSED_ID, new ConditionModuleCursed());
         CraftingHelper.register(ConditionsReference.CONDITION_CURSED_MAGIC_ID, new ConditionModuleCursedMagic());
@@ -24,6 +27,9 @@ public class ModCraftingConditions {
         //Vanilla
         static final ResourceLocation CONDITION_VANILLA_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_vanilla");
         static final ResourceLocation CONDITION_VANILLA_MAGIC_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_vanilla_magic");
+        //Thermal Expansion
+        static final ResourceLocation CONDITION_TE_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_te");
+        static final ResourceLocation CONDITION_TE_MAGIC_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_te_magic");
         //Cursed
         static final ResourceLocation CONDITION_CURSED_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_cursed");
         static final ResourceLocation CONDITION_CURSED_MAGIC_ID = new ResourceLocation(Reference.MOD_ID, "enable_module_cursed_magic");

@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_energy_signalum"
+  },
+  "pattern": [
+    " R ",
+    "GMG",
+    " R "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "tieredmagnets:magnet_energy_reinforced"
+    },
+    "R" : {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_te"
+    }
+  ]
+}

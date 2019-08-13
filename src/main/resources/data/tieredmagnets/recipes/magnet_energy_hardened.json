@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_energy_hardened"
+  },
+  "pattern": [
+    " O ",
+    "IMI",
+    " O "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "tieredmagnets:magnet_energy_leadstone"
+    },
+    "O" : {
+      "item": "minecraft:obsidian"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_te"
+    }
+  ]
+}

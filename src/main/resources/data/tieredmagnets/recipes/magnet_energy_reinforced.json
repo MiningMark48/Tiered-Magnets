@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "tieredmagnets:magnet_energy_reinforced"
+  },
+  "pattern": [
+    " G ",
+    "OMO",
+    " G "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "M": {
+      "item": "tieredmagnets:magnet_energy_hardened"
+    },
+    "O" : {
+      "item": "minecraft:obsidian"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "conditions": [
+    {
+      "type": "tieredmagnets:enable_module_te"
+    }
+  ]
+}

@@ -64,6 +64,8 @@ public class ModConfig {
         //Modules
         public final BooleanValue enableModuleVanilla;
         public final BooleanValue enableModuleVanillaMagic;
+        public final BooleanValue enableModuleTE;
+        public final BooleanValue enableModuleTEMagic;
         public final BooleanValue enableModuleCursed;
         public final BooleanValue enableModuleCursedMagic;
         public final BooleanValue enableUtilityBlocks;
@@ -126,6 +128,12 @@ public class ModConfig {
             enableModuleVanillaMagic = builder
                     .comment("If true, enables recipes for Vanilla-based, durability magnets that teleport items to the player.")
                     .define("Vanilla - Magic", true);
+            enableModuleTE = builder
+                    .comment("If true, enables (temporary) recipes for electromagnets.")
+                    .define("Thermal Expansion", true);
+            enableModuleTEMagic = builder
+                    .comment("If true, enables (temporary) recipes for electromagnets that teleport items to the player.")
+                    .define("Thermal Expansion - Magic", true);
             enableModuleCursed = builder
                     .comment("If true, enables recipes for magnets that have no cost to use.")
                     .define("Cursed", true);
@@ -135,7 +143,7 @@ public class ModConfig {
             enableUtilityBlocks = builder
                     .comment("If true, utility blocks for the magnets will be enabled.")
                     .define("Utility Blocks", true);
-            //TODO: Thermal Expansion and Patchouli
+            //TODO: Patchouli
             builder.pop();
 
             //Module - Vanilla
