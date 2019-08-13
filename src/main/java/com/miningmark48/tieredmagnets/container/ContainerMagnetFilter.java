@@ -1,9 +1,8 @@
 package com.miningmark48.tieredmagnets.container;
 
-import com.miningmark48.tieredmagnets.container.slot.SlotFilter;
+import com.miningmark48.tieredmagnets.container.slot.SlotFalse;
 import com.miningmark48.tieredmagnets.init.ModContainers;
 import com.miningmark48.tieredmagnets.inventory.InventoryMagnetFilter;
-import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -12,7 +11,6 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.ModLoadingContext;
 
 public class ContainerMagnetFilter extends Container {
 
@@ -34,7 +32,7 @@ public class ContainerMagnetFilter extends Container {
 
     public void addOwnSlots() {
         for (int i = 0; i < InventoryMagnetFilter.INV_SIZE; i++){
-            this.addSlot(new SlotFilter(this.inventory, i, 26 + (18 * (int)(i%3)), 17 + (18 * (int)(i/3))));
+            this.addSlot(new SlotFalse(this.inventory, i, 26 + (18 * (int)(i%3)), 17 + (18 * (int)(i/3))));
         }
     }
 
@@ -96,11 +94,28 @@ public class ContainerMagnetFilter extends Container {
     }
 
     @Override
-    public ItemStack slotClick(int slot, int button, ClickType flag, PlayerEntity player){
-        if (slot >= 0 && getSlot(slot) != null && getSlot(slot).getStack() == player.getHeldItem(Hand.MAIN_HAND)){
+    public ItemStack slotClick(int slotId, int button, ClickType flag, PlayerEntity player){
+        Slot slot = slotId < 0 ? null : this.inventorySlots.get(slotId);
+        if (slotId >= 0 && slot.getStack() == player.getHeldItem(Hand.MAIN_HAND)){
             return ItemStack.EMPTY;
         }
-        return super.slotClick(slot, button, flag, player);
+
+        if (slot == null) {
+            return ItemStack.EMPTY;
+        }
+
+        if (slot instanceof SlotFalse) {
+            ItemStack playerStack = player.inventory.getItemStack();
+            if (playerStack.isEmpty()) {
+                slot.putStack(ItemStack.EMPTY);
+            } else {
+                ItemStack copy = playerStack.copy();
+                copy.setCount(1);
+                slot.putStack(copy);
+            }
+        }
+
+        return super.slotClick(slotId, button, flag, player);
     }
 
 }
