@@ -4,7 +4,7 @@
   "version": 1,
   "creative_tab": "Tiered Magnets",
   "show_progress": false,
-  "model": "tieredmagnets:manual",
+  // "model": "tieredmagnets:manual",
   "book_texture": "tieredmagnets:textures/gui/manual/manual.png",
   "filler_texture": "tieredmagnets:textures/gui/manual/page_filler.png",
   "nameplate_color": "282828"

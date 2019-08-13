@@ -111,8 +111,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${config.mc_version}-${config.forge_version}"
 
     runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.10")
-    // runtimeOnly fg.deobf("com.direwolf20.buildinggadgets:buildinggadgets-3.02")
-    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.1-21-beta2")
+    // compile fg.deobf("com.direwolf20.buildinggadgets:buildinggadgets-3.0.2")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli_1.1-21-beta2")
 
 }
 
