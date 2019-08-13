@@ -7,14 +7,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
@@ -106,14 +104,6 @@ public class BlockMagneticInsulator extends ContainerBlock {
         world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
     }
 
-
-//    @SuppressWarnings("deprecation")
-//    @Override
-//    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos changedPos)
-//    {
-//        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
-//    }
-
     @SuppressWarnings("Duplicates")
     private void setDefaultFacing(World worldIn, BlockPos pos, BlockState state)
     {
@@ -143,44 +133,6 @@ public class BlockMagneticInsulator extends ContainerBlock {
         return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing().getOpposite());
     }
 
-    @Override
-    public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-//        world.setBlockState(pos, state.with(FACING, Direction.getDirectionFromEntityLiving(pos, placer)), 2);
-    }
-
-//    @SuppressWarnings("deprecation")
-//    @Override
-//    public BlockState getStateFromMeta(int meta)
-//    {
-//        boolean powered = false;
-//        if (meta >= 6)
-//        {
-//            meta -= 6;
-//            powered = true;
-//        }
-//
-//        return this.getDefaultState().withProperty(FACING, EnumFacing.values()[meta]).withProperty(POWERED, powered);
-//    }
-//
-//    @Override
-//    public int getMetaFromState(IBlockState state)
-//    {
-//        int i = state.getValue(FACING).getIndex();
-//
-//        if (state.getValue(POWERED))
-//        {
-//            i += 6;
-//        }
-//
-//        return i;
-//    }
-
-//    @Override
-//    protected BlockStateContainer createBlockState()
-//    {
-//        return new BlockStateContainer(this, FACING, POWERED);
-//    }
-
     @SuppressWarnings("Duplicates")
     public void setState(World worldIn, BlockPos pos, boolean isActive)
     {
@@ -206,18 +158,9 @@ public class BlockMagneticInsulator extends ContainerBlock {
         return false;
     }
 
-//    @Override
-//    public boolean isOpaqueCube(BlockState state){
-//        return false;
-//    }
-
     @Override
     public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT;
     }
 
-//    @Override
-//    public boolean isFullBlock(BlockState state) {
-//        return false;
-//    }
 }

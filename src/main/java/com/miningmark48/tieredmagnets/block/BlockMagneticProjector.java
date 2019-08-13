@@ -6,7 +6,6 @@ import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.block.*;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -120,13 +119,6 @@ public class BlockMagneticProjector extends ContainerBlock {
         world.setBlockState(pos, state.with(POWERED, world.isBlockPowered(pos)));
     }
 
-    //    @SuppressWarnings("deprecation")
-//    @Override
-//    public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos changedPos)
-//    {
-//        worldIn.setBlockState(pos, state.withProperty(POWERED, worldIn.isBlockPowered(pos)));
-//    }
-
     private void setDefaultFacing(World worldIn, BlockPos pos, BlockState state)
     {
         if (!worldIn.isRemote) {
@@ -155,44 +147,6 @@ public class BlockMagneticProjector extends ContainerBlock {
         return this.getDefaultState().with(FACING, ctx.getPlacementHorizontalFacing().getOpposite());
     }
 
-    @Override
-    public void onBlockPlacedBy(World p_180633_1_, BlockPos p_180633_2_, BlockState p_180633_3_, @Nullable LivingEntity p_180633_4_, ItemStack p_180633_5_) {
-//        worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.getDirectionFromEntityLiving(pos, placer)), 2);
-    }
-
-//    @SuppressWarnings("deprecation")
-//    @Override
-//    public IBlockState getStateFromMeta(int meta)
-//    {
-//        boolean powered = false;
-//        if (meta >= 6)
-//        {
-//            meta -= 6;
-//            powered = true;
-//        }
-//
-//        return this.getDefaultState().withProperty(FACING, EnumFacing.values()[meta]).withProperty(POWERED, powered);
-//    }
-//
-//    @Override
-//    public int getMetaFromState(IBlockState state)
-//    {
-//        int i = state.getValue(FACING).getIndex();
-//
-//        if (state.getValue(POWERED))
-//        {
-//            i += 6;
-//        }
-//
-//        return i;
-//    }
-
-//    @Override
-//    protected BlockStateContainer createBlockState()
-//    {
-//        return new BlockStateContainer(this, FACING, POWERED);
-//    }
-
     public void setState(World worldIn, BlockPos pos, boolean isActive)
     {
         TileEntity tileentity = worldIn.getTileEntity(pos);
@@ -217,21 +171,10 @@ public class BlockMagneticProjector extends ContainerBlock {
         return false;
     }
 
-//    @Override
-//    public boolean isOpaqueCube(BlockState state){
-//        return false;
-//    }
-
     @Override
     public BlockRenderLayer getRenderLayer(){
         return BlockRenderLayer.CUTOUT;
     }
-
-//    @Override
-//    public boolean isFullBlock(BlockState state) {
-//        return false;
-//    }
-
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState state1, boolean p_196243_5_) {
