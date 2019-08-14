@@ -47,7 +47,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
             TileEntity te = this.getWorld().getTileEntity(this.getPos().down());
             if (te != null) {
                 if (te instanceof IInventory) {
-                    int range = 1;
+                    double range = 0.5;
                     double x = this.getPos().getX() + 0.5D;
                     double y = this.getPos().getY() + 0.5D;
                     double z = this.getPos().getZ() + 0.5D;
