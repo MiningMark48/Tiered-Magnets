@@ -55,6 +55,8 @@
     "tooltip.item.magnet_base.energy3": "RF/t",
     "tooltip.item.magnet_base.line1": "Pulls items towards the player.",
     "tooltip.item.magnet_magic_base.line1": "Teleports items to the player.",
+    "tooltip.block.magnetic_insulator.line1": "Prevents magnets from pulling items in a defined range.",
+    "tooltip.block.magnetic_projector.line1": "Projects the effects of a magnet into the world as a block.",
 
     "_comment": "Chat Messages",
     "chat.item.magnet_base.enabled": "Magnet enabled",
