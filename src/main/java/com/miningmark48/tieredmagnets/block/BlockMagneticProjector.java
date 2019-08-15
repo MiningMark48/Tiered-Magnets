@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
+import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.block.*;
@@ -58,7 +59,7 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag flag) {
-        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal("tooltip.block.magnetic_projector.line1")));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(Tooltips.MAGNETIC_PROJECTOR.getKeyBlock("line1"))));
     }
 
     @Override

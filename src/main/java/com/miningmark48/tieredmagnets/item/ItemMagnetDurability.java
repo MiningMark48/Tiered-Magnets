@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
@@ -36,7 +37,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         super.addInformation(stack, playerIn, list, advanced);
 
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal("tooltip.item.magnet_base.durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage())));
+            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage()))));
         }
 
     }

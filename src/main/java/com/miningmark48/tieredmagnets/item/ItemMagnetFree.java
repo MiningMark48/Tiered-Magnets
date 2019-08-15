@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import com.miningmark48.tieredmagnets.reference.Translations;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,7 +29,7 @@ public class ItemMagnetFree extends ItemMagnetBase {
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal("tooltip.item.magnet_base.free")));
+            list.add(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("free"))));
         }
 
 //        if (OldConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("enchantment.vanishing_curse")));

@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.block;
 
 import com.miningmark48.tieredmagnets.container.ContainerMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
+import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.block.Block;
@@ -55,7 +56,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag flag) {
-        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal("tooltip.block.magnetic_insulator.line1")));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(Tooltips.MAGNETIC_INSULATOR.getKeyBlock("line1"))));
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import com.miningmark48.tieredmagnets.reference.Translations;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilCapability.EnergyUtil;
@@ -46,7 +47,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
         super.addInformation(stack, playerIn, list, advanced);
 
         if (KeyChecker.isHoldingShift() && ModConfig.isServerConfigLoaded()) {
-            stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy -> list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy1") + TextFormatting.AQUA + " " + energy.getEnergyStored() + " / " + energy.getMaxEnergyStored() + " " + TextFormatting.RED + ModTranslate.toLocal("tooltip.item.magnet_base.energy2"))));
+            stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy -> list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("energy1")) + TextFormatting.AQUA + " " + energy.getEnergyStored() + " / " + energy.getMaxEnergyStored() + " " + TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("energy2")))));
         }
 
     }

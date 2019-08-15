@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -57,13 +58,13 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
         setTagDefaults(stack);
 
-        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(String.format("tooltip.item.magnet%s_base.line1", (isMagic ? "_magic" : "")))));
-        list.add(new StringTextComponent(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal("tooltip.item.magnet_base.enabled")) : (TextFormatting.DARK_RED + ModTranslate.toLocal("tooltip.item.magnet_base.disabled"))));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(String.format(Tooltips.MAGNET_BASE.getKeyItem("%sline1"), (isMagic ? "magic." : "")))));
+        list.add(new StringTextComponent(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("enabled"))) : (TextFormatting.DARK_RED + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("disabled")))));
 
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal("tooltip.item.magnet_base.range2")));
+            list.add(new StringTextComponent(TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("range1")) + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("range2"))));
         } else {
-            list.add(new StringTextComponent(ModTranslate.toLocal("tooltip.item.hold") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal("tooltip.item.shift")));
+            list.add(new StringTextComponent(ModTranslate.toLocal(Tooltips.SHIFT.getKeyNone("1")) + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal(Tooltips.SHIFT.getKeyNone("2"))));
         }
 
         if (stack.getTag() != null && ModConfig.isServerConfigLoaded() && ModConfig.COMMON.debug_nbtTooltips.get()) {
