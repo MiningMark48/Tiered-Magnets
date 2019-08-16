@@ -29,7 +29,7 @@ public class ItemMagnetFree extends ItemMagnetBase {
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("free"))));
+            list.add(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal(Translations.Tooltips.I_MAGNET_FREE.getTooltip())));
         }
 
 //        if (OldConfig.cursedMagnetsConfigs.vanishing && !EnchantmentHelper.hasVanishingCurse(stack)) list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal("enchantment.vanishing_curse")));

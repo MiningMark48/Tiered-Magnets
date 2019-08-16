@@ -4,6 +4,7 @@ import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import com.miningmark48.tieredmagnets.reference.Translations.ChatMsgs;
 import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -58,13 +59,13 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
         setTagDefaults(stack);
 
-        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(String.format(Tooltips.MAGNET_BASE.getKeyItem("%sline1"), (isMagic ? "magic." : "")))));
-        list.add(new StringTextComponent(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("enabled"))) : (TextFormatting.DARK_RED + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("disabled")))));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(String.format(Tooltips.I_MAGNET_INFO.getTooltip(), (isMagic ? "magic." : "")))));
+        list.add(new StringTextComponent(isEnabled(stack) ? (TextFormatting.DARK_GREEN + ModTranslate.toLocal(Tooltips.I_MAGNET_ENABLED.getTooltip())) : (TextFormatting.DARK_RED + ModTranslate.toLocal(Tooltips.I_MAGNET_DISABLED.getTooltip()))));
 
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("range1")) + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("range2"))));
+            list.add(new StringTextComponent(TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.I_MAGNET_RANGE.getTooltip() + ".1") + TextFormatting.AQUA + " " + getRange(stack) + " " + TextFormatting.BLUE + ModTranslate.toLocal(Tooltips.I_MAGNET_RANGE.getTooltip() + ".2")));
         } else {
-            list.add(new StringTextComponent(ModTranslate.toLocal(Tooltips.SHIFT.getKeyNone("1")) + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal(Tooltips.SHIFT.getKeyNone("2"))));
+            list.add(new StringTextComponent(ModTranslate.toLocal(Tooltips.M_SHIFT.getTooltip() + ".1") + " " + TextFormatting.AQUA + TextFormatting.ITALIC + ModTranslate.toLocal(Tooltips.M_SHIFT.getTooltip() + ".2")));
         }
 
         if (stack.getTag() != null && ModConfig.isServerConfigLoaded() && ModConfig.COMMON.debug_nbtTooltips.get()) {
@@ -98,7 +99,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                             }
                         }, packetBuffer -> packetBuffer.writeItemStack(stack));
                     } else {
-                        player.sendMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.filtering.disabled")));
+                        player.sendMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal(ChatMsgs.I_MAGNET_NO_FILTER.getMessage())));
                     }
                 }
             }
@@ -128,10 +129,10 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     public static void toggleMagnet(ItemStack stack, PlayerEntity player) {
         if (isEnabled(stack)) {
             setEnabled(stack, false);
-            player.sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal("chat.item.magnet_base.disabled")), true);
+            player.sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal(ChatMsgs.I_MAGNET_ENABLED.getMessage())), true);
         } else {
             setEnabled(stack, true);
-            player.sendStatusMessage(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal("chat.item.magnet_base.enabled")), true);
+            player.sendStatusMessage(new StringTextComponent(TextFormatting.GOLD + ModTranslate.toLocal(ChatMsgs.I_MAGNET_DISABLED.getMessage())), true);
         }
         player.getCooldownTracker().setCooldown(stack.getItem(), ModConfig.COMMON.general_cooldownTime.get());
     }

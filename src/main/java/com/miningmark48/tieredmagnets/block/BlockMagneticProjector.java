@@ -59,7 +59,7 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable IBlockReader world, List<ITextComponent> list, ITooltipFlag flag) {
-        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(Tooltips.MAGNETIC_PROJECTOR.getKeyBlock("line1"))));
+        list.add(new StringTextComponent(TextFormatting.YELLOW + ModTranslate.toLocal(Tooltips.B_MPROJECTOR.getTooltip())));
     }
 
     @Override

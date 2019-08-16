@@ -37,7 +37,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
         super.addInformation(stack, playerIn, list, advanced);
 
         if (KeyChecker.isHoldingShift()) {
-            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal(Tooltips.MAGNET_BASE.getKeyItem("durability") + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage()))));
+            list.add(new StringTextComponent(TextFormatting.LIGHT_PURPLE + ModTranslate.toLocal(Tooltips.I_MAGNET_DURABILITY.getTooltip()) + TextFormatting.AQUA + " " + (stack.getMaxDamage() - stack.getDamage())));
         }
 
     }

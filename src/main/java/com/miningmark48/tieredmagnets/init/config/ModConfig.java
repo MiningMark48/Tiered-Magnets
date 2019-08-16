@@ -229,7 +229,7 @@ public class ModConfig {
             builder.push("debug");
             debug_nbtTooltips = builder
                     .comment("If true, tooltips will be added to the magnets to show their NBT.")
-                    .define("NBT Tooltips", false);
+                    .define("NBT Keys", false);
             builder.pop();
 
         }

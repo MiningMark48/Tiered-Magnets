@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.client.gui;
 
 import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
 import com.miningmark48.tieredmagnets.reference.Reference;
+import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
@@ -45,7 +46,7 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = ModTranslate.toLocal("gui.magnetic_projector.name");
+        String text = ModTranslate.toLocal(Gui.MPROJECTOR_NAME.getGui());
         int x = UtilGui.getXCenter(text, this.font, xSize);
         this.font.drawString(text, x, 5, 0x404040);
     }

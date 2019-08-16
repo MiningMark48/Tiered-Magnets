@@ -47,7 +47,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
         super.addInformation(stack, playerIn, list, advanced);
 
         if (KeyChecker.isHoldingShift() && ModConfig.isServerConfigLoaded()) {
-            stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy -> list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("energy1")) + TextFormatting.AQUA + " " + energy.getEnergyStored() + " / " + energy.getMaxEnergyStored() + " " + TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.MAGNET_BASE.getKeyItem("energy2")))));
+            stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy -> list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.I_MAGNET_ENERGY.getTooltip() + ".1") + TextFormatting.AQUA + " " + energy.getEnergyStored() + " / " + energy.getMaxEnergyStored() + " " + TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.I_MAGNET_ENERGY.getTooltip() + ".2"))));
         }
 
     }

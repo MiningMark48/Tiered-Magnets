@@ -5,6 +5,7 @@ import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.network.packets.PacketChangeRangeInsulator;
 import com.miningmark48.tieredmagnets.network.packets.PacketTogglePreview;
 import com.miningmark48.tieredmagnets.reference.Reference;
+import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -57,11 +58,11 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = ModTranslate.toLocal("gui.magnetic_insulator.name");
+        String text = ModTranslate.toLocal(Gui.MINSULATOR_NAME.getGui());
         int x = UtilGui.getXCenter(text, this.font, xSize);
         this.font.drawString(text, x, 5, 0x404040);
 
-        this.font.drawString(ModTranslate.toLocal("gui.magnetic_insulator.label.range.name"), 73, 20, 0x404040);
+        this.font.drawString(ModTranslate.toLocal(Gui.MINSULATOR_RANGE_LABEL.getGui()), 73, 20, 0x404040);
         this.font.drawString(String.valueOf(this.te.getRange()), 82, 36, 0x404040);
 
         renderTooltips(mouseX, mouseY);
@@ -93,8 +94,8 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
                 PacketHandler.INSTANCE.sendToServer(new PacketChangeRangeInsulator(this.te.getPos(), 1));
             }
         }));
-        buttonTogglePreview = addButton(createAndAddButton(51, 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"), (button) -> {
-            buttonTogglePreview.setMessage(!this.te.getDoPreview() ? ModTranslate.toLocal("gui.magnetic_insulator.button.hide_preview") : ModTranslate.toLocal("gui.magnetic_insulator.button.show_preview"));
+        buttonTogglePreview = addButton(createAndAddButton(51, 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MINSULATOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MINSULATOR_BUTTON_PREVIEW_S.getGui()), (button) -> {
+            buttonTogglePreview.setMessage(!this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MINSULATOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MINSULATOR_BUTTON_PREVIEW_S.getGui()));
             PacketHandler.INSTANCE.sendToServer(new PacketTogglePreview(this.te.getPos()));
         }));
 
@@ -115,9 +116,9 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
         Minecraft mc = Minecraft.getInstance();
         if (this.isMouseOver(mouseX, mouseY, 63, 30, 76, 48) || this.isMouseOver(mouseX, mouseY, 99, 30, 112, 48)) {
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal("gui.tooltips.adjust_range.name"));
-            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.none"));
-            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.shift"));
+            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NAME.getGui()));
+            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NONE.getGui()));
+            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_SHIFT.getGui()));
             GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) + 25, mc.mainWindow.getWidth(), mc.mainWindow.getHeight(), -1, mc.fontRenderer);
         }
     }

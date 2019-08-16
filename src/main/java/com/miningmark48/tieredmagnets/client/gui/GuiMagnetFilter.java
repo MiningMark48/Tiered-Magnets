@@ -7,6 +7,7 @@ import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.network.packets.PacketChangeRangeMagnetFilter;
 import com.miningmark48.tieredmagnets.network.packets.PacketFilterToggle;
 import com.miningmark48.tieredmagnets.reference.Reference;
+import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
@@ -65,7 +66,7 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String text = ModTranslate.toLocal("gui.magnet_filter.name");
+        String text = ModTranslate.toLocal(Gui.MAGNET_FILTER_NAME.getGui());
         int x = UtilGui.getXCenter(text, this.font, xSize);
         this.font.drawString(text, x, 5, 0x404040);
 
@@ -73,7 +74,7 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
             range = m.getRange(player.getHeldItem(Hand.MAIN_HAND));
         }
-        this.font.drawString(ModTranslate.toLocal("gui.magnet_filter.label.range.name"), 110, 44, 0x404040);
+        this.font.drawString(ModTranslate.toLocal(Gui.MAGNET_FILTER_RANGE_LABEL.getGui()), 110, 44, 0x404040);
         this.font.drawString(String.valueOf(range), 118, 61, 0x404040);
 
         renderTooltips(mouseX, mouseY);
@@ -93,14 +94,14 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
         if (!this.magnet.hasTag()) {
             this.magnet.setTag(new CompoundNBT());
             assert this.magnet.getTag() != null;
-            this.magnet.getTag().putBoolean("filterModeBlacklist", true);
+            this.magnet.getTag().putBoolean("filterModeBlacklist", true); //TODO: Use key
         }
         assert this.magnet.getTag() != null;
-        buttonModeBlacklist = this.magnet.getTag().getBoolean("filterModeBlacklist");
+        buttonModeBlacklist = this.magnet.getTag().getBoolean("filterModeBlacklist"); //TODO: Use key
 
-        buttonFilterToggle = addButton(createAndAddButton(95, 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"), (button) -> {
+        buttonFilterToggle = addButton(createAndAddButton(95, 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui()), (button) -> {
             buttonModeBlacklist = !buttonModeBlacklist;
-            button.setMessage(buttonModeBlacklist ? ModTranslate.toLocal("gui.magnet_filter.button.blacklist") : ModTranslate.toLocal("gui.magnet_filter.button.whitelist"));
+            button.setMessage(buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui()));
             PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
         }));
 
@@ -130,9 +131,9 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
         Minecraft mc = Minecraft.getInstance();
         if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
             List<String> text = new ArrayList<>();
-            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal("gui.tooltips.adjust_range.name"));
-            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.none"));
-            text.add(ModTranslate.toLocal("gui.tooltips.adjust_range.shift"));
+            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NAME.getGui()));
+            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NONE.getGui()));
+            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_SHIFT.getGui()));
             GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.mainWindow.getWidth(), mc.mainWindow.getHeight(), -1, mc.fontRenderer);
         }
     }
