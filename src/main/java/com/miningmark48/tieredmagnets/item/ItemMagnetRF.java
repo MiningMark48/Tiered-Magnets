@@ -46,7 +46,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
     public void addInformation(ItemStack stack, @Nullable World playerIn, List<ITextComponent> list, ITooltipFlag advanced) {
         super.addInformation(stack, playerIn, list, advanced);
 
-        if (KeyChecker.isHoldingShift() && ModConfig.isServerConfigLoaded()) {
+        if (KeyChecker.isHoldingShift() && ModConfig.isCommonCfgLoaded()) {
             stack.getCapability(CapabilityEnergy.ENERGY).ifPresent(energy -> list.add(new StringTextComponent(TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.I_MAGNET_ENERGY.getTooltip() + ".1") + TextFormatting.AQUA + " " + energy.getEnergyStored() + " / " + energy.getMaxEnergyStored() + " " + TextFormatting.RED + ModTranslate.toLocal(Translations.Tooltips.I_MAGNET_ENERGY.getTooltip() + ".2"))));
         }
 
@@ -90,7 +90,7 @@ public class ItemMagnetRF extends ItemMagnetBase {
 
     @Override
     public int getDefaultRange() {
-        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.COMMON.te_baseRange.get(), ModConfig.COMMON.te_multiplierRange.get(), tier) : super.getDefaultRange();
+        return ModConfig.isCommonCfgLoaded() ? calculateAmount(ModConfig.COMMON.te_baseRange.get(), ModConfig.COMMON.te_multiplierRange.get(), tier) : super.getDefaultRange();
     }
 
     @Override

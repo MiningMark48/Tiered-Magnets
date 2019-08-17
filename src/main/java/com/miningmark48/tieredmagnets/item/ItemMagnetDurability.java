@@ -69,7 +69,7 @@ public class ItemMagnetDurability extends ItemMagnetBase {
 
     @Override
     public int getDefaultRange() {
-        return ModConfig.isServerConfigLoaded() ? calculateAmount(ModConfig.COMMON.vanilla_baseRange.get(), ModConfig.COMMON.vanilla_multiplierRange.get(), tier) : super.getDefaultRange();
+        return ModConfig.isCommonCfgLoaded() ? calculateAmount(ModConfig.COMMON.vanilla_baseRange.get(), ModConfig.COMMON.vanilla_multiplierRange.get(), tier) : super.getDefaultRange();
     }
 
     @Override

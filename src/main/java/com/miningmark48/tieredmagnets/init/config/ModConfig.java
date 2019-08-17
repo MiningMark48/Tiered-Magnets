@@ -268,14 +268,21 @@ public class ModConfig {
     }
 
     private static boolean serverCfgLoaded = false;
+    private static boolean commonCfgLoaded = false;
 
     private static void loadServerConfig() {
         serverCfgLoaded = true;
     }
 
+    private static void loadCommonConfig() {
+        commonCfgLoaded = true;
+    }
+
     public static void onLoad(final net.minecraftforge.fml.config.ModConfig.Loading configEvent) {
         if (configEvent.getConfig().getSpec() == ModConfig.serverSpec)
             loadServerConfig();
+        if (configEvent.getConfig().getSpec() == ModConfig.commonSpec)
+            loadCommonConfig();
 
         ModLogger.debug("Loaded %s config file %s", Reference.MOD_ID, configEvent.getConfig().getFileName());
     }
@@ -288,6 +295,10 @@ public class ModConfig {
 
     public static boolean isServerConfigLoaded() {
         return serverCfgLoaded;
+    }
+
+    public static boolean isCommonCfgLoaded() {
+        return commonCfgLoaded;
     }
 
 }
