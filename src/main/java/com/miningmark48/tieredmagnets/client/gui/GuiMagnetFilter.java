@@ -6,6 +6,7 @@ import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
 import com.miningmark48.tieredmagnets.network.packets.PacketChangeRangeMagnetFilter;
 import com.miningmark48.tieredmagnets.network.packets.PacketFilterToggle;
+import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
@@ -94,10 +95,10 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
         if (!this.magnet.hasTag()) {
             this.magnet.setTag(new CompoundNBT());
             assert this.magnet.getTag() != null;
-            this.magnet.getTag().putBoolean("filterModeBlacklist", true); //TODO: Use key
+            this.magnet.getTag().putBoolean(NBTKeys.FILTER_MODE.getKey(), true);
         }
         assert this.magnet.getTag() != null;
-        buttonModeBlacklist = this.magnet.getTag().getBoolean("filterModeBlacklist"); //TODO: Use key
+        buttonModeBlacklist = this.magnet.getTag().getBoolean(NBTKeys.FILTER_MODE.getKey());
 
         buttonFilterToggle = addButton(createAndAddButton(95, 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui()), (button) -> {
             buttonModeBlacklist = !buttonModeBlacklist;
