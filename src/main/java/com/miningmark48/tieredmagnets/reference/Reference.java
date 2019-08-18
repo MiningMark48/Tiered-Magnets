@@ -4,8 +4,8 @@ public class Reference {
 
     public static final String MOD_ID = "tieredmagnets";
     public static final String MOD_NAME = "Tiered Magnets";
-    public static final String MOD_VERSION = "0.0.3";
-    public static final String GAME_VERSION = "1.12.2";
+    public static final String MOD_VERSION = "1.0.0";
+    public static final String GAME_VERSION = "1.14.4";
     public static final String VERSION = GAME_VERSION + "-" + MOD_VERSION;
     public static final String MOD_DEPENDENCIES = "";
     public static final String CLIENT_PROXY_CLASS = "com.miningmark48.tieredmagnets.proxy.ClientProxy";
