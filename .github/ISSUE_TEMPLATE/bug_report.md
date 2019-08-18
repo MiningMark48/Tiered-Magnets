@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Version**
-What version of the mod are you using?
+What version of the mod are you using? Ex: 1.14.4-1.0.0
 
 **Describe the bug**
 A clear and concise description of what the bug is.
