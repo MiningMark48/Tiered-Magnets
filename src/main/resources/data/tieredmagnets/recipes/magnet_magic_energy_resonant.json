@@ -21,7 +21,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_module_te_magic"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "te_magic"
     }
   ]
 }

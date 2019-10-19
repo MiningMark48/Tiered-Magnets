@@ -27,7 +27,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_ub_mprojector"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "projector"
     }
   ]
 }

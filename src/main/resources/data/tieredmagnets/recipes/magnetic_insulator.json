@@ -21,7 +21,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_ub_minsulator"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "insulator"
     }
   ]
 }

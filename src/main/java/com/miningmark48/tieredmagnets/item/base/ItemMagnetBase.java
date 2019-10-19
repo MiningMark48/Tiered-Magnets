@@ -35,7 +35,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -221,7 +220,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     }
 
     private boolean canMagnetItem(Entity entity) {
-        return !entity.getEntityData().getBoolean(NBTKeys.NO_MAGNET.getKey()) && !entity.getEntityData().getBoolean(NBTKeys.INT_DEMAGNETIZE.getKey());
+        return !entity.getPersistentData().getBoolean(NBTKeys.NO_MAGNET.getKey()) && !entity.getPersistentData().getBoolean(NBTKeys.INT_DEMAGNETIZE.getKey());
     }
 
     public boolean canMagnet(ItemStack stack) {
@@ -232,7 +231,6 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
 
     }
 
-    @NonNull
     public EnumParticles getParticle() {
         return EnumParticles.VANILLA;
     }

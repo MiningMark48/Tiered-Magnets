@@ -47,9 +47,9 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 
         List<ItemEntity> items = world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - r, y - r, z - r, x + r, y + r, z + r));
         if (!world.isBlockPowered(pos)) {
-            items.forEach(item -> item.getEntityData().putBoolean(NBTKeys.NO_MAGNET.getKey(), true));
+            items.forEach(item -> item.getPersistentData().putBoolean(NBTKeys.NO_MAGNET.getKey(), true));
         } else {
-            items.forEach(item -> item.getEntityData().putBoolean(NBTKeys.NO_MAGNET.getKey(), false));
+            items.forEach(item -> item.getPersistentData().putBoolean(NBTKeys.NO_MAGNET.getKey(), false));
         }
 
         if (getDoPreview()) {
@@ -147,7 +147,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 
     private void sendUpdates() {
         assert world != null;
-        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.NOTIFY_LISTENERS);
+        world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), Constants.BlockFlags.NOTIFY_NEIGHBORS);
         markDirty();
     }
 

@@ -27,7 +27,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_module_cursed"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "cursed"
     }
   ]
 }

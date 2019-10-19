@@ -21,7 +21,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_module_cursed_magic"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "cursed_magic"
     }
   ]
 }

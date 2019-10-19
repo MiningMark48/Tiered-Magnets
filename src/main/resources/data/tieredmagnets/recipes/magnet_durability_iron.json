@@ -18,7 +18,8 @@
   },
   "conditions": [
     {
-      "type": "tieredmagnets:enable_module_vanilla"
+      "type": "tieredmagnets:module_enabled",
+      "module_name": "vanilla"
     }
   ]
 }
