@@ -16,7 +16,7 @@
       "item": "minecraft:iron_ingot"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "tieredmagnets:magnetite"
     }
   },
   "conditions": [

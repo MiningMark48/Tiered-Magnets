@@ -60,6 +60,7 @@ public class ModConfig {
         public final DoubleValue general_costDistance;
         public final BooleanValue general_enableFiltering;
         public final BooleanValue general_enableXPMagnet;
+        public final BooleanValue general_enableRepair;
 
         //Modules
         public final BooleanValue enableModuleVanilla;
@@ -118,6 +119,9 @@ public class ModConfig {
             general_enableXPMagnet = builder
                     .comment("If true, magnets will be able to be attract experience orbs.")
                     .define("XP Magnet", true);
+            general_enableRepair = builder
+                    .comment("If true, durability magnets can be repaired with Magnetite")
+                    .define("Magnet Repair", true);
             builder.pop();
 
             //Modules

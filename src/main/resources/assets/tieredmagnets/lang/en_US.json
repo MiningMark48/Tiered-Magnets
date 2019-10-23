@@ -31,6 +31,7 @@
     "item.tieredmagnets.magnet_magic_energy_resonant": "Magic Resonant Electromagnet",
     "item.tieredmagnets.magnet_free": "Cursed Magnet",
     "item.tieredmagnets.magnet_magic_free": "Magic Cursed Magnet",
+    "item.tieredmagnets.magnetite": "Magnetite",
 
     "_comment": "Blocks",
     "block.tieredmagnets.magnetic_insulator": "Magnetic Insulator",
@@ -47,6 +48,8 @@
     "tooltip.tieredmagnets.item.magnet_base.energy.2": "RF",
     "tooltip.tieredmagnets.item.magnet_base.line1": "Pulls items towards the player.",
     "tooltip.tieredmagnets.item.magnet_base.magic.line1": "Teleports items to the player.",
+    "tooltip.tieredmagnets.item.magnetite.drops": "Drops from",
+    "tooltip.tieredmagnets.item.magnetite.repair": "Can be used to repair magnets!",
     "tooltip.tieredmagnets.block.magnetic_insulator.line1": "Prevents magnets from pulling items in a defined range.",
     "tooltip.tieredmagnets.block.magnetic_projector.line1": "Projects the effects of a magnet into the world as a block.",
     "tooltip.tieredmagnets.misc.shift.hold.1": "Hold",

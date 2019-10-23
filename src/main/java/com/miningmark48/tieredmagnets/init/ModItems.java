@@ -2,7 +2,10 @@ package com.miningmark48.tieredmagnets.init;
 
 import com.miningmark48.tieredmagnets.init.registry.RegistryObjectBuilder;
 import com.miningmark48.tieredmagnets.init.registry.container.RegistryContainer;
-import com.miningmark48.tieredmagnets.item.*;
+import com.miningmark48.tieredmagnets.item.ItemMagnetDurability;
+import com.miningmark48.tieredmagnets.item.ItemMagnetFree;
+import com.miningmark48.tieredmagnets.item.ItemMagnetRF;
+import com.miningmark48.tieredmagnets.item.ItemMagnetite;
 import com.miningmark48.tieredmagnets.item.base.EnumMagnetTiers;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraft.item.Item;
@@ -80,12 +83,15 @@ public class ModItems {
     @ObjectHolder(ItemReference.MAGNET_MAGIC_ENERGY_RESONANT)
     public static ItemMagnetRF ItemMagnetMagicElectromagnetResonant;
 
-
     //Free Magnets
     @ObjectHolder(ItemReference.MAGNET_FREE)
     public static ItemMagnetFree ItemMagnetFree;
     @ObjectHolder(ItemReference.MAGNET_MAGIC_FREE)
     public static ItemMagnetFree ItemMagnetMagicFree;
+
+    //Normal Items
+    @ObjectHolder(ItemReference.MAGNETITE)
+    public static Item ItemMagnetite;
 
     public static void init() {
         //Durability Magnets
@@ -121,6 +127,9 @@ public class ModItems {
         //Free Magnets
         addItemBuilder(ItemReference.MAGNET_FREE_RL, unstackableItemProperties(), EnumMagnetTiers.F_REG::createFree);
         addItemBuilder(ItemReference.MAGNET_MAGIC_FREE_RL, unstackableItemProperties(), EnumMagnetTiers.F_MAGIC::createFree);
+
+        //Normal Items
+        addItemBuilder(ItemReference.MAGNETITE_RL, itemProperties(), ItemMagnetite::new);
 
     }
 
@@ -182,6 +191,9 @@ public class ModItems {
         public static final String MAGNET_FREE = Reference.MOD_ID + ":magnet_free";
         public static final String MAGNET_MAGIC_FREE = Reference.MOD_ID + ":magnet_magic_free";
 
+        //Normal Items
+        public static final String MAGNETITE = Reference.MOD_ID + ":magnetite";
+
         //Durability RL
         public static final ResourceLocation MAGNET_DURABILITY_STONE_RL = new ResourceLocation(MAGNET_DURABILITY_STONE);
         public static final ResourceLocation MAGNET_DURABILITY_IRON_RL = new ResourceLocation(MAGNET_DURABILITY_IRON);
@@ -215,6 +227,9 @@ public class ModItems {
         //Free Magnets RL
         public static final ResourceLocation MAGNET_FREE_RL = new ResourceLocation(MAGNET_FREE);
         public static final ResourceLocation MAGNET_MAGIC_FREE_RL = new ResourceLocation(MAGNET_MAGIC_FREE);
+
+        //Normal Items RL
+        public static final ResourceLocation MAGNETITE_RL = new ResourceLocation(MAGNETITE);
 
     }
 

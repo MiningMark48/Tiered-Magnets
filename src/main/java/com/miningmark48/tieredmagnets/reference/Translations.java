@@ -54,6 +54,7 @@ public class Translations {
         MAGNET_FILTER("magnet_filter"),
         MAGNETIC_INSULATOR("magnetic_insulator"),
         MAGNETIC_PROJECTOR("magnetic_projector"),
+        MAGNETITE("magnetite"),
         SHIFT("shift"),
         TOOLTIP("tooltips");
 
@@ -77,6 +78,8 @@ public class Translations {
         I_MAGNET_DURABILITY(makeTooltip(Types.ITEM, Keys.MAGNET_BASE, "durability")),
         I_MAGNET_ENERGY(makeTooltip(Types.ITEM, Keys.MAGNET_BASE, "energy")),
         I_MAGNET_FREE(makeTooltip(Types.ITEM, Keys.MAGNET_BASE, "free")),
+        I_MAGNETITE_DROPS(makeTooltip(Types.ITEM, Keys.MAGNETITE, "drops")),
+        I_MAGNETITE_REPAIR(makeTooltip(Types.ITEM, Keys.MAGNETITE, "repair")),
         B_MINSULATOR(makeTooltip(Types.BLOCK, Keys.MAGNETIC_INSULATOR, "line1")),
         B_MPROJECTOR(makeTooltip(Types.BLOCK, Keys.MAGNETIC_PROJECTOR, "line1")),
         M_SHIFT(makeTooltip(Types.MISC, Keys.SHIFT, "hold"));
