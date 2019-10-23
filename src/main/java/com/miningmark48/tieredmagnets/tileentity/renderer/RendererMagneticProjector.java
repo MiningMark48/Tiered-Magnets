@@ -58,6 +58,9 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
                     double translateY = y + 0.75D;
                     double translateZ = z + 0D;
 
+                    double rSpeed = 0.4f;
+                    double rTime = Minecraft.getInstance().world.getGameTime() / (rSpeed * 100D);
+
                     buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
                     //north side
@@ -83,6 +86,10 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
                     buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
                     buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
                     buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
+
+                    GlStateManager.translated(translateX + 0.5f, translateY, translateZ + 0.5f);
+                    GlStateManager.rotatef(-(float) (((rTime * 40D) % 360)), 0, 1, 0);
+                    GlStateManager.translated(-translateX - 0.5f, -translateY, -translateZ - 0.5f);
 
                     tess.draw();
 
