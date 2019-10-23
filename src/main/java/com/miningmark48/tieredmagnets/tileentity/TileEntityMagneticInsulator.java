@@ -1,7 +1,6 @@
 package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
-import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
@@ -52,37 +51,37 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
             items.forEach(item -> item.getPersistentData().putBoolean(NBTKeys.NO_MAGNET.getKey(), false));
         }
 
-        if (getDoPreview()) {
-            double offset = 0.5D;
-            double pSpeed = 0.075D * (r * 0.5D);
-            EnumParticles particle = EnumParticles.FLAME;
-
-            // Square - Corner 1
-            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
-            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, pSpeed, 0D, 0D);
-            // Square - Corner 2
-            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
-            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, -pSpeed, 0D, 0D);
-            // Square - Corner 3
-            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, -pSpeed, 0D, 0D);
-            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
-            // Square - Corner 4
-            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, pSpeed, 0D, 0D);
-            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
-            // Verticals
-            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, -pSpeed, 0D);
-            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, pSpeed, 0D);
-            // Vert Cross - Up
-            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, pSpeed);
-            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, -pSpeed);
-            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, pSpeed, 0D, 0D);
-            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, -pSpeed, 0D, 0D);
-            // Vert Cross - Down
-            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, pSpeed);
-            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, -pSpeed);
-            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, pSpeed, 0D, 0D);
-            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
-        }
+//        if (getDoPreview()) {
+//            double offset = 0.5D;
+//            double pSpeed = 0.075D * (r * 0.5D);
+//            EnumParticles particle = EnumParticles.FLAME;
+//
+//            // Square - Corner 1
+//            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
+//            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z - r + offset, pSpeed, 0D, 0D);
+//            // Square - Corner 2
+//            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
+//            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z + r + offset, -pSpeed, 0D, 0D);
+//            // Square - Corner 3
+//            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, -pSpeed, 0D, 0D);
+//            particle.spawnParticleBasic(world, x + r + offset, y + offset * 2, z - r + offset, 0D, 0D, pSpeed);
+//            // Square - Corner 4
+//            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, pSpeed, 0D, 0D);
+//            particle.spawnParticleBasic(world, x - r + offset, y + offset * 2, z + r + offset, 0D, 0D, -pSpeed);
+//            // Verticals
+//            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, -pSpeed, 0D);
+//            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, pSpeed, 0D);
+//            // Vert Cross - Up
+//            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, pSpeed);
+//            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, 0D, 0D, -pSpeed);
+//            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, pSpeed, 0D, 0D);
+//            particle.spawnParticleBasic(world, x + offset, y + r + offset, z + offset, -pSpeed, 0D, 0D);
+//            // Vert Cross - Down
+//            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, pSpeed);
+//            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, 0D, 0D, -pSpeed);
+//            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, pSpeed, 0D, 0D);
+//            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
+//        }
 
         if (world.getBlockState(pos).getBlock() == ModBlocks.BlockMagneticInsulator){
             BlockMagneticInsulator solar = (BlockMagneticInsulator) world.getBlockState(pos).getBlock();
