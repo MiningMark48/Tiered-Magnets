@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets;
 
+import com.miningmark48.tieredmagnets.client.events.EventAnvilRepair;
 import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.registry.ModObjects;
@@ -43,6 +44,8 @@ public class TieredMagnets {
 
         eventBus.addListener(ModConfig::onLoad);
         eventBus.addListener(ModConfig::onFileChange);
+
+        MinecraftForge.EVENT_BUS.register(new EventAnvilRepair());
 
         DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
             eventBus.addListener((Consumer<FMLClientSetupEvent>) event -> ClientProxy.clientSetup(eventBus));
