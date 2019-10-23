@@ -46,7 +46,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                tieredmagnets {
                     source sourceSets.main
                 }
             }
@@ -62,7 +62,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                tieredmagnets {
                     source sourceSets.main
                 }
             }
@@ -77,10 +77,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'tieredmagnets', '--all', '--output', file('src/generated/resources/')
 
             mods {
-                examplemod {
+                tieredmagnets {
                     source sourceSets.main
                 }
             }
@@ -108,11 +108,11 @@ repositories {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${config.mc_version}-${config.forge_version}"
+    minecraft "net.minecraftforge:forge:1.14.4-28.1.64"
 
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.10")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
     // compile fg.deobf("com.direwolf20.buildinggadgets:buildinggadgets-3.0.2")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli_1.1-21-beta2")
+    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli_1.1-21-beta2")
 
 }
 
