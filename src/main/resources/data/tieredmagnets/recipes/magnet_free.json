@@ -22,7 +22,7 @@
       "item": "minecraft:soul_sand"
     },
     "R": {
-      "item": "minecraft:redstone"
+      "item": "tieredmagnets:magnetite"
     }
   },
   "conditions": [
