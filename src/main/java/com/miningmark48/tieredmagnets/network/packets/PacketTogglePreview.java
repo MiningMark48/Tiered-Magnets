@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets.network.packets;
 
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
+import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -44,10 +45,14 @@ public class PacketTogglePreview extends PacketEmpty {
 
             if (te instanceof TileEntityMagneticInsulator) {
                 TileEntityMagneticInsulator mi = (TileEntityMagneticInsulator) te;
-
                 mi.setDoPreview(!mi.getDoPreview());
-
                 mi.markDirty();
+            }
+
+            if (te instanceof TileEntityMagneticProjector) {
+                TileEntityMagneticProjector mp = (TileEntityMagneticProjector) te;
+                mp.setDoPreview(!mp.getDoPreview());
+                mp.markDirty();
             }
 
         }

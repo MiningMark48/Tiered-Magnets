@@ -1,6 +1,7 @@
 package com.miningmark48.tieredmagnets.tileentity.renderer;
 
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
+import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
@@ -29,16 +30,98 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder buf = tess.getBuffer();
 
-        if (te != null && !Objects.requireNonNull(te.getWorld()).isBlockPowered(te.getPos())) {
-            ItemStack stack = te.getStackInSlot(0);
-            if (!stack.isEmpty()) {
-                renderItem(te, stack, x, y, z);
+        if (te != null) {
+            if (!Objects.requireNonNull(te.getWorld()).isBlockPowered(te.getPos())) {
+                ItemStack stack = te.getStackInSlot(0);
+                if (!stack.isEmpty()) {
+                    renderItem(te, stack, x, y, z);
 
-                if (ModConfig.CLIENT.ub_enableLampRender.get()) {
-                    float red = 1f;
+                    if (ModConfig.CLIENT.ub_enableLampRender.get()) {
+                        float red = 1f;
+                        float green = 1f;
+                        float blue = 0f;
+                        float alpha = 0.25f;
+
+                        GlStateManager.pushMatrix();
+                        GlStateManager.disableCull();
+                        GlStateManager.disableLighting();
+
+                        GlStateManager.enableAlphaTest();
+                        GlStateManager.enableBlend();
+                        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+                        GlStateManager.disableTexture();
+                        GlStateManager.shadeModel(GL11.GL_SMOOTH);
+
+                        GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
+                        //                    GlStateManager.translate(x + 0.5f, y + 0.5f, z + 0.5f);
+
+                        double translateX = x + 0D;
+                        double translateY = y + 0.75D;
+                        double translateZ = z + 0D;
+
+                        double rSpeed = 0.4f;
+                        double rTime = Minecraft.getInstance().world.getGameTime() / (rSpeed * 100D);
+
+                        buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+
+                        //north side
+                        buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
+
+                        //east side
+                        buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
+
+                        //south side
+                        buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
+
+                        //west side
+                        buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
+                        buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
+
+                        GlStateManager.translated(translateX + 0.5f, translateY, translateZ + 0.5f);
+                        GlStateManager.rotatef(-(float) (((rTime * 40D) % 360)), 0, 1, 0);
+                        GlStateManager.translated(-translateX - 0.5f, -translateY, -translateZ - 0.5f);
+
+                        tess.draw();
+
+
+//                    buf.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+//                    GL11.glLineWidth(5f);
+//
+//                    buf.pos(translateX + 0f, translateY + 1f, translateZ + 1f).color(1, 1, 1, 1).endVertex();
+//                    buf.pos(translateX + 0f, translateY + 1f, translateZ + 0f).color(1, 1, 1, 1).endVertex();
+//
+//                    tess.draw();
+
+                        GlStateManager.enableTexture();
+                        GlStateManager.disableBlend();
+                        GlStateManager.disableAlphaTest();
+                        GlStateManager.enableLighting();
+                        GlStateManager.enableCull();
+                        GlStateManager.popMatrix();
+                    }
+                }
+            }
+
+            if (te.getDoPreview()) {
+                ItemStack stack = te.getStackInSlot(0);
+                if (!stack.isEmpty() && stack.getItem() instanceof ItemMagnetBase) {
+                    ItemMagnetBase magnet = (ItemMagnetBase) stack.getItem();
+                    float red = 0f;
                     float green = 1f;
-                    float blue = 0f;
-                    float alpha = 0.25f;
+                    float blue = 0.1f;
+                    float alpha = 0.75f;
 
                     GlStateManager.pushMatrix();
                     GlStateManager.disableCull();
@@ -54,53 +137,41 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
                     GlStateManager.alphaFunc(GL11.GL_ALWAYS, 0);
 //                    GlStateManager.translate(x + 0.5f, y + 0.5f, z + 0.5f);
 
-                    double translateX = x + 0D;
-                    double translateY = y + 0.75D;
-                    double translateZ = z + 0D;
+                    double translateX = x + 0.5D;
+                    double translateY = y + 0.5D;
+                    double translateZ = z + 0.5D;
 
-                    double rSpeed = 0.4f;
+                    double rSpeed = 0.25f;
                     double rTime = Minecraft.getInstance().world.getGameTime() / (rSpeed * 100D);
 
-                    buf.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
+                    int r = magnet.getRange(stack);
 
-                    //north side
-                    buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
 
-                    //east side
-                    buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
-
-                    //south side
-                    buf.pos(translateX + 1f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.62f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
-
-                    //west side
-                    buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 1f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0f, translateY + 0.25f, translateZ + 0f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.38f).color(red, green, blue, alpha).endVertex();
-                    buf.pos(translateX + 0.38f, translateY - 0.19f, translateZ + 0.62f).color(red, green, blue, alpha).endVertex();
-
-                    GlStateManager.translated(translateX + 0.5f, translateY, translateZ + 0.5f);
+                    GlStateManager.pushMatrix();
+                    RendererMagneticInsulator.renderLines(buf, r, translateX, translateY, translateZ, red, green, blue, alpha);
+                    GlStateManager.translated(translateX, translateY, translateZ);
                     GlStateManager.rotatef(-(float) (((rTime * 40D) % 360)), 0, 1, 0);
-                    GlStateManager.translated(-translateX - 0.5f, -translateY, -translateZ - 0.5f);
-
+                    GlStateManager.translated(-translateX, -translateY, -translateZ);
                     tess.draw();
+                    GlStateManager.popMatrix();
 
+                    GlStateManager.pushMatrix();
+                    RendererMagneticInsulator.renderLines(buf, r, translateX, translateY, translateZ, red, green, blue, alpha);
+                    GlStateManager.translated(translateX, translateY, translateZ);
+                    GlStateManager.rotatef(90f, 1f, 0f, 0f);
+                    GlStateManager.rotatef(-(float) (((rTime * 40D) % 360)), 0, 1, 0);
+                    GlStateManager.translated(-translateX, -translateY, -translateZ);
+                    tess.draw();
+                    GlStateManager.popMatrix();
 
-//                    buf.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-//                    GL11.glLineWidth(5f);
-//
-//                    buf.pos(translateX + 0f, translateY + 1f, translateZ + 1f).color(1, 1, 1, 1).endVertex();
-//                    buf.pos(translateX + 0f, translateY + 1f, translateZ + 0f).color(1, 1, 1, 1).endVertex();
-//
-//                    tess.draw();
+                    GlStateManager.pushMatrix();
+                    RendererMagneticInsulator.renderLines(buf, r, translateX, translateY, translateZ, red, green, blue, alpha);
+                    GlStateManager.translated(translateX, translateY, translateZ);
+                    GlStateManager.rotatef(90f, 0f, 0f, 1f);
+                    GlStateManager.rotatef(-(float) (((rTime * 40D) % 360)), 0, 1, 0);
+                    GlStateManager.translated(-translateX, -translateY, -translateZ);
+                    tess.draw();
+                    GlStateManager.popMatrix();
 
                     GlStateManager.enableTexture();
                     GlStateManager.disableBlend();
@@ -109,7 +180,6 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
                     GlStateManager.enableCull();
                     GlStateManager.popMatrix();
                 }
-
             }
         }
     }

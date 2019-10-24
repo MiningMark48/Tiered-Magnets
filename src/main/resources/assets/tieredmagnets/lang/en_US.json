@@ -72,6 +72,8 @@
     "gui.tieredmagnets.magnetic_insulator.button.show_preview": "Show Preview",
     "gui.tieredmagnets.magnetic_insulator.button.hide_preview": "Hide Preview",
     "gui.tieredmagnets.magnetic_insulator.label.range.name": "Range",
+    "gui.tieredmagnets.magnetic_projector.button.show_range": "Show Range",
+    "gui.tieredmagnets.magnetic_projector.button.hide_range": "Hide Range",
     "gui.tieredmagnets.magnetic_projector.name": "Magnetic Projector",
 
     "_comment": "Keys",

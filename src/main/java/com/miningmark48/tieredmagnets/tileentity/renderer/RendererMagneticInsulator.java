@@ -87,7 +87,7 @@ public class RendererMagneticInsulator extends TileEntityRenderer<TileEntityMagn
         }
     }
 
-    private static void renderLines(BufferBuilder buf, int r, double translateX, double translateY, double translateZ, float red, float green, float blue, float alpha) {
+    public static void renderLines(BufferBuilder buf, int r, double translateX, double translateY, double translateZ, float red, float green, float blue, float alpha) {
         buf.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
         GL11.glLineWidth(5f);
 

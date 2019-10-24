@@ -135,6 +135,8 @@ public class Translations {
         MINSULATOR_BUTTON_PREVIEW_S(make(Keys.MAGNETIC_INSULATOR, "button.show_preview")),
         MINSULATOR_RANGE_LABEL(make(Keys.MAGNETIC_INSULATOR, "label.range.name")),
         MINSULATOR_NAME(make(Keys.MAGNETIC_INSULATOR, "name")),
+        MPROJECTOR_BUTTON_PREVIEW_H(make(Keys.MAGNETIC_PROJECTOR, "button.hide_range")),
+        MPROJECTOR_BUTTON_PREVIEW_S(make(Keys.MAGNETIC_PROJECTOR, "button.show_range")),
         MPROJECTOR_NAME(make(Keys.MAGNETIC_PROJECTOR, "name"));
 
         private final String gui;

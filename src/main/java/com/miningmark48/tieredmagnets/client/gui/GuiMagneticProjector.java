@@ -1,6 +1,8 @@
 package com.miningmark48.tieredmagnets.client.gui;
 
 import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
+import com.miningmark48.tieredmagnets.network.PacketHandler;
+import com.miningmark48.tieredmagnets.network.packets.PacketTogglePreview;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
@@ -8,6 +10,7 @@ import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -22,6 +25,8 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
     private IInventory playerInv;
     private PlayerEntity player;
     private TileEntityMagneticProjector te;
+
+    private Button buttonTogglePreview;
 
     public GuiMagneticProjector(ContainerMagneticProjector container, PlayerInventory playerInventory, ITextComponent title) {
         this(container.getTe(), container, playerInventory);
@@ -56,6 +61,22 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
         GL11.glColor4f(1F, 1F, 1F, 1F);
         Minecraft.getInstance().getTextureManager().bindTexture(texture);
         blit(guiLeft, guiTop, 0, 0, xSize, ySize);
+    }
+
+    @SuppressWarnings("Duplicates")
+    @Override
+    public void init() {
+        super.init();
+
+        buttonTogglePreview = addButton(createAndAddButton(51, 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_S.getGui()), (button) -> {
+            buttonTogglePreview.setMessage(!this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_S.getGui()));
+            PacketHandler.INSTANCE.sendToServer(new PacketTogglePreview(this.te.getPos()));
+        }));
+
+    }
+
+    private Button createAndAddButton(int x, int y, int width, int height, String text, Button.IPressable action) {
+        return new Button(guiLeft + x, guiTop + y, width, height, text, action);
     }
 
 //    @SuppressWarnings("Duplicates")

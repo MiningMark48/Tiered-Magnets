@@ -3,6 +3,7 @@ package com.miningmark48.tieredmagnets.tileentity;
 import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
+import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
@@ -25,6 +26,8 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
 
     protected NonNullList<ItemStack> inventory;
     private ItemMagnetBase magnet;
+
+    private boolean doPreview = false;
 
     public TileEntityMagneticProjector(TileEntityType<?> p_i48289_1_) {
         super(p_i48289_1_);
@@ -67,6 +70,14 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
 
     }
 
+    public boolean getDoPreview() {
+        return doPreview;
+    }
+
+    public void setDoPreview(boolean doPreview) {
+        this.doPreview = doPreview;
+    }
+
     @Override
     public void read(CompoundNBT compound)
     {
@@ -74,6 +85,8 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
         this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         ItemStackHelper.loadAllItems(compound, this.inventory);
+
+        setDoPreview(compound.getBoolean(NBTKeys.PREVIEW.getKey()));
     }
 
     @Override
@@ -82,6 +95,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
         super.write(compound);
 
         ItemStackHelper.saveAllItems(compound, this.inventory);
+        compound.putBoolean(NBTKeys.PREVIEW.getKey(), getDoPreview());
 
         return compound;
     }
