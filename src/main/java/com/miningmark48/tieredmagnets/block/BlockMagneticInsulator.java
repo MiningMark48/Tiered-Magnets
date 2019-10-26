@@ -29,7 +29,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -46,8 +45,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
-    private VoxelShape SHAPE_BASE = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 2.0D, 15.0D);
-    private VoxelShape SHAPE_TOP = Block.makeCuboidShape(4.0D, 2D, 4.0D, 12.0D, 14.25D, 12.0D);
+    private VoxelShape SHAPE_BASE = Block.makeCuboidShape(4D, 0D, 2.5D, 12.5D, 16D, 13.5D);
 
     public BlockMagneticInsulator(Properties properties) {
         super(properties);
@@ -68,13 +66,13 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader p_220053_2_, BlockPos p_220053_3_, ISelectionContext p_220053_4_) {
-        return VoxelShapes.or(SHAPE_BASE, SHAPE_TOP);
+        return SHAPE_BASE;
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader p_220071_2_, BlockPos p_220071_3_, ISelectionContext p_220071_4_) {
 
-        return VoxelShapes.or(SHAPE_BASE, SHAPE_TOP);
+        return SHAPE_BASE;
     }
 
     @Nullable
