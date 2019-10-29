@@ -3,20 +3,20 @@
     "item": "tieredmagnets:magnetic_insulator"
   },
   "pattern": [
-    "EGE",
-    " G ",
+    "MIM",
+    "GIG",
     "III"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "E": {
-      "item": "minecraft:ender_pearl"
-    },
     "G": {
       "item": "minecraft:gold_ingot"
     },
     "I": {
       "item": "minecraft:iron_ingot"
+    },
+    "M": {
+      "item": "tieredmagnets:magnetite"
     }
   },
   "conditions": [
