@@ -88,7 +88,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                             @Nonnull
                             @Override
                             public ITextComponent getDisplayName() {
-                                return stack.getDisplayName();
+                                return new StringTextComponent("Magnet");
                             }
 
                             @Nullable

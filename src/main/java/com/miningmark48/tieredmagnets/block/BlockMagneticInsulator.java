@@ -91,7 +91,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
                         @Nonnull
                         @Override
                         public ITextComponent getDisplayName() {
-                            return state.getBlock().getNameTextComponent();
+                            return new StringTextComponent("Magnetic Insulator");
                         }
 
                         @Nonnull

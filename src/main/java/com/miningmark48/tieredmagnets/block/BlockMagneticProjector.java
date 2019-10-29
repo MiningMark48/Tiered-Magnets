@@ -108,7 +108,7 @@ public class BlockMagneticProjector extends ContainerBlock {
                         @Nonnull
                         @Override
                         public ITextComponent getDisplayName() {
-                            return state.getBlock().getNameTextComponent();
+                            return new StringTextComponent("Magnetic Projector");
                         }
 
                         @Nonnull
