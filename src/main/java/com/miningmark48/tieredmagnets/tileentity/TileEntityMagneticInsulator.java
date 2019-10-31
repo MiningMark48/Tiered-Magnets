@@ -30,7 +30,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 
     public TileEntityMagneticInsulator()
     {
-        this(ModBlocks.ModTileEntities.MAGNETIC_INSULATOR);
+        this(ModBlocks.MAGNETIC_INSULATOR_TILE.get());
     }
 
     @Override
@@ -83,7 +83,7 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
 //            particle.spawnParticleBasic(world, x + offset, y - r + offset, z + offset, -pSpeed, 0D, 0D);
 //        }
 
-        if (world.getBlockState(pos).getBlock() == ModBlocks.BlockMagneticInsulator){
+        if (world.getBlockState(pos).getBlock() == ModBlocks.MAGNETIC_INSULATOR.get()){
             BlockMagneticInsulator solar = (BlockMagneticInsulator) world.getBlockState(pos).getBlock();
             solar.setState(world, pos, world.isBlockPowered(pos));
         }

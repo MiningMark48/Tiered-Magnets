@@ -13,7 +13,7 @@ public class EventAnvilRepair {
 
     @SubscribeEvent
     public static void onAnvilUpdate(AnvilUpdateEvent event) {
-        if ((ModConfig.COMMON.general_enableRepair.get()) && ((event.getLeft().getItem() instanceof ItemMagnetDurability) && (event.getRight().getItem() == ModItems.ItemMagnetite))) {
+        if ((ModConfig.COMMON.general_enableRepair.get()) && ((event.getLeft().getItem() instanceof ItemMagnetDurability) && (event.getRight().getItem() == ModItems.MAGNETITE.get()))) {
             event.setCost(2);
             event.setMaterialCost(1);
             ItemStack newItem = event.getLeft().copy();

@@ -35,7 +35,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     public TileEntityMagneticProjector() {
-        this(ModBlocks.ModTileEntities.MAGNETIC_PROJECTOR);
+        this(ModBlocks.MAGNETIC_PROJECTOR_TILE.get());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
             }
         }
 
-        if (this.world.getBlockState(pos).getBlock() == ModBlocks.BlockMagneticProjector){
+        if (this.world.getBlockState(pos).getBlock() == ModBlocks.MAGNETIC_PROJECTOR.get()){
             BlockMagneticProjector solar = (BlockMagneticProjector) this.world.getBlockState(pos).getBlock();
             solar.setState(this.world, this.pos, world.isBlockPowered(pos));
         }

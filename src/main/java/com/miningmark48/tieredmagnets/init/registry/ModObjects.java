@@ -1,17 +1,17 @@
 package com.miningmark48.tieredmagnets.init.registry;
 
-import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.ModContainers;
-import com.miningmark48.tieredmagnets.init.ModItems;
+import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
+import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
+import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticInsulator;
+import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticProjector;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 
 public class ModObjects {
 
     public static void init() {
-        ModBlocks.init();
-        ModItems.init();
-        ModBlocks.ModTileEntities.init();
         ModContainers.init();
         DistExecutor.runWhenOn(Dist.CLIENT, () -> ModObjects::clientInit);
     }
@@ -21,14 +21,12 @@ public class ModObjects {
     }
 
     public static void cleanup() {
-        ModBlocks.cleanup();
-        ModItems.cleanup();
-        ModBlocks.ModTileEntities.cleanup();
         ModContainers.cleanup();
     }
 
     private static void clientInit() {
-        ModBlocks.ModTileEntities.clientInit();
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMagneticInsulator.class, new RendererMagneticInsulator());
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMagneticProjector.class, new RendererMagneticProjector());
     }
 
 }

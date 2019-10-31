@@ -9,7 +9,7 @@ public class ModCreativeTab {
     public static final ItemGroup Magnets_Tab = new ItemGroup(Reference.MOD_ID) {
         @Override
         public ItemStack createIcon() {
-            return new ItemStack(ModItems.ItemMagnetDurabilityDiamond);
+            return new ItemStack(ModItems.MAGNET_DURABILITY_DIAMOND.get());
         }
     };
 

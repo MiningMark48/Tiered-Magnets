@@ -2,130 +2,24 @@ package com.miningmark48.tieredmagnets.init;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
-import com.miningmark48.tieredmagnets.init.registry.block.BlockBuilder;
-import com.miningmark48.tieredmagnets.init.registry.block.BlockRegistryContainer;
-import com.miningmark48.tieredmagnets.init.registry.block.tile.TileEntityBuilder;
-import com.miningmark48.tieredmagnets.init.registry.block.tile.TileEntityRegistryContainer;
-import com.miningmark48.tieredmagnets.init.registry.block.tile.TileEntityTypeBuilder;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
-import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticInsulator;
-import com.miningmark48.tieredmagnets.tileentity.renderer.RendererMagneticProjector;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
-import static com.miningmark48.tieredmagnets.init.ModItems.itemProperties;
-
-@ObjectHolder(Reference.MOD_ID)
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModBlocks {
 
-    private static final BlockRegistryContainer container = new BlockRegistryContainer(ModTileEntities.container);
+    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MOD_ID);
+    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
 
-    public ModBlocks() {
+    public static final RegistryObject<Block> MAGNETIC_INSULATOR = BLOCKS.register("magnetic_insulator", BlockMagneticInsulator::new);
+    public static final RegistryObject<Block> MAGNETIC_PROJECTOR = BLOCKS.register("magnetic_projector", BlockMagneticProjector::new);
 
-    }
-
-    @ObjectHolder(BlockReference.MAGNETIC_INSULATOR)
-    public static BlockMagneticInsulator BlockMagneticInsulator;
-    @ObjectHolder(BlockReference.MAGNETIC_PROJECTOR)
-    public static BlockMagneticProjector BlockMagneticProjector;
-
-    public static void init() {
-        //Magnetic Insulator
-        container.add(new BlockBuilder(BlockReference.MAGNETIC_INSULATOR_RL)
-                .builder(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f))
-                .item(itemProperties())
-                .withTileEntity(new TileEntityBuilder<TileEntityMagneticInsulator>(TileEntityReference.MAGNETIC_INSULATOR_RL)
-                        .builder(new TileEntityTypeBuilder<>(TileEntityMagneticInsulator::new))
-                        .factory(TileEntityTypeBuilder::build)
-                        .renderer(TileEntityMagneticInsulator.class, () -> RendererMagneticInsulator::new))
-                .factory(BlockMagneticInsulator::new));
-        //Magnetic Projector
-        container.add(new BlockBuilder(BlockReference.MAGNETIC_PROJECTOR_RL)
-                .builder(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f))
-                .item(itemProperties())
-                .withTileEntity(new TileEntityBuilder<TileEntityMagneticProjector>(TileEntityReference.MAGNETIC_PROJECTOR_RL)
-                        .builder(new TileEntityTypeBuilder<>(TileEntityMagneticProjector::new))
-                        .factory(TileEntityTypeBuilder::build)
-                        .renderer(TileEntityMagneticProjector.class, () -> RendererMagneticProjector::new))
-                .factory(BlockMagneticProjector::new));
-    }
-
-    @SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        container.register(event);
-    }
-
-    @SubscribeEvent
-    public static void registerItemBlocks(RegistryEvent.Register<Item> event) {
-        container.registerItemBlocks(event);
-    }
-
-    public static void cleanup() {
-        container.clear();
-    }
-
-    public static final class BlockReference {
-
-        public static final String MAGNETIC_INSULATOR = Reference.MOD_ID + ":magnetic_insulator";
-        public static final String MAGNETIC_PROJECTOR = Reference.MOD_ID + ":magnetic_projector";
-
-        public static final ResourceLocation MAGNETIC_INSULATOR_RL = new ResourceLocation(MAGNETIC_INSULATOR);
-        public static final ResourceLocation MAGNETIC_PROJECTOR_RL = new ResourceLocation(MAGNETIC_PROJECTOR);
-
-    }
-
-    @ObjectHolder(Reference.MOD_ID)
-    @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-    public static final class ModTileEntities {
-        private static final TileEntityRegistryContainer container = new TileEntityRegistryContainer();
-
-        private ModTileEntities() {
-
-        }
-
-        @ObjectHolder(TileEntityReference.MAGNETIC_INSULATOR)
-        public static TileEntityType<?> MAGNETIC_INSULATOR;
-        @ObjectHolder(TileEntityReference.MAGNETIC_PROJECTOR)
-        public static TileEntityType<?> MAGNETIC_PROJECTOR;
-
-        public static void init() {
-
-        }
-
-        @SubscribeEvent
-        public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
-            container.register(event);
-        }
-
-        public static void clientInit() {
-            container.clientInit();
-        }
-
-        public static void cleanup() {
-            container.clear();
-        }
-
-    }
-
-    public static final class TileEntityReference {
-
-        public static final String MAGNETIC_INSULATOR = Reference.MOD_ID + ":magnetic_insulator";
-        public static final String MAGNETIC_PROJECTOR = Reference.MOD_ID + ":magnetic_projector";
-
-        public static final ResourceLocation MAGNETIC_INSULATOR_RL = new ResourceLocation(MAGNETIC_INSULATOR);
-        public static final ResourceLocation MAGNETIC_PROJECTOR_RL = new ResourceLocation(MAGNETIC_PROJECTOR);
-
-    }
+    public static final RegistryObject<TileEntityType<TileEntityMagneticInsulator>> MAGNETIC_INSULATOR_TILE = TILE_ENTITIES.register("magnetic_insulator", () -> TileEntityType.Builder.create(TileEntityMagneticInsulator::new, ModBlocks.MAGNETIC_INSULATOR.get()).build(null));
+    public static final RegistryObject<TileEntityType<TileEntityMagneticProjector>> MAGNETIC_PROJECTOR_TILE = TILE_ENTITIES.register("magnetic_projector", () -> TileEntityType.Builder.create(TileEntityMagneticProjector::new, ModBlocks.MAGNETIC_PROJECTOR.get()).build(null));
 
 }

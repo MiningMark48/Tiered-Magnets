@@ -25,8 +25,8 @@ public class ItemMagnetDurability extends ItemMagnetBase {
     private final boolean isMagic;
     private final int tier;
 
-    public ItemMagnetDurability(Properties properties, int tier, boolean isMagic) {
-        super(properties.maxStackSize(1), isMagic);
+    public ItemMagnetDurability(int tier, boolean isMagic) {
+        super(new Properties(), isMagic);
 
         this.isMagic = isMagic;
         this.tier = tier;

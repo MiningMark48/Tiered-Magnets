@@ -2,7 +2,9 @@ package com.miningmark48.tieredmagnets;
 
 import com.miningmark48.tieredmagnets.client.events.EventAnvilRepair;
 import com.miningmark48.tieredmagnets.client.events.EventLootLoad;
+import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
+import com.miningmark48.tieredmagnets.init.ModItems;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.init.registry.ModObjects;
 import com.miningmark48.tieredmagnets.network.PacketHandler;
@@ -35,6 +37,10 @@ public class TieredMagnets {
 
     public TieredMagnets() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModItems.ITEMS.register(eventBus);
+        ModBlocks.BLOCKS.register(eventBus);
+        ModBlocks.TILE_ENTITIES.register(eventBus);
 
         ModLoadingContext.get().registerConfig(Type.SERVER, ModConfig.serverSpec);
         ModLoadingContext.get().registerConfig(Type.CLIENT, ModConfig.clientSpec);

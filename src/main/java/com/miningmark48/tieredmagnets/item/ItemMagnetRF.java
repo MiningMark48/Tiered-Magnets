@@ -32,8 +32,8 @@ public class ItemMagnetRF extends ItemMagnetBase {
     private final int tier;
     private final boolean isMagic;
 
-    public ItemMagnetRF(Properties properties, int tier, boolean isMagic) {
-        super(properties, isMagic);
+    public ItemMagnetRF(int tier, boolean isMagic) {
+        super(new Properties(), isMagic);
 
         this.tier = tier;
         this.isMagic = isMagic;

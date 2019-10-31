@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ContainerBlock;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -47,8 +48,8 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     private VoxelShape SHAPE_BASE = Block.makeCuboidShape(4D, 0D, 2.5D, 12.5D, 16D, 13.5D);
 
-    public BlockMagneticInsulator(Properties properties) {
-        super(properties);
+    public BlockMagneticInsulator() {
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f));
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
     }
 
@@ -78,7 +79,7 @@ public class BlockMagneticInsulator extends ContainerBlock {
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityMagneticInsulator(ModBlocks.ModTileEntities.MAGNETIC_INSULATOR);
+        return new TileEntityMagneticInsulator(ModBlocks.MAGNETIC_INSULATOR_TILE.get());
     }
 
     @Override

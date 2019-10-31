@@ -8,6 +8,7 @@ import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -52,8 +53,8 @@ public class BlockMagneticProjector extends ContainerBlock {
     private VoxelShape SHAPE_ACTIVE = VoxelShapes.or(SHAPE_BASE, Block.makeCuboidShape(5.0D, 6.0D, 5.0D, 11.0D, 9.0D, 11.0D));
     private VoxelShape SHAPE_INACTIVE = VoxelShapes.or(SHAPE_BASE, Block.makeCuboidShape(5.0D, 6.0D, 5.0D, 11.0D, 8.25D, 11.0D));
 
-    public BlockMagneticProjector(Properties properties) {
-        super(properties);
+    public BlockMagneticProjector() {
+        super(Block.Properties.create(Material.ROCK).hardnessAndResistance(2.0f));
         this.setDefaultState(this.getStateContainer().getBaseState().with(FACING, Direction.NORTH).with(POWERED, false));
     }
 
@@ -82,7 +83,7 @@ public class BlockMagneticProjector extends ContainerBlock {
     @Nullable
     @Override
     public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityMagneticProjector(ModBlocks.ModTileEntities.MAGNETIC_PROJECTOR);
+        return new TileEntityMagneticProjector(ModBlocks.MAGNETIC_PROJECTOR_TILE.get());
     }
 
     @Override

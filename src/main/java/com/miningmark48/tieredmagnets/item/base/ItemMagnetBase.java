@@ -2,6 +2,7 @@ package com.miningmark48.tieredmagnets.item.base;
 
 import com.miningmark48.tieredmagnets.client.particle.EnumParticles;
 import com.miningmark48.tieredmagnets.container.ContainerMagnetFilter;
+import com.miningmark48.tieredmagnets.init.ModCreativeTab;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import com.miningmark48.tieredmagnets.reference.Translations.ChatMsgs;
@@ -49,7 +50,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     private boolean isMagic;
 
     public ItemMagnetBase(Properties properties, boolean isMagic){
-        super(properties);
+        super(properties.group(ModCreativeTab.Magnets_Tab).maxStackSize(1));
 
         this.isMagic = isMagic;
     }

@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.item;
 
+import com.miningmark48.tieredmagnets.init.ModCreativeTab;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.Translations;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -17,8 +18,8 @@ import java.util.List;
 
 public class ItemMagnetite extends Item {
 
-    public ItemMagnetite(Properties prop) {
-        super(prop);
+    public ItemMagnetite() {
+        super(new Properties().group(ModCreativeTab.Magnets_Tab));
     }
 
     @Override
