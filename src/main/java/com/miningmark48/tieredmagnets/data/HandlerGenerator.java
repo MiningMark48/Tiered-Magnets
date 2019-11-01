@@ -36,7 +36,7 @@ public class HandlerGenerator {
 
 //        generator.addProvider(new GeneratorBlockStates(generator, helper));
 //        generator.addProvider(new GeneratorItemModels(generator, helper));
-//        generator.addProvider(new GeneratorLanguage(generator));
+        generator.addProvider(new GeneratorLanguage(generator));
     }
 
 }
