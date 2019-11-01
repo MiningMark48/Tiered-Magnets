@@ -35,6 +35,7 @@ public class GeneratorLoot extends LootTableProvider {
         map.forEach((name, table) -> LootTableManager.func_215302_a(validationresults, name, table, map::get));
     }
 
+    @SuppressWarnings("ConstantConditions")
     private class Blocks extends BlockLootTables {
 
         @Override

@@ -1,5 +1,6 @@
 package com.miningmark48.tieredmagnets.data;
 
+import com.miningmark48.tieredmagnets.init.ModCraftingConditions;
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.data.DataGenerator;
@@ -13,6 +14,7 @@ public class HandlerGenerator {
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
+        ModCraftingConditions.init();
         ModLogger.info(event.getGenerator().getOutputFolder().toString());
 
         if (event.includeServer())
@@ -32,7 +34,7 @@ public class HandlerGenerator {
 
 //        generator.addProvider(new GeneratorBlockStates(generator, helper));
 //        generator.addProvider(new GeneratorItemModels(generator, helper));
-        generator.addProvider(new GeneratorLanguage(generator));
+//        generator.addProvider(new GeneratorLanguage(generator));
     }
 
 }

@@ -1,0 +1,41 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "module_name": "cursed",
+          "type": "tieredmagnets:module_enabled"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "DGD",
+          "ISI",
+          "R R"
+        ],
+        "key": {
+          "D": {
+            "item": "minecraft:diamond"
+          },
+          "G": {
+            "item": "minecraft:ghast_tear"
+          },
+          "I": {
+            "item": "minecraft:iron_ingot"
+          },
+          "S": {
+            "item": "minecraft:soul_sand"
+          },
+          "R": {
+            "item": "tieredmagnets:magnetite"
+          }
+        },
+        "result": {
+          "item": "tieredmagnets:magnet_free"
+        }
+      }
+    }
+  ]
+}

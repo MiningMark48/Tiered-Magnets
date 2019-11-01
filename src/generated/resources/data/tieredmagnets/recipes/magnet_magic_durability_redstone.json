@@ -1,0 +1,38 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "module_name": "vanilla_magic",
+          "type": "tieredmagnets:module_enabled"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "GEG",
+          "RMR",
+          "GEG"
+        ],
+        "key": {
+          "R": {
+            "item": "tieredmagnets:magnetite"
+          },
+          "G": {
+            "item": "minecraft:gold_ingot"
+          },
+          "E": {
+            "item": "minecraft:ender_pearl"
+          },
+          "M": {
+            "item": "tieredmagnets:magnet_durability_redstone"
+          }
+        },
+        "result": {
+          "item": "tieredmagnets:magnet_magic_durability_redstone"
+        }
+      }
+    }
+  ]
+}

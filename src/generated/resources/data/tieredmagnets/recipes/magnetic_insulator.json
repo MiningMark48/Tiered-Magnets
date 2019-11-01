@@ -1,0 +1,35 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "module_name": "insulator",
+          "type": "tieredmagnets:module_enabled"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "MIM",
+          "GIG",
+          "III"
+        ],
+        "key": {
+          "G": {
+            "item": "minecraft:gold_ingot"
+          },
+          "I": {
+            "item": "minecraft:iron_ingot"
+          },
+          "M": {
+            "item": "tieredmagnets:magnetite"
+          }
+        },
+        "result": {
+          "item": "tieredmagnets:magnetic_insulator"
+        }
+      }
+    }
+  ]
+}

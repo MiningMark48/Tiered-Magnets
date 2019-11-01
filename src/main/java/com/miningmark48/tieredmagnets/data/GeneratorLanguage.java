@@ -5,6 +5,7 @@ import com.miningmark48.tieredmagnets.reference.Reference;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.LanguageProvider;
 
+@SuppressWarnings("ConstantConditions")
 public class GeneratorLanguage extends LanguageProvider {
 
     public GeneratorLanguage(DataGenerator gen) {

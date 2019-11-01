@@ -75,6 +75,7 @@ public class ConditionModuleEnabled implements ICondition {
         {
             return ConditionModuleEnabled.NAME;
         }
+
     }
 
 }

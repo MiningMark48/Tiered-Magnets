@@ -1,0 +1,41 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "module_name": "projector",
+          "type": "tieredmagnets:module_enabled"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:crafting_shaped",
+        "pattern": [
+          "IPI",
+          "GRG",
+          "IHI"
+        ],
+        "key": {
+          "P": {
+            "item": "minecraft:glass_pane"
+          },
+          "G": {
+            "item": "minecraft:gold_ingot"
+          },
+          "I": {
+            "item": "minecraft:iron_ingot"
+          },
+          "R": {
+            "item": "tieredmagnets:magnetite"
+          },
+          "H": {
+            "item": "minecraft:hopper"
+          }
+        },
+        "result": {
+          "item": "tieredmagnets:magnetic_projector"
+        }
+      }
+    }
+  ]
+}
