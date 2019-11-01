@@ -48,6 +48,7 @@ public class TieredMagnets {
 
         eventBus.addListener(this::setup);
         eventBus.addListener(this::finishLoad);
+        eventBus.addListener(this::setupClient);
 
         eventBus.addListener(ModConfig::onLoad);
         eventBus.addListener(ModConfig::onFileChange);
@@ -59,6 +60,7 @@ public class TieredMagnets {
             eventBus.addListener((Consumer<FMLClientSetupEvent>) event -> ClientProxy.clientSetup(eventBus));
 //            ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> GuiMod::openScreen);
         });
+
 
         ModObjects.init();
 
@@ -79,6 +81,10 @@ public class TieredMagnets {
 
         PacketHandler.registerMessages();
 
+    }
+
+    private void setupClient(final FMLClientSetupEvent event) {
+        ModObjects.clientInit();
     }
 
     private void finishLoad(FMLLoadCompleteEvent event) {
