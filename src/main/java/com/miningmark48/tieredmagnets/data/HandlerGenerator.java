@@ -13,8 +13,7 @@ public class HandlerGenerator {
 
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
-
-        ModLogger.info("DATA!");
+        ModLogger.info(event.getGenerator().getOutputFolder().toString());
 
         if (event.includeServer())
             registerServerProviders(event.getGenerator());
@@ -24,7 +23,7 @@ public class HandlerGenerator {
     }
 
     private static void registerServerProviders(DataGenerator generator) {
-//        generator.addProvider(new GeneratorLoot(generator));
+        generator.addProvider(new GeneratorLoot(generator));
         generator.addProvider(new GeneratorRecipes(generator));
     }
 
@@ -33,7 +32,7 @@ public class HandlerGenerator {
 
 //        generator.addProvider(new GeneratorBlockStates(generator, helper));
 //        generator.addProvider(new GeneratorItemModels(generator, helper));
-//        generator.addProvider(new GeneratorLanguage(generator));
+        generator.addProvider(new GeneratorLanguage(generator));
     }
 
 }

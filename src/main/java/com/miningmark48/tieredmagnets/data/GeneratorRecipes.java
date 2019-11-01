@@ -1,7 +1,6 @@
 package com.miningmark48.tieredmagnets.data;
 
 import com.miningmark48.tieredmagnets.init.ModItems;
-import com.miningmark48.tieredmagnets.util.ModLogger;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
@@ -20,19 +19,8 @@ public class GeneratorRecipes extends RecipeProvider {
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ModLogger.info("HELLO");
-        ShapedRecipeBuilder.shapedRecipe(Blocks.DIAMOND_BLOCK.getBlock(), 64)
-                .patternLine("XXX")
-                .patternLine("XXX")
-                .patternLine("XXX")
-                .key('X', Blocks.DIRT)
-                .setGroup("")
-                .addCriterion("has_dirt", hasItem(Blocks.DIRT)) //Doesn't actually print... TODO: nested/conditional advancements?
-                .build(consumer);
-        ModLogger.info("BYE");
-
-//        registerBlockRecipes(consumer);
-//        registerItemRecipes(consumer);
+        registerBlockRecipes(consumer);
+        registerItemRecipes(consumer);
     }
 
     private void registerBlockRecipes(Consumer<IFinishedRecipe> consumer) {
