@@ -1,6 +1,5 @@
 package com.miningmark48.tieredmagnets.block;
 
-import com.miningmark48.tieredmagnets.container.ContainerMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
@@ -8,13 +7,10 @@ import com.miningmark48.tieredmagnets.util.ModTranslate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ContainerBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -23,8 +19,11 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -34,11 +33,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockMagneticInsulator extends ContainerBlock {
+public class BlockMagneticInsulator extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
@@ -75,57 +73,26 @@ public class BlockMagneticInsulator extends ContainerBlock {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
-        return new TileEntityMagneticInsulator(ModBlocks.MAGNETIC_INSULATOR_TILE.get());
+    public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
+        return ModBlocks.MAGNETIC_INSULATOR_TILE.get().create();
     }
 
-//    @Override
-//    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
-//        if (!player.isSneaking()) {
-//            if (player instanceof ServerPlayerEntity) {
-//                TileEntity te = world.getTileEntity(pos);
-//                if (te instanceof TileEntityMagneticInsulator) {
-//                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-//                        @Nonnull
-//                        @Override
-//                        public ITextComponent getDisplayName() {
-//                            return new StringTextComponent("Magnetic Insulator");
-//                        }
-//
-//                        @Nonnull
-//                        @Override
-//                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
-//                            return new ContainerMagneticInsulator(i, playerInventory, (TileEntityMagneticInsulator) te);
-//                        }
-//                    }, packetBuffer -> packetBuffer.writeBlockPos(pos));
-//                }
-//            }
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean hasTileEntity(BlockState state) {
+        return true;
+    }
 
     @Override
-    public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
-        if (!player.isSneaking()) {
-            if (player instanceof ServerPlayerEntity) {
-                TileEntity te = world.getTileEntity(pos);
-                if (te instanceof TileEntityMagneticInsulator) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-                        @Nonnull
-                        @Override
-                        public ITextComponent getDisplayName() {
-                            return new StringTextComponent("Magnetic Insulator");
-                        }
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+        if (world.isRemote)
+            return ActionResultType.SUCCESS;
 
-                        @Nonnull
-                        @Override
-                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
-                            return new ContainerMagneticInsulator(i, playerInventory, (TileEntityMagneticInsulator) te);
-                        }
-                    }, packetBuffer -> packetBuffer.writeBlockPos(pos));
-                }
-            }
-        }
+        TileEntity te = world.getTileEntity(pos);
+        if (! (te instanceof TileEntityMagneticInsulator))
+            return ActionResultType.FAIL;
+
+        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos);
+        return ActionResultType.SUCCESS;
     }
 
     @SuppressWarnings("Duplicates")

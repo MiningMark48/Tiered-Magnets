@@ -7,7 +7,10 @@ import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +27,11 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -41,7 +47,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("Duplicates")
-public class BlockMagneticProjector extends ContainerBlock {
+public class BlockMagneticProjector extends Block {
 
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     private static final BooleanProperty POWERED = BooleanProperty.create("powered");
@@ -79,12 +85,12 @@ public class BlockMagneticProjector extends ContainerBlock {
 
     @Nullable
     @Override
-    public TileEntity createNewTileEntity(IBlockReader worldIn) {
+    public TileEntity createTileEntity(BlockState state, IBlockReader worldIn) {
         return new TileEntityMagneticProjector(ModBlocks.MAGNETIC_PROJECTOR_TILE.get());
     }
 
     @Override
-    public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
         if (!player.isSneaking()) {
             ItemStack magnet = ItemMagnetBase.getMagnet(player);
             if (!magnet.isEmpty() && !world.isRemote && ModConfig.COMMON.ub_enableMagnetSwap.get()) {
@@ -114,9 +120,11 @@ public class BlockMagneticProjector extends ContainerBlock {
                             return new ContainerMagneticProjector(i, playerInventory, (TileEntityMagneticProjector) te);
                         }
                     }, packetBuffer -> packetBuffer.writeBlockPos(pos));
+                    return ActionResultType.SUCCESS;
                 }
             }
         }
+        return ActionResultType.FAIL;
     }
 
     @Override

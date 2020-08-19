@@ -1,11 +1,16 @@
 package com.miningmark48.tieredmagnets.tileentity;
 
 import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
+import com.miningmark48.tieredmagnets.container.ContainerMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -13,13 +18,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TileEntityMagneticInsulator extends TileEntity implements ITickableTileEntity {
+public class TileEntityMagneticInsulator extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
     private int range = 1;// = OldConfig.utilityBlockConfigs.insulatorRange;
     private boolean doPreview = false;
@@ -110,6 +118,13 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         this.doPreview = doPreview;
     }
 
+    @Nullable
+    @Override
+    public Container createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+        assert world != null;
+        return new ContainerMagneticInsulator(i, playerInventory, this);
+    }
+
     @Override
     public void read(BlockState state, CompoundNBT compound) {
         super.read(state, compound);
@@ -150,4 +165,8 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         markDirty();
     }
 
+    @Override
+    public ITextComponent getDisplayName() {
+        return new StringTextComponent("Magnetic Insulator");
+    }
 }

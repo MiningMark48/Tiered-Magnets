@@ -50,7 +50,7 @@ public class GuiMagneticInsulator extends ContainerScreen<ContainerMagneticInsul
     public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(stack);
         super.render(stack, mouseX, mouseY, partialTicks);
-//        this.renderHoveredToolTip(mouseX, mouseY);
+        this.func_230459_a_(stack, mouseX, mouseY); // renderHoveredTooltip
     }
 
     @Override
