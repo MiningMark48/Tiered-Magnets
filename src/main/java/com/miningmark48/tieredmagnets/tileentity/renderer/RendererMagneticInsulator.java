@@ -1,25 +1,32 @@
 package com.miningmark48.tieredmagnets.tileentity.renderer;
 
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticInsulator;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
 public class RendererMagneticInsulator extends TileEntityRenderer<TileEntityMagneticInsulator> {
 
-    public RendererMagneticInsulator() {
-
+    public RendererMagneticInsulator(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
     }
 
     @SuppressWarnings("Duplicates")
     @Override
-    public void render(TileEntityMagneticInsulator te, double x, double y, double z, float p_199341_8_, int p_199341_9_) {
+    public void render(TileEntityMagneticInsulator te, float v, MatrixStack mStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder buf = tess.getBuffer();
+
+        int x = te.getPos().getX();
+        int y = te.getPos().getY();
+        int z = te.getPos().getZ();
 
         if (te != null && te.getDoPreview()) {
 
@@ -34,7 +41,7 @@ public class RendererMagneticInsulator extends TileEntityRenderer<TileEntityMagn
 
             GlStateManager.enableAlphaTest();
             GlStateManager.enableBlend();
-            GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+//            GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
             GlStateManager.disableTexture();
             GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -128,5 +135,4 @@ public class RendererMagneticInsulator extends TileEntityRenderer<TileEntityMagn
 
         return 0;
     }
-
 }

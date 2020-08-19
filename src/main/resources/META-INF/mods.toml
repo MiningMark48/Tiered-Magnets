@@ -6,6 +6,7 @@ issueTrackerURL="https://github.com/MiningMark48/Tiered-Magnets/issues" #optiona
 logoFile="tieredmagnets_logo.png"
 credits="Codyrule for textures! Kaosjr for contributions!" #optional
 authors="MiningMark48"
+license="MIT"
 
 [[mods]] #mandatory
     modId="tieredmagnets" #mandatory

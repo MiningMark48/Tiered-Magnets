@@ -23,7 +23,8 @@ public final class UtilLang {
     }
 
     public static String getFormattedBlockName(Block block) {
-        return block.getNameTextComponent().getFormattedText();
+//        return block.getNameTextComponent().getFormattedText();
+        return "";
     }
 
 }

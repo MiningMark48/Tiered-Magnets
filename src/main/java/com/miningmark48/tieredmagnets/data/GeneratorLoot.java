@@ -7,8 +7,8 @@ import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.loot.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.storage.loot.*;
 import net.minecraftforge.fml.RegistryObject;
 
 import java.util.List;
@@ -31,8 +31,8 @@ public class GeneratorLoot extends LootTableProvider {
     }
 
     @Override
-    protected void validate(Map<ResourceLocation, LootTable> map, ValidationResults validationresults) {
-        map.forEach((name, table) -> LootTableManager.func_215302_a(validationresults, name, table, map::get));
+    protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationresults) {
+        map.forEach((name, table) -> LootTableManager.func_227508_a_(validationresults, name, table));
     }
 
     @SuppressWarnings("ConstantConditions")

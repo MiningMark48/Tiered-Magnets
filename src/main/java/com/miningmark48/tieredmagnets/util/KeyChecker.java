@@ -11,7 +11,7 @@ public class KeyChecker {
     }
 
     private static boolean isKeyDown(int keycode) {
-        return InputMappings.isKeyDown(Minecraft.getInstance().mainWindow.getHandle(), keycode);
+        return InputMappings.isKeyDown(Minecraft.getInstance().getMainWindow().getHandle(), keycode);
     }
 
 }

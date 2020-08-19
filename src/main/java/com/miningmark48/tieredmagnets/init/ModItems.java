@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
 
     public static final Item.Properties ITEM_GROUP = new Item.Properties().group(ModCreativeTab.Magnets_Tab);
-    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Reference.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
     //Items
         //Magnets - Durability

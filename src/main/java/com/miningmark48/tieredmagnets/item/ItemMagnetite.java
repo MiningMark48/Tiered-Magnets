@@ -26,7 +26,7 @@ public class ItemMagnetite extends Item {
     public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
         super.addInformation(stack, world, tooltip, flag);
 
-        tooltip.add(new StringTextComponent(TextFormatting.YELLOW + String.format(ModTranslate.toLocal(Translations.Tooltips.I_MAGNETITE_DROPS.getTooltip()) + " %s", Blocks.IRON_ORE.getNameTextComponent().getString())));
+        tooltip.add(new StringTextComponent(TextFormatting.YELLOW + String.format(ModTranslate.toLocal(Translations.Tooltips.I_MAGNETITE_DROPS.getTooltip()) + " %s", Blocks.IRON_ORE.getTranslatedName().getString())));
         if (ModConfig.COMMON.general_enableRepair.get()) tooltip.add(new StringTextComponent(TextFormatting.DARK_GREEN + ModTranslate.toLocal(Translations.Tooltips.I_MAGNETITE_REPAIR.getTooltip())));
     }
 }

@@ -51,7 +51,7 @@ public class TieredMagnets {
         eventBus.addListener(this::setupClient);
 
         eventBus.addListener(ModConfig::onLoad);
-        eventBus.addListener(ModConfig::onFileChange);
+//        eventBus.addListener(ModConfig::onFileChange);
 
         MinecraftForge.EVENT_BUS.register(new EventLootLoad());
         MinecraftForge.EVENT_BUS.register(new EventAnvilRepair());

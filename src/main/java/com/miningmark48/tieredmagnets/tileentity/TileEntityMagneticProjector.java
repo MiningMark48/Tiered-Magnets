@@ -4,13 +4,13 @@ import com.miningmark48.tieredmagnets.block.BlockMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -79,9 +79,9 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
     }
 
     @Override
-    public void read(CompoundNBT compound)
+    public void read(BlockState state, CompoundNBT compound)
     {
-        super.read(compound);
+        super.read(state, compound);
         this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
         ItemStackHelper.loadAllItems(compound, this.inventory);
@@ -100,11 +100,11 @@ public class TileEntityMagneticProjector extends TileEntity implements ITickable
         return compound;
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-    {
-        this.read(pkt.getNbtCompound());
-    }
+//    @Override
+//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+//    {
+//        this.read(pkt.getNbtCompound());
+//    }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()

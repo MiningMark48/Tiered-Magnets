@@ -112,9 +112,9 @@ sourceSets.main.resources {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:1.14.4-28.1.74"
+    minecraft "net.minecraftforge:forge:1.16.2-33.0.5"
 
-    runtimeOnly fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.0.11")
     // compile fg.deobf("com.direwolf20.buildinggadgets:buildinggadgets-3.0.2")
     // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli_1.1-21-beta2")
 

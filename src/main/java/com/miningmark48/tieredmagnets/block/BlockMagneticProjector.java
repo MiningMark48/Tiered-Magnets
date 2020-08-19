@@ -24,11 +24,8 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -87,7 +84,7 @@ public class BlockMagneticProjector extends ContainerBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult ray) {
+    public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player) {
         if (!player.isSneaking()) {
             ItemStack magnet = ItemMagnetBase.getMagnet(player);
             if (!magnet.isEmpty() && !world.isRemote && ModConfig.COMMON.ub_enableMagnetSwap.get()) {
@@ -100,7 +97,6 @@ public class BlockMagneticProjector extends ContainerBlock {
                     projector.setInventorySlotContents(0, magnet.copy());
                     magnet.shrink(1);
                 }
-                return true;
             }
             if (player instanceof ServerPlayerEntity) {
                 TileEntity te = world.getTileEntity(pos);
@@ -121,7 +117,6 @@ public class BlockMagneticProjector extends ContainerBlock {
                 }
             }
         }
-        return true;
     }
 
     @Override
@@ -178,15 +173,15 @@ public class BlockMagneticProjector extends ContainerBlock {
         return BlockRenderType.MODEL;
     }
 
-    @Override
-    public boolean isSolid(BlockState state){
-        return false;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer(){
-        return BlockRenderLayer.CUTOUT;
-    }
+//    @Override
+//    public boolean isSolid(BlockState state){
+//        return false;
+//    }
+//
+//    @Override
+//    public BlockRenderLayer getRenderLayer(){
+//        return BlockRenderLayer.CUTOUT;
+//    }
 
     @Override
     public void onReplaced(BlockState state, World world, BlockPos pos, BlockState state1, boolean p_196243_5_) {

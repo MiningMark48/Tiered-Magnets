@@ -36,10 +36,10 @@ public class TileEntityRegistryContainer extends ClientConstructContainer<TileEn
         ModLogger.info("Registering %s TileEntityRenderer's", Reference.MOD_ID);
         int count = 0;
         for (TileEntityBuilder<?> builder : getBuilders()) {
-            if (builder.hasRenderer()) {
-                builder.registerRenderer();
-                ++ count;
-            }
+//            if (builder.hasRenderer()) {
+//                builder.registerRenderer();
+//                ++ count;
+//            }
         }
         ModLogger.info("Finished registering %s %s TileEntityRenderer's", count, Reference.MOD_ID);
     }

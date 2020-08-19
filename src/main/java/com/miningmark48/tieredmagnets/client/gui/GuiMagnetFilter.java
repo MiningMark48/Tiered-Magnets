@@ -12,8 +12,8 @@ import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.util.KeyChecker;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,11 +23,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraft.util.text.StringTextComponent;
 
-import java.util.ArrayList;
-import java.util.List;
+//import net.minecraftforge.fml.client.config.GuiUtils;
 
 public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
 
@@ -60,32 +58,33 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, partialTicks);
+//        this.renderTooltips(stack, mouseX, mouseY);
     }
 
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    @Override
+    public void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY) {
         String text = ModTranslate.toLocal(Gui.MAGNET_FILTER_NAME.getGui());
         int x = UtilGui.getXCenter(text, this.font, xSize);
-        this.font.drawString(text, x, 5, 0x404040);
+        this.font.drawString(stack, text, x, 5, 0x404040);
 
         if (magnet.getItem() instanceof ItemMagnetBase) {
             ItemMagnetBase m = (ItemMagnetBase) magnet.getItem();
             range = m.getRange(player.getHeldItem(Hand.MAIN_HAND));
         }
-        this.font.drawString(ModTranslate.toLocal(Gui.MAGNET_FILTER_RANGE_LABEL.getGui()), 110, 44, 0x404040);
-        this.font.drawString(String.valueOf(range), 118, 61, 0x404040);
+        this.font.drawString(stack, ModTranslate.toLocal(Gui.MAGNET_FILTER_RANGE_LABEL.getGui()), 110, 44, 0x404040);
+        this.font.drawString(stack, String.valueOf(range), 118, 61, 0x404040);
 
-        renderTooltips(mouseX, mouseY);
+//        this.renderTooltips(stack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float var1, int var2, int var3) {
         GlStateManager.color4f(1, 1, 1, 1);
         getMinecraft().getTextureManager().bindTexture(texture);
-        blit(guiLeft, guiTop, 0, 0, xSize, ySize);
+        this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     @Override
@@ -102,7 +101,7 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
 
         buttonFilterToggle = addButton(createAndAddButton(95, 20, 60, 20, buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui()), (button) -> {
             buttonModeBlacklist = !buttonModeBlacklist;
-            button.setMessage(buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui()));
+            button.setMessage(new StringTextComponent(buttonModeBlacklist ? ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_B.getGui()) : ModTranslate.toLocal(Gui.MAGNET_FILTER_BUTTON_W.getGui())));
             PacketHandler.INSTANCE.sendToServer(new PacketFilterToggle());
         }));
 
@@ -124,20 +123,21 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
     }
 
     private Button createAndAddButton(int x, int y, int width, int height, String text, Button.IPressable action) {
-        return new Button(guiLeft + x, guiTop + y, width, height, text, action);
+        return new Button(guiLeft + x, guiTop + y, width, height, new StringTextComponent(text), action);
     }
 
-    @SuppressWarnings("Duplicates")
-    private void renderTooltips(int mouseX, int mouseY) {
-        Minecraft mc = Minecraft.getInstance();
-        if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
-            List<String> text = new ArrayList<>();
-            text.add(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NAME.getGui()));
-            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NONE.getGui()));
-            text.add(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_SHIFT.getGui()));
-            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.mainWindow.getWidth(), mc.mainWindow.getHeight(), -1, mc.fontRenderer);
-        }
-    }
+//    @SuppressWarnings("Duplicates")
+//    private void renderTooltips(MatrixStack stack, int mouseX, int mouseY) {
+//        Minecraft mc = Minecraft.getInstance();
+//        if (this.isMouseOver(mouseX, mouseY, 100, 55, 113, 73) || this.isMouseOver(mouseX, mouseY, 136, 55, 149, 73)) {
+//            List<IReorderingProcessor> text = new ArrayList<>();
+//            text.add(new TranslationTextComponent(TextFormatting.GOLD + "" + TextFormatting.BOLD + ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NAME.getGui())));
+//            text.add(new TranslationTextComponent(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_NONE.getGui())));
+//            text.add(new TranslationTextComponent(ModTranslate.toLocal(Gui.TOOLTIPS_RANGE_SHIFT.getGui())));
+////            GuiUtils.drawHoveringText(text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20, mc.mainWindow.getWidth(), mc.mainWindow.getHeight(), -1, mc.fontRenderer);
+//            this.renderTooltip(stack, text, mouseX - ((this.width - this.xSize) / 2), mouseY - ((this.height - this.ySize) / 2) - 20);
+//        }
+//    }
 
     @SuppressWarnings("Duplicates")
     private boolean isMouseOver(int mouseX, int mouseY, int minX, int minY, int maxX, int maxY){
@@ -146,5 +146,4 @@ public class GuiMagnetFilter extends ContainerScreen<ContainerMagnetFilter> {
 //        ModLogger.info("x: " + actualX + ", y: " + actualY);
         return (actualX >= minX) && (actualX <= maxX) && (actualY >= minY) && (actualY <= maxY);
     }
-
 }

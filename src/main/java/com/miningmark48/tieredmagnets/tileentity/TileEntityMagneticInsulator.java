@@ -4,9 +4,9 @@ import com.miningmark48.tieredmagnets.block.BlockMagneticInsulator;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.reference.NBTKeys;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -111,8 +111,8 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         setRange(compound.getInt(NBTKeys.RANGE.getKey()));
         setDoPreview(compound.getBoolean(NBTKeys.PREVIEW.getKey()));
     }
@@ -125,12 +125,12 @@ public class TileEntityMagneticInsulator extends TileEntity implements ITickable
         return super.write(compound);
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-    {
-        this.read(pkt.getNbtCompound());
-        sendUpdates();
-    }
+//    @Override
+//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+//    {
+//        this.read(pkt.getNbtCompound());
+//        sendUpdates();
+//    }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket()

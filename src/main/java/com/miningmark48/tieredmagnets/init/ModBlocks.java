@@ -13,8 +13,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlocks {
 
-    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Reference.MOD_ID);
-    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
+    public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Reference.MOD_ID);
+
 
     public static final RegistryObject<Block> MAGNETIC_INSULATOR = BLOCKS.register("magnetic_insulator", BlockMagneticInsulator::new);
     public static final RegistryObject<Block> MAGNETIC_PROJECTOR = BLOCKS.register("magnetic_projector", BlockMagneticProjector::new);

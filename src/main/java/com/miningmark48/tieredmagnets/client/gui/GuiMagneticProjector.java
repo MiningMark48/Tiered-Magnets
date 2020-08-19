@@ -8,6 +8,7 @@ import com.miningmark48.tieredmagnets.reference.Translations.Gui;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
 import com.miningmark48.tieredmagnets.util.UtilGui;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -44,23 +45,23 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
     }
 
     @Override
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground();
-        super.render(mouseX, mouseY, partialTicks);
-        this.renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(stack);
+        super.render(stack, mouseX, mouseY, partialTicks);
+//        this.renderHoveredToolTip(stack, mouseX, mouseY);
     }
 
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+    protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY) {
         String text = ModTranslate.toLocal(Gui.MPROJECTOR_NAME.getGui());
         int x = UtilGui.getXCenter(text, this.font, xSize);
-        this.font.drawString(text, x, 5, 0x404040);
+        this.font.drawString(stack, text, x, 5, 0x404040);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float var1, int var2, int var3) {
         GL11.glColor4f(1F, 1F, 1F, 1F);
         Minecraft.getInstance().getTextureManager().bindTexture(texture);
-        blit(guiLeft, guiTop, 0, 0, xSize, ySize);
+        this.blit(stack, guiLeft, guiTop, 0, 0, xSize, ySize);
     }
 
     @SuppressWarnings("Duplicates")
@@ -69,14 +70,14 @@ public class GuiMagneticProjector extends ContainerScreen<ContainerMagneticProje
         super.init();
 
         buttonTogglePreview = addButton(createAndAddButton(51, 55, 75, 20, this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_S.getGui()), (button) -> {
-            buttonTogglePreview.setMessage(!this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_S.getGui()));
+            buttonTogglePreview.setMessage(new StringTextComponent(!this.te.getDoPreview() ? ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_H.getGui()) : ModTranslate.toLocal(Gui.MPROJECTOR_BUTTON_PREVIEW_S.getGui())));
             PacketHandler.INSTANCE.sendToServer(new PacketTogglePreview(this.te.getPos()));
         }));
 
     }
 
     private Button createAndAddButton(int x, int y, int width, int height, String text, Button.IPressable action) {
-        return new Button(guiLeft + x, guiTop + y, width, height, text, action);
+        return new Button(guiLeft + x, guiTop + y, width, height, new StringTextComponent(text), action);
     }
 
 //    @SuppressWarnings("Duplicates")

@@ -5,16 +5,14 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class TileEntityBuilder<T extends TileEntity> extends RegistryObjectBuilder<TileEntityType<?>, TileEntityTypeBuilder<T>> {
 
-    private Class<T> tileClass;
+    private TileEntityType<T> tileClass;
     private Supplier<Supplier<TileEntityRenderer<? super T>>> renderer;
 
     public TileEntityBuilder(String registryName) {
@@ -35,7 +33,7 @@ public class TileEntityBuilder<T extends TileEntity> extends RegistryObjectBuild
         return (TileEntityBuilder<T>) super.builder(builder);
     }
 
-    public TileEntityBuilder<T> renderer(Class<T> clazz, Supplier<Supplier<TileEntityRenderer<? super T>>> renderer) {
+    public TileEntityBuilder<T> renderer(TileEntityType<T> clazz, Supplier<Supplier<TileEntityRenderer<? super T>>> renderer) {
         this.tileClass = Objects.requireNonNull(clazz);
         this.renderer = Objects.requireNonNull(renderer);
         return this;
@@ -51,21 +49,21 @@ public class TileEntityBuilder<T extends TileEntity> extends RegistryObjectBuild
         return this;
     }
 
-    private Class<T> getTileClass() {
+    private TileEntityType<T> getTileClass() {
         return tileClass;
     }
 
-    @Nullable
-    private TileEntityRenderer<? super T> getRenderer() {
-        return renderer != null ? renderer.get().get() : null;
-    }
+//    @Nullable
+//    private TileEntityRendererDispatcher<? super T> getRenderer() {
+//        return renderer != null ? renderer.get().get() : null;
+//    }
 
-    boolean hasRenderer() {
-        return getRenderer() != null;
-    }
+//    boolean hasRenderer() {
+//        return getRenderer() != null;
+//    }
 
-    void registerRenderer() {
-        ClientRegistry.bindTileEntitySpecialRenderer(getTileClass(), getRenderer());
-    }
+//    void registerRenderer() {
+//        ClientRegistry.bindTileEntityRenderer(getTileClass(), getRenderer());
+//    }
 
 }

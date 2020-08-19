@@ -3,11 +3,14 @@ package com.miningmark48.tieredmagnets.tileentity.renderer;
 import com.miningmark48.tieredmagnets.init.config.ModConfig;
 import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -19,16 +22,20 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
 
     private ItemEntity entityItem = new ItemEntity(Minecraft.getInstance().world, 0D, 0D, 0D);
 
-    public RendererMagneticProjector() {
-
+    public RendererMagneticProjector(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
     }
 
     @SuppressWarnings("Duplicates")
     @Override
-    public void render(TileEntityMagneticProjector te, double x, double y, double z, float p_199341_8_, int p_199341_9_) {
+    public void render(TileEntityMagneticProjector te, float v, MatrixStack mStack, IRenderTypeBuffer buffer, int i, int i1) {
 
         Tessellator tess = Tessellator.getInstance();
         BufferBuilder buf = tess.getBuffer();
+
+        int x = te.getPos().getX();
+        int y = te.getPos().getY();
+        int z = te.getPos().getZ();
 
         if (te != null) {
             if (!Objects.requireNonNull(te.getWorld()).isBlockPowered(te.getPos())) {
@@ -48,7 +55,7 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
 
                         GlStateManager.enableAlphaTest();
                         GlStateManager.enableBlend();
-                        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+//                        GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
                         GlStateManager.disableTexture();
                         GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -129,7 +136,7 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
 
                     GlStateManager.enableAlphaTest();
                     GlStateManager.enableBlend();
-                    GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+//                    GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 
                     GlStateManager.disableTexture();
                     GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -206,10 +213,10 @@ public class RendererMagneticProjector extends TileEntityRenderer<TileEntityMagn
         if (getDoesFloat() || getDoesRotation()) {
             double rTime = Minecraft.getInstance().world.getGameTime() / (getEffectSpeed() * 100D);
             if (getDoesFloat()) GlStateManager.translated(0D, Math.sin(rTime % (2 * Math.PI)) * 0.065, 0D);
-            if (getDoesRotation()) GlStateManager.rotated((float) (((rTime * 40D) % 360)), 0, 1, 0);
+            if (getDoesRotation()) GlStateManager.rotatef((float) (((rTime * 40D) % 360)), 0, 1, 0);
         }
 
-        Minecraft.getInstance().getRenderManager().renderEntity(entityItem, 0D, 0D, 0D, 0.0F, 0.0F, false);
+//        Minecraft.getInstance().getRenderManager().renderEntity(entityItem, 0D, 0D, 0D, 0.0F, 0.0F, false);
 
         GlStateManager.popMatrix();
     }

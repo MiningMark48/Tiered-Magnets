@@ -99,7 +99,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
                             }
                         }, packetBuffer -> packetBuffer.writeItemStack(stack));
                     } else {
-                        player.sendMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal(ChatMsgs.I_MAGNET_NO_FILTER.getMessage())));
+                        player.sendStatusMessage(new StringTextComponent(TextFormatting.DARK_RED + ModTranslate.toLocal(ChatMsgs.I_MAGNET_NO_FILTER.getMessage())), false);
                     }
                 }
             }
@@ -141,7 +141,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int p_77663_4_, boolean p_77663_5_) {
         if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
-            if (!player.isSneaking()) doUpdate(stack, player.world, player.posX, player.posY, player.posZ, player.abilities.isCreativeMode);
+            if (!player.isSneaking()) doUpdate(stack, player.world, player.getPosX(), player.getPosY(), player.getPosZ(), player.abilities.isCreativeMode);
         }
     }
 
@@ -193,7 +193,7 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
         assert stack.getTag() != null;
         if (!isMagic) {
             double speed = getSpeed();
-            entity.addVelocity((x - entity.posX) * speed, (y - entity.posY) * speed, (z - entity.posZ) * speed); //Attracts
+            entity.addVelocity((x - entity.getPosX()) * speed, (y - entity.getPosY()) * speed, (z - entity.getPosZ()) * speed); //Attracts
 //            entity.addVelocity((entity.posX - x) * speed, (entity.posY - y) * speed, (entity.posZ - z) * speed); //Repels
         } else {
             entity.setPositionAndUpdate(x, y, z);
@@ -203,10 +203,10 @@ public abstract class ItemMagnetBase extends Item /* implements IBauble */ {
             Random rand = new Random();
             double r = 0.15D * Math.sqrt(rand.nextDouble() + 1);
             double th = (rand.nextDouble() + 1) * 2 * Math.PI;
-            double pX = entity.posX + r * MathHelper.cos((float) th);
-            double pZ = entity.posZ + r * MathHelper.sin((float) th);
+            double pX = entity.getPosX() + r * MathHelper.cos((float) th);
+            double pZ = entity.getPosZ() + r * MathHelper.sin((float) th);
 
-            spawnParticles(entity.world, pX, entity.posY, pZ);
+            spawnParticles(entity.world, pX, entity.getPosY(), pZ);
         }
 
         if (!noCost && entity.getDistanceSq(x, y, z) <= ModConfig.COMMON.general_costDistance.get()) {

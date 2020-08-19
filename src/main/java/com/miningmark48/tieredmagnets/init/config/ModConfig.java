@@ -2,8 +2,6 @@ package com.miningmark48.tieredmagnets.init.config;
 
 import com.miningmark48.tieredmagnets.reference.Reference;
 import com.miningmark48.tieredmagnets.util.ModLogger;
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
@@ -291,11 +289,11 @@ public class ModConfig {
         ModLogger.debug("Loaded %s config file %s", Reference.MOD_ID, configEvent.getConfig().getFileName());
     }
 
-    public static void onFileChange(final net.minecraftforge.fml.config.ModConfig.ConfigReloading configEvent) {
-        ModLogger.info("%s config just got changed on the file system, reloading!", Reference.MOD_ID);
-        IntegratedServer serv = Minecraft.getInstance().getIntegratedServer();
-        if (serv != null) serv.reload();
-    }
+//    public static void onFileChange(final net.minecraftforge.fml.config.ModConfig.Reloading configEvent) {
+//        ModLogger.info("%s config just got changed on the file system, reloading!", Reference.MOD_ID);
+//        IntegratedServer serv = Minecraft.getInstance().getIntegratedServer();
+//        if (serv != null) serv.reload();
+//    }
 
     public static boolean isServerConfigLoaded() {
         return serverCfgLoaded;
