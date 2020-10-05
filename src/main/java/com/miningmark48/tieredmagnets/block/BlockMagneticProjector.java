@@ -1,9 +1,6 @@
 package com.miningmark48.tieredmagnets.block;
 
-import com.miningmark48.tieredmagnets.container.ContainerMagneticProjector;
 import com.miningmark48.tieredmagnets.init.ModBlocks;
-import com.miningmark48.tieredmagnets.init.config.ModConfig;
-import com.miningmark48.tieredmagnets.item.base.ItemMagnetBase;
 import com.miningmark48.tieredmagnets.reference.Translations.Tooltips;
 import com.miningmark48.tieredmagnets.tileentity.TileEntityMagneticProjector;
 import com.miningmark48.tieredmagnets.util.ModTranslate;
@@ -14,11 +11,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -42,7 +37,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -89,42 +83,55 @@ public class BlockMagneticProjector extends Block {
         return new TileEntityMagneticProjector(ModBlocks.MAGNETIC_PROJECTOR_TILE.get());
     }
 
+//    @Override
+//    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
+//        if (!player.isSneaking()) {
+//            ItemStack magnet = ItemMagnetBase.getMagnet(player);
+//            if (!magnet.isEmpty() && !world.isRemote && ModConfig.COMMON.ub_enableMagnetSwap.get()) {
+//                TileEntity te = world.getTileEntity(pos);
+//                if (te instanceof TileEntityMagneticProjector) {
+//                    TileEntityMagneticProjector projector = (TileEntityMagneticProjector) te;
+//                    if (!projector.getStackInSlot(0).isEmpty()) {
+//                        InventoryHelper.dropInventoryItems(world, pos, projector);
+//                    }
+//                    projector.setInventorySlotContents(0, magnet.copy());
+//                    magnet.shrink(1);
+//                }
+//            }
+//            if (player instanceof ServerPlayerEntity) {
+//                TileEntity te = world.getTileEntity(pos);
+//                if (te instanceof TileEntityMagneticProjector) {
+//                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+//                        @Nonnull
+//                        @Override
+//                        public ITextComponent getDisplayName() {
+//                            return new StringTextComponent("Magnetic Projector");
+//                        }
+//
+//                        @Nonnull
+//                        @Override
+//                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
+//                            return new ContainerMagneticProjector(i, playerInventory, (TileEntityMagneticProjector) te);
+//                        }
+//                    }, packetBuffer -> packetBuffer.writeBlockPos(pos));
+//                    return ActionResultType.SUCCESS;
+//                }
+//            }
+//        }
+//        return ActionResultType.FAIL;
+//    }
+
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
-        if (!player.isSneaking()) {
-            ItemStack magnet = ItemMagnetBase.getMagnet(player);
-            if (!magnet.isEmpty() && !world.isRemote && ModConfig.COMMON.ub_enableMagnetSwap.get()) {
-                TileEntity te = world.getTileEntity(pos);
-                if (te instanceof TileEntityMagneticProjector) {
-                    TileEntityMagneticProjector projector = (TileEntityMagneticProjector) te;
-                    if (!projector.getStackInSlot(0).isEmpty()) {
-                        InventoryHelper.dropInventoryItems(world, pos, projector);
-                    }
-                    projector.setInventorySlotContents(0, magnet.copy());
-                    magnet.shrink(1);
-                }
-            }
-            if (player instanceof ServerPlayerEntity) {
-                TileEntity te = world.getTileEntity(pos);
-                if (te instanceof TileEntityMagneticProjector) {
-                    NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
-                        @Nonnull
-                        @Override
-                        public ITextComponent getDisplayName() {
-                            return new StringTextComponent("Magnetic Projector");
-                        }
+        if (world.isRemote)
+            return ActionResultType.SUCCESS;
 
-                        @Nonnull
-                        @Override
-                        public Container createMenu(int i, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity playerEntity) {
-                            return new ContainerMagneticProjector(i, playerInventory, (TileEntityMagneticProjector) te);
-                        }
-                    }, packetBuffer -> packetBuffer.writeBlockPos(pos));
-                    return ActionResultType.SUCCESS;
-                }
-            }
-        }
-        return ActionResultType.FAIL;
+        TileEntity te = world.getTileEntity(pos);
+        if (! (te instanceof TileEntityMagneticProjector))
+            return ActionResultType.FAIL;
+
+        NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos);
+        return ActionResultType.SUCCESS;
     }
 
     @Override

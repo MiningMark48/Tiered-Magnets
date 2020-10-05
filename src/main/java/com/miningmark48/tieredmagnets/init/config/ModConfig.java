@@ -215,13 +215,13 @@ public class ModConfig {
             builder.comment(comment_utilityBlocks).push(name_utilityBlocks);
             ub_enableMInsulator = builder
                     .comment("If true, enables a block to prevent items from being picked up.")
-                    .define("Enable Magnetic Insulator", true);
+                    .define("Enable Magnetic Insulator", false);
             ub_enableMProjector = builder
                     .comment("If true, enables a block to recreate a magnet in block-form.")
-                    .define("Enable Magnetic Projector", true);
+                    .define("Enable Magnetic Projector", false);
             ub_enableMagnetSwap = builder
                     .comment("If true, a magnet can be inserted into the Magnetic Projector by right clicking the block while holding a magnet.")
-                    .define("Enable Magnet Swap", true);
+                    .define("Enable Magnet Swap", false);
             ub_insulatorRange = builder
                     .comment("Affects the maximum range in which the Magnetic Insulator can disable item pickup.")
                     .defineInRange("Magnetic Insulator Range", 16, 1, Integer.MAX_VALUE);

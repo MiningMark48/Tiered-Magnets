@@ -1,6 +1,6 @@
 {
-  "block.tieredmagnets.magnetic_insulator": "Magnetic Insulator",
-  "block.tieredmagnets.magnetic_projector": "Magnetic Insulator",
+  "block.tieredmagnets.magnetic_insulator": "[WIP] Magnetic Insulator",
+  "block.tieredmagnets.magnetic_projector": "[WIP] Magnetic Insulator",
   "chat.tieredmagnets.item.magnet_base.disabled": "Magnet disabled",
   "chat.tieredmagnets.item.magnet_base.enabled": "Magnet enabled",
   "chat.tieredmagnets.item.magnet_base.filtering.disabled": "Filtering has been disabled!",
